@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard";
 import { BlankPage } from "../pages/BlankPage";
 import { MainLayout } from "../layout/MainLayout";
+import { ManageClass } from "../pages/ManageClass";
+import { ManageSubject } from "../pages/ManageSubject";
 export const Router = () => {
   return (
     <BrowserRouter>
@@ -12,9 +14,9 @@ export const Router = () => {
           <Route path="/schedules" element={<BlankPage />} />
           <Route path="/teachers" element={<BlankPage />} />
           <Route path="/students" element={<BlankPage />} />
-          <Route path="/classes" element={<BlankPage />} />
+          <Route path="/classes" element={<ManageClass />} />
           <Route path="/specilizations" element={<BlankPage />} />
-          <Route path="/subjects" element={<BlankPage />} />
+          <Route path="/subjects" element={<ManageSubject />} />
         </Route>
       </Routes>
     </BrowserRouter>

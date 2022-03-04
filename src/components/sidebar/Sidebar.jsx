@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "antd/dist/antd.css";
 import sidebarNav from "./sidebarNav";
 import styles from "./Sidebar.module.scss";
 import { Link, useLocation } from "react-router-dom";

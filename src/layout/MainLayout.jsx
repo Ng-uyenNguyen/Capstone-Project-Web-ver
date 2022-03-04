@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/sidebar/Sidebar";
-import { Dashboard } from "../pages/Dashboard";
 import styles from "./MainLayout.module.scss";
 export const MainLayout = () => {
   return (

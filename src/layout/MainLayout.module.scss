@@ -1,6 +1,8 @@
 @use "../scss/abstracts/" as *;
 
 .main {
-  padding-left: $sideBarWidth;
+  padding-left: $sideBarWidth + 50px;
   overflow-x: hidden;
+  height: 100vh;
+  padding-top: 5%;
 }
