@@ -1,6 +1,5 @@
 import React from "react";
-import { Table, Tag, Space } from "antd";
-import "antd/dist/antd.css";
+import { CustomTable1 } from "../components/custom_table_1/CustomTable1";
 export const BlankPage = () => {
   const dataSource = [
     {
@@ -11,6 +10,36 @@ export const BlankPage = () => {
     },
     {
       key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "3",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "4",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "5",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "6",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+    {
+      key: "7",
       name: "John",
       age: 42,
       address: "10 Downing Street",
@@ -36,7 +65,7 @@ export const BlankPage = () => {
   ];
   return (
     <div>
-      <Table dataSource={dataSource} columns={columns} />
+      <CustomTable1 dataSource={dataSource} columns={columns} />
     </div>
   );
 };

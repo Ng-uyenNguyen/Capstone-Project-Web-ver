@@ -2,6 +2,7 @@
 
 .sidebar {
   @include flex(strech, flex-start);
+  font-family: "Roboto", sans-serif;
   flex-direction: column;
   width: $sideBarWidth;
   padding: 20px 10px 0px 10px;
@@ -36,7 +37,7 @@
       }
       &__text {
         font-size: 1rem;
-        font-weight: 700;
+        font-weight: 500;
       }
       &:hover {
         color: $primary-color-1;
