@@ -5,8 +5,9 @@ import { BlankPage } from "../pages/BlankPage";
 import { MainLayout } from "../layout/MainLayout";
 import { ManageSubject } from "../pages/ManageSubject";
 import { ManageClass } from "../pages/manage class/ManageClass";
+import  ManageTeacher  from "../pages/manage teacher/ManageTeacher";
 import { ClassDetail } from "../pages/manage class/ClassDetail";
-
+import sidebarNav from "../components/sidebar/sidebarNav";
 export const Router = () => {
   return (
     <BrowserRouter>
@@ -14,10 +15,10 @@ export const Router = () => {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/schedules" element={<BlankPage />} />
-          <Route path="/teachers" element={<BlankPage />} />
-          <Route path="/students" element={<BlankPage />} />
+          <Route path="/teachers" element={<ManageTeacher />} />
+          <Route path="/students" element={<ManageTeacher/>} />
           <Route path="/classes" element={<ManageClass />} />
-          <Route path="/specilizations" element={<BlankPage />} />
+          <Route path="/specilizations" element={<personDetails />} />
           <Route path="/subjects" element={<ManageSubject />} />
           <Route path="/classDetail" element={<ClassDetail />} />
         </Route>
