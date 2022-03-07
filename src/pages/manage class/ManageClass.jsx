@@ -1,7 +1,7 @@
-import { Button, Divider, Table, Typography } from "antd";
+import { Button, Table, Typography } from "antd";
 import React from "react";
 import "./ManageClass.scss";
-import "../components/custom_table_1/CustomTable1.scss";
+import "../../components/custom_table_1/CustomTable1.scss";
 import { Link } from "react-router-dom";
 export const ManageClass = () => {
   const { Title } = Typography;

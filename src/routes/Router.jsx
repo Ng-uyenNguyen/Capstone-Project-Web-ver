@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from "../pages/Dashboard";
 import { BlankPage } from "../pages/BlankPage";
 import { MainLayout } from "../layout/MainLayout";
-import { ManageClass } from "../pages/ManageClass";
 import { ManageSubject } from "../pages/ManageSubject";
-import { ClassDetail } from "../pages/ClassDetail";
+import { ManageClass } from "../pages/manage class/ManageClass";
+import { ClassDetail } from "../pages/manage class/ClassDetail";
+
 export const Router = () => {
   return (
     <BrowserRouter>
