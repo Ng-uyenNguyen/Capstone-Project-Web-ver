@@ -1,0 +1,8 @@
+@use "../../scss/abstracts/" as *;
+.class_detail {
+  font-family: $fontFamily;
+  padding-right: $paddingRight;
+  h3 {
+    font-weight: bold;
+  }
+}

@@ -1,7 +1,6 @@
 import { Button, Table, Typography } from "antd";
 import React from "react";
-import "./ManageClass.scss";
-import "../../components/custom_table_1/CustomTable1.scss";
+import styles from "./ManageClass.module.scss";
 import { Link } from "react-router-dom";
 export const ManageClass = () => {
   const { Title } = Typography;
@@ -87,39 +86,29 @@ export const ManageClass = () => {
       align: "center",
     },
   ];
+
   return (
-    <div className="class_management">
+    <div className={styles.class_management}>
       <Title level={3}>Manage Class</Title>
-      <div className="year-course">
-        <div className="year-course__divider">
-          <Title level={4}>K14</Title>
-          <div className="center-divider" />
-          <Button type="primary" className="add-button">
-            + New Class
-          </Button>
-        </div>
-        <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
+      <YearCourse title="K14" dataSource={dataSource} columns={columns} />
+      <YearCourse title="K15" dataSource={dataSource} columns={columns} />
+      <YearCourse title="K16" dataSource={dataSource} columns={columns} />
+    </div>
+  );
+};
+
+const YearCourse = ({ title, dataSource, columns }) => {
+  const { Title } = Typography;
+  return (
+    <div className={styles.year_course}>
+      <div className={styles.divider}>
+        <Title level={4}>{title}</Title>
+        <div className={styles.center_divider} />
+        <Button type="primary" className={styles.add_button}>
+          + New Class
+        </Button>
       </div>
-      <div className="year-course">
-        <div className="year-course__divider">
-          <Title level={4}>K15</Title>
-          <div className="center-divider" />
-          <Button type="primary" className="add-button">
-            + New Class
-          </Button>
-        </div>
-        <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
-      </div>
-      <div className="year-course">
-        <div className="year-course__divider">
-          <Title level={4}>K16</Title>
-          <div className="center-divider" />
-          <Button type="primary" className="add-button">
-            + New Class
-          </Button>
-        </div>
-        <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
-      </div>
+      <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
     </div>
   );
 };

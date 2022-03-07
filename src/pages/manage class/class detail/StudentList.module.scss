@@ -1,0 +1,8 @@
+@use "../../../scss/abstracts/" as *;
+.class_student_list {
+  .add_new_student {
+    @include add_button;
+    margin-bottom: 10px;
+    float: right;
+  }
+}
