@@ -12,12 +12,18 @@
   z-index: 100;
   border-right: 1px solid rgba(153, 153, 153, 0.39);
   &__logo {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding-left: 1rem;
     img {
       width: 70%;
       height: 55px;
     }
+  }
+  &__divider {
+    height: 1px;
+    width: 100%;
+    margin-bottom: 2rem;
+    background-image: linear-gradient(180deg, rgba(224, 225, 226, 0), rgba(224, 225, 226, 1), rgba(224, 225, 226, 0));
   }
   &__menu {
     @include flex(left, flex-start);

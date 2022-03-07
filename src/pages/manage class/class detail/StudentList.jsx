@@ -7,7 +7,7 @@ export const StudentList = () => {
       key: "1",
       name: (
         <div>
-          <Avatar src="https://joeschmoe.io/api/v1/random"></Avatar>Nguyen Duy Bao Nguyen
+          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
         </div>
       ),
       id: "ST0001",
@@ -18,7 +18,7 @@ export const StudentList = () => {
       key: "2",
       name: (
         <div>
-          <Avatar src="https://joeschmoe.io/api/v1/random"></Avatar>Nguyen Duy Bao Nguyen
+          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
         </div>
       ),
       id: "ST0001",
@@ -29,7 +29,7 @@ export const StudentList = () => {
       key: "3",
       name: (
         <div>
-          <Avatar src="https://joeschmoe.io/api/v1/random"></Avatar>Nguyen Duy Bao Nguyen
+          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
         </div>
       ),
       id: "ST0001",
@@ -40,7 +40,7 @@ export const StudentList = () => {
       key: "4",
       name: (
         <div>
-          <Avatar src="https://joeschmoe.io/api/v1/random"></Avatar>Nguyen Duy Bao Nguyen
+          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
         </div>
       ),
       id: "ST0001",
@@ -74,7 +74,10 @@ export const StudentList = () => {
   ];
   const [activeRow, setActiveRow] = useState(0);
   return (
-    <div>
+    <div className={styles.class_student_list}>
+      <Button type="primary" className={styles.add_new_student}>
+        + New Student
+      </Button>
       <Table
         className="custom_table_1"
         dataSource={dataSource}
@@ -82,7 +85,7 @@ export const StudentList = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              const rows = document.getElementsByClassName("ant-table-row");
+              const rows = event.target.parentElement.parentElement.children;
               setActiveRow((prev) => {
                 rows[[prev]].classList.remove("active");
                 event.target.parentElement.classList.add("active");
