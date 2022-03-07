@@ -5,6 +5,7 @@ import { BlankPage } from "../pages/BlankPage";
 import { MainLayout } from "../layout/MainLayout";
 import { ManageClass } from "../pages/ManageClass";
 import { ManageSubject } from "../pages/ManageSubject";
+import { ClassDetail } from "../pages/ClassDetail";
 export const Router = () => {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ export const Router = () => {
           <Route path="/classes" element={<ManageClass />} />
           <Route path="/specilizations" element={<BlankPage />} />
           <Route path="/subjects" element={<ManageSubject />} />
+          <Route path="/classDetail" element={<ClassDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

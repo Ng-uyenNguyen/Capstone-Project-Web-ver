@@ -1,0 +1,47 @@
+@use "../scss/abstracts/" as *;
+.class_management {
+  padding-right: 50px;
+  font-family: $fontFamily;
+  h3 {
+    font-weight: bold;
+    margin-bottom: 4%;
+  }
+  .year-course {
+    margin-bottom: 5%;
+    &__divider {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      h4 {
+        margin: 0;
+        font-weight: bold;
+      }
+      .center-divider {
+        position: relative;
+        height: 2px;
+        width: 100%;
+        margin: 0 2%;
+        background-color: #c4c4c4;
+        &::before {
+          content: "";
+          background-color: $primary-color-1;
+          position: absolute;
+          width: 10%;
+          height: 2px;
+        }
+      }
+      .add-button {
+        background-color: $primary-color-1;
+        color: white;
+        border-width: 0;
+        border-radius: 8px;
+        box-sizing: border-box;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

@@ -1,10 +1,6 @@
 @use "../../scss/abstracts/" as *;
 
 .custom_table_1 {
-  .active {
-    background-color: $primary-color-1;
-    color: white;
-  }
   table {
     .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
       content: "";
@@ -21,17 +17,22 @@
         }
       }
     }
-    .ant-table-tbody .ant-table-row:nth-child(even) {
-      background-color: $primary-color-3;
-    }
+
     .ant-table-tbody > tr {
       cursor: pointer;
       .ant-table-cell-row-hover {
+        background-color: unset;
+      }
+      &:nth-child(even) {
         background-color: $primary-color-3;
       }
       td {
         border-width: 0;
       }
+    }
+    .active {
+      background-color: $primary-color-1 !important;
+      color: white;
     }
   }
 }

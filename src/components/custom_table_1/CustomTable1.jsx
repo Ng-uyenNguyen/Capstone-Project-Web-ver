@@ -1,20 +1,27 @@
-import React from "react";
-import { Table, Tag, Space } from "antd";
+import { Table } from "antd";
 import "antd/dist/antd.css";
+import React, { useState } from "react";
 import "./CustomTable1.scss";
-export const CustomTable1 = ({ dataSource, columns }) => {
+export const CustomTable1 = ({ dataSource, columns, ...rest }) => {
+  const [activeRow, setActiveRow] = useState(0);
+
   return (
     <div>
       <Table
         className="custom_table_1"
         dataSource={dataSource}
         columns={columns}
+        {...rest}
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              event.target.parentElement.style.backgroundColor = "#21bf73";
-              event.target.parentElement.style.color = "white";
-            }, // click row
+              const rows = document.getElementsByClassName("ant-table-row");
+              setActiveRow((prev) => {
+                rows[[prev]].classList.remove("active");
+                return rowIndex;
+              });
+              event.target.parentElement.classList.add("active");
+            },
           };
         }}
       />
