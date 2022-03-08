@@ -1,0 +1,15 @@
+@use "../../../scss/abstracts/" as *;
+.class_course_list {
+  padding-right: $sideBarWidth + 50px;
+  &__table {
+    position: relative;
+    .add_new_course_btn {
+      position: absolute;
+      right: 0;
+      top: -57px;
+      @include add_button;
+      margin-bottom: 10px;
+      float: right;
+    }
+  }
+}

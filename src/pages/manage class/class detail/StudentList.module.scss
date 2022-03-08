@@ -1,8 +1,13 @@
 @use "../../../scss/abstracts/" as *;
 .class_student_list {
+  padding-right: $sideBarWidth + 50px;
+  &__table {
+    position: relative;
+  }
   .add_new_student {
+    position: absolute;
+    top: -57px;
+    right: 0;
     @include add_button;
-    margin-bottom: 10px;
-    float: right;
   }
 }
