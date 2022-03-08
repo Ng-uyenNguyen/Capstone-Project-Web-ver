@@ -5,13 +5,18 @@
   width: 100%;
   display: grid;
   align-items: center;
+  background-image: url("../../assets/images/classroom.jpg"),
+    linear-gradient(rgba(186, 186, 186, 0.9), rgba(186, 186, 186, 0.9));
+  background-blend-mode: overlay;
   .logo {
     padding: 10px 0;
   }
 }
 .loginForm {
+  background-color: $primary-color-4;
   margin: 0 auto;
   width: 50%;
+  border-radius: 1em;
   border: 1px solid whitesmoke;
   padding: 10px;
   display: flex;
