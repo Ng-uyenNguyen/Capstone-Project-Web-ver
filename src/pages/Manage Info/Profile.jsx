@@ -1,8 +1,6 @@
 import React from 'react'
 import { Typography, Avatar } from 'antd';
-import { AntDesignOutlined } from '@ant-design/icons';
-import profileImg from '../../assets/images/profileImg.png'
-import './Style_Info.scss'
+// import styles from './Style_Info.module.scss'
 export const Profile = () => {
     const { Title } = Typography;
     const user_data = {
@@ -20,19 +18,20 @@ export const Profile = () => {
     return (
 
         <div className='manage-profile'>
-            <h1 title='1'>Profile</h1>
+
+            <h1 >Profile</h1>
             <div className='info-banner'>
                 <Avatar className='avatar'
                     size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 160 }}
                     icon={<img src={require("../../assets/images/profileImg.png")}></img>}
                 />
                 <div className='name-field'>
-                    <Title title='2'>{user_data.name}</Title>
+                    <Title>{user_data.name}</Title>
                     <p className='role'>Administration</p>
                 </div>
             </div>
             <div className='profile-field'>
-                <div className='profile-title'>
+                <div className='title'>
                     <p>Email</p>
                     <p>Birthday</p>
                     <p>Gender</p>

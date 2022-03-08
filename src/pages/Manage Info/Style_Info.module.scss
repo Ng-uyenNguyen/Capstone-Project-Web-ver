@@ -1,0 +1,87 @@
+@use "../../scss/abstracts/" as *;
+
+.info_banner {
+  background-color: $primary-color-3;
+  width: 95%;
+  height: 184px;
+  margin: 3% 3% 3% 0;
+  border-radius: 19px;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+}
+.profile_field{
+  display: flex;
+  flex-direction: row;
+  font-family: $fontFamily;
+  font-size: $fontSizeMedium;
+  margin-left: 5%;
+}
+.name_field {
+  font-family: $fontFamily;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+  margin-left: 2%;
+  z-index: 3;
+  position: relative;
+}
+.role {
+  font-family: $fontFamily;
+  font-size: $fontSizeMedium;
+}
+.title {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  font-family: $fontFamily;
+  font-size: $fontSizeMedium;
+  font-weight: bold;
+  color: $txtColor;
+  p {
+    margin-bottom: 18%;
+  }
+  
+}
+.profile_data{
+  p {
+    margin-bottom: 10%;
+  }
+}
+//====================== Change Password
+.changePass{
+  display: flex;
+  flex-direction: column;
+}
+.info{
+  display: flex;
+  align-items: center;
+  margin: 3% 3% 0 0;
+  padding-left: 2%;
+}
+.contain{
+  background-color: $primary-color-4;
+  width: 95%;
+  height: 613px;
+  margin: -4% 3% 3% 0;
+  // z-index: -1;
+  border-radius: 19px;
+  display: flex;
+  padding-left: 14% ;
+  padding-top: 10%;
+}
+
+.form_input{
+  display: flex;
+  flex-direction: column;
+  
+  input{
+    margin-bottom: 10%;
+    width: 425px;
+    height: 51px;
+    border-radius: 10px;
+    border-color: $primary-color-1;
+  }
+
+
+}

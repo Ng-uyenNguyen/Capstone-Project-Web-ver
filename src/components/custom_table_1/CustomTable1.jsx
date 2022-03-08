@@ -2,7 +2,7 @@ import { Table } from "antd";
 import "antd/dist/antd.css";
 import React, { useState } from "react";
 import "./CustomTable1.scss";
-export const CustomTable1 = ({ dataSource, columns, ...rest }) => {
+export const CustomTable1 = ({ dataSource, columns }) => {
   const [activeRow, setActiveRow] = useState(0);
 
   return (
@@ -11,7 +11,6 @@ export const CustomTable1 = ({ dataSource, columns, ...rest }) => {
         className="custom_table_1"
         dataSource={dataSource}
         columns={columns}
-        {...rest}
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

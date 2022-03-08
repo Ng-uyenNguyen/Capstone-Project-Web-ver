@@ -18,6 +18,7 @@ export const Sidebar = () => {
       <div className={styles.sidebar__logo}>
         <img src={require("../../assets/images/Logo.png")} alt="logo" />
       </div>
+      <div className={styles.sidebar__divider} />
       <div className={styles.sidebar__menu}>
         {sidebarNav.map((item, index) => (
           <Link to={item.link} key={`nav-${index}`} className={clsx(styles.sidebar__menu__item, { [styles.sidebar__menu__active]: index === activeIndex })}>
