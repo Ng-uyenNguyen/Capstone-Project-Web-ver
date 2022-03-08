@@ -1,8 +1,10 @@
 @use "../../scss/abstracts/" as *;
 
 .loginContainer {
-  height: 100vh;
+  box-sizing: border-box;
+  padding: 20px 0;
   width: 100%;
+  min-height: 100vh;
   display: grid;
   align-items: center;
   background-image: url("../../assets/images/classroom.jpg"),
@@ -18,15 +20,27 @@
   width: 50%;
   border-radius: 1em;
   border: 1px solid whitesmoke;
-  padding: 10px;
+  background-color: #ffffff;
+  background-size: 120%;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/images/loginbackground.png");
   display: flex;
   flex-wrap: wrap;
+  .login_image {
+    flex: 1;
+    min-width: 230px;
+  }
 }
 
 .login_input {
   padding: 5px;
-  height: 100%;
-  margin: auto 0;
+  flex: 1;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  .input_content {
+    min-width: 230px;
+  }
   button {
     box-sizing: content-box;
     width: 90%;
