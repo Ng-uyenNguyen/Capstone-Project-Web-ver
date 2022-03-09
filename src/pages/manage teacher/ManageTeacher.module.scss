@@ -1,0 +1,13 @@
+@use "../../scss/abstracts/" as *;
+.container {
+  font-family: $fontFamily;
+  padding-right: $sideBarWidth + 50px;
+  .divider {
+    @include divider(25%);
+  }
+  .teacher_list {
+    .add_new_teacher_btn {
+      @include add_button;
+    }
+  }
+}

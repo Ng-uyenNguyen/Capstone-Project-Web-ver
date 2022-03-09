@@ -16,7 +16,7 @@ function TeacherDetails() {
       </div>
       <div className={styles.teacher__form__title}>
         <p className={styles.teacher__form__title__content}>Contact</p>
-        <img clasName={styles.teacher__form__title__image} src={require("../../assets/images/divideLine.png")} />
+        <img className={styles.teacher__form__title__image} src={require("../../assets/images/divideLine.png")} />
       </div>
       <div className={styles.teacher__contact__form}>
         <div className={styles.teacher__contact__form__container}>
@@ -57,7 +57,7 @@ function TeacherDetails() {
       </div>
       <div className={styles.teacher__form__title}>
         <p className={styles.teacher__form__title__content}>Information</p>
-        <img clasName={styles.teacher__form__title__image} src={require("../../assets/images/divideLine.png")} />
+        <img className={styles.teacher__form__title__image} src={require("../../assets/images/divideLine.png")} />
       </div>
       <div className={styles.teacher__information__form}>
         <div className={styles.teacher__information__form__container}>
@@ -81,7 +81,7 @@ function TeacherDetails() {
       </div>
       <div className={styles.teacher__form__title}>
         <p className={styles.teacher__form__title__content}>Teaching Subjects</p>
-        <img clasName={styles.teacher__form__title__image} src={require("../../assets/images/divideLine.png")} />
+        <img className={styles.teacher__form__title__image} src={require("../../assets/images/divideLine.png")} />
       </div>
       <div className={styles.teacher__teaching__subject__form}>
         <div className={styles.teacher__teaching__subject__form__item}>SSC102</div>

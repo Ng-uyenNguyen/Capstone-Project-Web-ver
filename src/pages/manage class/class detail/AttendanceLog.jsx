@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import React, { useState } from "react";
+import { AttendanceDetail } from "../../../components/attendance detail/AttendanceDetail";
 import styles from "./AttendanceLog.module.scss";
 export const AttendanceLog = () => {
   const dataSource = [
@@ -64,6 +65,7 @@ export const AttendanceLog = () => {
     },
   ];
   const [activeRow, setActiveRow] = useState(0);
+  const [loading, setLoading] = useState(false);
   return (
     <div className={styles.class_attendance_log}>
       <Table
@@ -79,10 +81,12 @@ export const AttendanceLog = () => {
                 event.target.parentElement.classList.add("active");
                 return rowIndex;
               });
+              setLoading(true);
             },
           };
         }}
       />
+      <AttendanceDetail loading={loading} />
     </div>
   );
 };

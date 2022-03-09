@@ -11,7 +11,7 @@ export const ManageClass = () => {
       specilization: "Software Engineering",
       totalStudent: 30,
       timeTable: <Button type="link">View</Button>,
-      detail: <Link to="/classDetail">Detail</Link>,
+      detail: <Link to="/classes/classDetail">Detail</Link>,
     },
     {
       key: "2",

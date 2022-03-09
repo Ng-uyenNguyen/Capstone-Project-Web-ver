@@ -1,11 +1,11 @@
 @use "../../scss/abstracts" as *;
 
 .teacher {
-  @include flex(strech, flex-start);
+  @include flex(stretch, flex-start);
   font-family: "Roboto", sans-serif;
   flex-direction: column;
   width: $sideBarWidth;
-  padding: 20px 10px 0px 10px;
+  padding: 35px 10px 0px 10px;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -73,6 +73,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      color: #404d61;
       &__email {
         display: flex;
         justify-content: flex-start;
@@ -81,7 +82,6 @@
         column-gap: 1em;
         &__content {
           margin-top: 2%;
-          color: gray;
         }
       }
       &__phone {
@@ -92,7 +92,6 @@
         column-gap: 1em;
         &__content {
           margin-top: 2%;
-          color: gray;
         }
       }
       &__address {
@@ -103,7 +102,6 @@
         column-gap: 1em;
         &__content {
           margin-top: 2%;
-          color: gray;
         }
       }
     }
