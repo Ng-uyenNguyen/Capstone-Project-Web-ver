@@ -19,7 +19,7 @@ export const Router = () => {
           <Route path="/classes" element={<ManageClass />} />
           <Route path="/specilizations" element={<BlankPage />} />
           <Route path="/subjects" element={<BlankPage />} />
-          <Route path="/classDetail" element={<ClassDetail />} />
+          <Route path="/classes/classDetail" element={<ClassDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
