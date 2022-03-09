@@ -4,6 +4,7 @@
   @include flex(strech, flex-start);
   font-family: "Roboto", sans-serif;
   flex-direction: column;
+  background-color: #ffffff;
   width: $sideBarWidth;
   padding: 20px 10px 0px 10px;
   height: 100vh;
@@ -23,7 +24,12 @@
     height: 1px;
     width: 100%;
     margin-bottom: 2rem;
-    background-image: linear-gradient(180deg, rgba(224, 225, 226, 0), rgba(224, 225, 226, 1), rgba(224, 225, 226, 0));
+    background-image: linear-gradient(
+      180deg,
+      rgba(224, 225, 226, 0),
+      rgba(224, 225, 226, 1),
+      rgba(224, 225, 226, 0)
+    );
   }
   &__menu {
     @include flex(left, flex-start);
@@ -51,7 +57,8 @@
     }
     &__active {
       color: $primary-color-1;
-      box-shadow: 0px -2px 4px rgba(169, 169, 169, 0.15), 0px 2px 5.5px rgba(169, 169, 169, 0.15);
+      box-shadow: 0px -2px 4px rgba(169, 169, 169, 0.15),
+        0px 2px 5.5px rgba(169, 169, 169, 0.15);
     }
   }
 }

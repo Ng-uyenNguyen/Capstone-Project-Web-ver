@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Dashboard } from "../pages/Dashboard";
+import { Dashboard } from "../pages/dashboard/Dashboard";
 import { BlankPage } from "../pages/BlankPage";
 import { MainLayout } from "../layout/MainLayout";
 import { ManageClass } from "../pages/manage class/ManageClass";
@@ -12,7 +12,7 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/schedules" element={<BlankPage />} />

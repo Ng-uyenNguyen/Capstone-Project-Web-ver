@@ -1,0 +1,68 @@
+@use "../../scss/abstracts/" as *;
+
+.dashboard_container {
+  .dashboard_content {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    padding-right: 50px;
+    gap: 2em;
+  }
+  .dashboard-box-shadow {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 1em;
+  }
+  .dashboard_left {
+    display: grid;
+    .pill_container {
+      display: flex;
+      justify-content: space-between;
+      gap: 3em;
+      .overview_pill {
+        align-items: center;
+        padding: 20px 0;
+        box-sizing: border-box;
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: #ffffff;
+        border: 1px whitesmoke solid;
+        .pill_icon_container {
+          padding-left: 2em;
+          height: 60px;
+        }
+        .pill_icon_container img {
+          height: 100%;
+          width: auto;
+        }
+        .pill_detail {
+          p {
+            color: #757d8a;
+            font-weight: bold;
+            margin-bottom: 0px;
+          }
+          strong {
+            font-size: 1.5em;
+          }
+        }
+      }
+    }
+    .overview_chart {
+      height: 400px;
+      background-color: white;
+      margin-top: 20px;
+    }
+    .table_class {
+      background-color: white;
+      margin: 20px 0;
+    }
+  }
+  .dashboard_right {
+    height: 100%;
+    background-color: red;
+  }
+  .dashboard_title {
+    font-size: 1.6em;
+    font-family: Roboto;
+    font-weight: 900;
+  }
+}

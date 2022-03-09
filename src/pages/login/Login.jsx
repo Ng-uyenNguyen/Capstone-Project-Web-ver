@@ -39,22 +39,20 @@ export const Login = () => {
               autoComplete="off"
             >
               <Form.Item
-                className="username"
                 name="username"
                 rules={[
-                  {
-                    required: true,
-                    message: "Please input your username!",
-                  },
+                  { required: true, message: "Please input your username!" },
                 ]}
               >
-                <span className="input_icon">
-                  <img
-                    src={require("../../assets/images/usernameicon.png")}
-                    alt=""
-                  />
-                </span>
-                <Input className="input_field username" />
+                <div className="input_block">
+                  <span className="input_icon">
+                    <img
+                      src={require("../../assets/images/usernameicon.png")}
+                      alt=""
+                    />
+                  </span>
+                  <Input className="input_field username" />
+                </div>
               </Form.Item>
 
               <Form.Item
