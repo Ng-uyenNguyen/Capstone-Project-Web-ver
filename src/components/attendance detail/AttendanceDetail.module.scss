@@ -1,11 +1,9 @@
 @use "../../scss/abstracts" as *;
 .class_attendance_detail {
-  @include flex(center, flex-start);
   font-family: "Roboto", sans-serif;
-  flex-direction: column;
   overflow: scroll;
   width: $sideBarWidth;
-  padding: 80px 10px 0px 10px;
+  // padding: 80px 10px 0px 10px;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -13,6 +11,13 @@
   z-index: 100;
   border: solid 1px lightgray;
   background-color: $primary-color-4;
+  .subject_box_wrapper {
+    @include flex(center, flex-start);
+    font-family: "Roboto", sans-serif;
+    flex-direction: column;
+    overflow: scroll;
+    padding: 0;
+  }
 }
 .subject_box {
   width: 90%;

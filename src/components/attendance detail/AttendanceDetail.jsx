@@ -9,14 +9,16 @@ export const AttendanceDetail = ({ loading }) => {
     </div>
   ) : (
     <div className={styles.class_attendance_detail}>
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
+      <div className={styles.subject_box_wrapper}>
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+      </div>
     </div>
   );
 };

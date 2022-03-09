@@ -74,6 +74,7 @@ const ManageTeacher = () => {
     },
   ];
   const [activeRow, setActiveRow] = useState(0);
+  const [loading, setLoading] = useState(false);
   const { Title } = Typography;
   return (
     <div className={styles.container}>
@@ -81,7 +82,7 @@ const ManageTeacher = () => {
       <div className={styles.divider} />
       <div className={styles.teacher_list}>
         <Button type="primary" className={styles.add_new_teacher_btn}>
-          + New Student
+          + New Teacher
         </Button>
         <Table
           className="custom_table_1"
@@ -101,7 +102,7 @@ const ManageTeacher = () => {
           }}
         />
       </div>
-      <TeacherDetails />
+      <TeacherDetails loading />
     </div>
   );
 };
