@@ -1,6 +1,7 @@
+import { Button, Table } from "antd";
 import React, { useState } from "react";
+import { CourseListDetail } from "../../../components/class course detail/CourseListDetail";
 import styles from "./CourseList.module.scss";
-import { Avatar, Button, Table, Typography } from "antd";
 export const CourseList = () => {
   const dataSource = [
     {
@@ -38,23 +39,29 @@ export const CourseList = () => {
   const [activeRow, setActiveRow] = useState(0);
   return (
     <div class={styles.class_course_list}>
-      <Table
-        className="custom_table_1"
-        dataSource={dataSource}
-        columns={columns}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              const rows = event.target.parentElement.parentElement.children;
-              setActiveRow((prev) => {
-                rows[[prev]].classList.remove("active");
-                event.target.parentElement.classList.add("active");
-                return rowIndex;
-              });
-            },
-          };
-        }}
-      />
+      <div className={styles.class_course_list__table}>
+        <Button type="primary" className={styles.add_new_course_btn}>
+          + New Course
+        </Button>
+        <Table
+          className="custom_table_1"
+          dataSource={dataSource}
+          columns={columns}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                const rows = event.target.parentElement.parentElement.children;
+                setActiveRow((prev) => {
+                  rows[[prev]].classList.remove("active");
+                  event.target.parentElement.classList.add("active");
+                  return rowIndex;
+                });
+              },
+            };
+          }}
+        />
+      </div>
+      <CourseListDetail />
     </div>
   );
 };
