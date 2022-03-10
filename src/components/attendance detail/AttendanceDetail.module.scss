@@ -1,0 +1,66 @@
+@use "../../scss/abstracts" as *;
+.class_attendance_detail {
+  @include flex(center, flex-start);
+  font-family: "Roboto", sans-serif;
+  flex-direction: column;
+  overflow: scroll;
+  width: $sideBarWidth;
+  padding: 80px 10px 0px 10px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  background-color: $primary-color-4;
+}
+.subject_box {
+  width: 90%;
+  border: 1.5px solid #e3e3e3;
+  box-sizing: border-box;
+  border-radius: 15px;
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 5%;
+  .subject_info {
+    @include flex(center, flex-start);
+    margin-bottom: 10px;
+    img {
+      margin-right: 5px;
+    }
+    h4,
+    p {
+      margin: 0;
+      margin-left: 2px;
+    }
+    p {
+      color: #636363;
+    }
+  }
+  .subject_operation {
+    @include flex(center, space-between);
+    .subject_detail {
+      p {
+        margin: 0;
+      }
+    }
+    .download_btn {
+      background-color: $primary-color-1;
+      border-radius: 10px;
+    }
+  }
+}
+.class_attendance_detail_loading {
+  @include flex(center, center);
+  font-family: "Roboto", sans-serif;
+  flex-direction: column;
+  overflow: scroll;
+  width: $sideBarWidth;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  background-color: $primary-color-4;
+}

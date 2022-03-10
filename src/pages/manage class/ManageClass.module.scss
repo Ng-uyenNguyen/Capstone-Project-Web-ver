@@ -18,18 +18,8 @@
         font-weight: bold;
       }
       .center_divider {
-        position: relative;
-        height: 2px;
-        width: 100%;
+        @include divider;
         margin: 0 2%;
-        background-color: #c4c4c4;
-        &::before {
-          content: "";
-          background-color: $primary-color-1;
-          position: absolute;
-          width: 10%;
-          height: 2px;
-        }
       }
       .add_button {
         @include add_button;

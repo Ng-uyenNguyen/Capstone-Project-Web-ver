@@ -7,21 +7,27 @@
   padding-top: 2%;
   overflow-y: hidden;
   position: relative;
-  .admin_dropdown {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    z-index: 1000;
-    p {
-      margin: 0;
-      margin-left: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-    }
+  .admin_dropdown_wrapper {
+    width: $sideBarWidth;
     @include flex(center, center);
-    .admin_name {
-      cursor: pointer;
-      margin-right: 3px;
+    position: fixed;
+    padding: 10px 0;
+    top: 0px;
+    right: 0;
+    z-index: 200;
+    background-color: transparent;
+    .admin_dropdown {
+      p {
+        margin: 0;
+        margin-left: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      @include flex(center, center);
+      .admin_name {
+        cursor: pointer;
+        margin-right: 3px;
+      }
     }
   }
 }

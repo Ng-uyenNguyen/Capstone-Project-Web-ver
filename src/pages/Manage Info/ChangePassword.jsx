@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Typography } from 'antd';
+import { Avatar, Typography, Button } from 'antd';
 import styles from './Style_Info.module.scss'
 
 export const ChangePassword = () => {
@@ -20,7 +20,7 @@ export const ChangePassword = () => {
     return (
         <div>
             <h1 >Change Password</h1>
-           
+            <div className={styles.divider}></div>
             <div className={styles.changePass}>
                 <div className={styles.info}>
                     <Avatar className={styles.avatar}
@@ -29,20 +29,17 @@ export const ChangePassword = () => {
                     />
                     <div className={styles.name_field}>
                         <Title title='2'>My Nguyen</Title>
-                        <p className='role'>Administration</p>
+                        <p className={styles.role}>Administration</p>
                     </div>
                 </div>
                 <div className={styles.contain}>
-               
-                    <div className={styles.title}>
-                        <p>Email</p>
-                        <p>Old Password</p>
-                        <p>New Password</p>
-                        <p>Confirm New Password</p>
-                    </div>
-                    <div>
-                        <form className={styles.form_input}>
+                    <div className={styles.custom_form}>
+                        <div className={styles.input_item}>
+                            <p>Email</p>
                             <input type="text" name="mail" value={inputField.mail} onChange={handleChange} />
+                        </div>
+                        <div className={styles.input_item}>
+                            <p>Old Password</p>
                             <input
                                 type='text'
                                 name="oldPassword"
@@ -51,6 +48,9 @@ export const ChangePassword = () => {
                                 value={inputField.oldPassword}
 
                             />
+                        </div>
+                        <div className={styles.input_item}>
+                            <p>New Password</p>
                             <input
                                 type='text'
                                 name="newPassword"
@@ -58,7 +58,11 @@ export const ChangePassword = () => {
                                 onChange={handleChange}
                                 value={inputField.newPassword}
 
+
                             />
+                        </div>
+                        <div className={styles.input_item}>
+                            <p>Confirm New Password</p>
                             <input
                                 type='text'
                                 name="confirmPassword"
@@ -67,14 +71,14 @@ export const ChangePassword = () => {
                                 value={inputField.confirmPassword}
 
                             />
-
-                        </form>
-
+                        </div>
+                        <div className={styles.custom_btn}>
+                            <Button className={styles.custom_btn__btn_cancel}>Cancel</Button>
+                            <Button className={styles.custom_btn__btn_done}>Done</Button>
+                        </div>
                     </div>
-                  
                 </div>
             </div>
         </div>
     )
 }
-	

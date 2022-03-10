@@ -1,8 +1,7 @@
-import React from "react";
-import { Tag, Typography } from 'antd';
-import { CustomTable1 } from "../../components/custom_table_1/CustomTable1";
+import React, { useState } from "react";
+import { Tag, Typography, Button, Table } from 'antd';
 import { SubjectDetail } from './SubjectDetail'
-import './StyleSubject.scss'
+import styles from './StyleSubject.module.scss'
 export const ManageSubject = () => {
   const { Title } = Typography;
   const dataSource = [
@@ -68,20 +67,42 @@ export const ManageSubject = () => {
         <>
           {specializations.map(specialization => {
             return (
-              <Tag key={specialization} className='subject-tag'>{specialization.toUpperCase()}</Tag>
+              <Tag key={specialization} className={styles.subject_tag}>{specialization.toUpperCase()}</Tag>
             );
           })}
         </>
       ),
     },
   ];
+  const [activeRow, setActiveRow] = useState(0);
+  const [loading, setLoading] = useState(false);
   return (
-    <div>
-      <Title title={3}>Manage Subject</Title>
-      <div className='manage-subject'>
-        <CustomTable1 dataSource={dataSource} columns={columns} />
-        <SubjectDetail />
+    <div className={styles.manage_subject} >
+      <Title level={3}><b>Manage Subject</b></Title>
+      <div className={styles.divider} />
+
+      <div className={styles.manage_subject__table}>
+        <Button type="primary" className={styles.add_new_subject_btn}>
+          + New Subject
+        </Button>
+        <Table className="custom_table_1" dataSource={dataSource} columns={columns}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                const rows = event.target.parentElement.parentElement.children;
+                setActiveRow((prev) => {
+                  rows[[prev]].classList.remove("active");
+                  event.target.parentElement.classList.add("active");
+                  return rowIndex;
+                });
+                setLoading(true);
+
+              },
+            };
+          }} />
+
       </div>
+      <SubjectDetail loading={loading} />
     </div>
   )
 };
