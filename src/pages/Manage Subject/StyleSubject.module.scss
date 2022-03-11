@@ -1,0 +1,176 @@
+@use "../../scss/abstracts/" as *;
+//=============== manage subject
+.manage_subject {
+  font-family: $fontFamily;
+  h3 {
+    font-weight: bold;
+    margin-bottom: 2%;
+  }
+  padding-right: $sideBarWidth + 50px;
+  display: flex;
+  flex-direction: column;
+  &__table {
+    position: relative;
+    Table > thead{
+      background-color: $light-gray;
+    }
+  }
+  .add_new_subject_btn {
+    position: relative;
+    right: 0;
+    @include add_button;
+    margin-bottom: 10px;
+    float: right;
+    width: fit-content;
+    height: fit-content;
+    background-color: $primary-color-1;
+  }
+}
+//==== common 
+.divider {
+  @include divider(25%);
+  margin-bottom: 2%;
+}
+.divider_btn {
+  display: flex;
+  flex-direction: column;
+}
+.subject_tag {
+  width: 50px;
+  height: max-content;
+  border-radius: 5px;
+  border: none;
+  background-color: $primary-color-2;
+  color: $primary-color-1;
+  text-align: center;
+  font-weight: bold;
+}
+//=== Detail
+.subject_detail_loading {
+  @include flex(center, center);
+  font-family: "Roboto", sans-serif;
+  flex-direction: column;
+  overflow: scroll;
+  width: $sideBarWidth;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  background-color: $primary-color-4;
+}
+
+
+.subject_detail {
+  @include flex(center, flex-start);
+  font-family: "Roboto", sans-serif;
+  flex-direction: column;
+  overflow: scroll;
+  width: $sideBarWidth;
+  padding: 80px 10px 0px 10px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  background-color: $primary-color-4;
+  .divider {
+    @include divider(25%);
+  }
+  &__subject_tag {
+    width: 60px;
+    height: fit-content;
+    border-radius: 5px;
+    border: none;
+    background-color: $primary-color-2;
+    color: $black-1;
+    text-align: center;
+    margin: 10px;
+    font-size: small;
+  }
+  .btn_remove{
+    width: 115px;
+    height: 34px;
+    background-color: $red;
+    color: white;
+    border-radius: 40px;
+    font-size: medium;
+    margin-right: 20px;
+  }
+  .btn_update{
+    width: 115px;
+    height: 34px;
+    background-color: $yellow;
+    color: white;
+    border-radius: 40px;
+    font-size: medium;
+
+  }
+  .btn_field{
+    width: 92%;
+    padding-top: 40px;
+  }
+  .subject_banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $primary-color-1;
+    width: 92%;
+    height: 90px;
+    border-radius: 10px;
+    .subject_info {
+      @include flex(center, flex-start);
+      h4 {
+        margin-top: 15px;
+        margin-left: 2px;
+        color: $white;
+        font-size: medium;
+        font-weight: bold;
+      }
+      p {
+        margin-top: 0;
+        margin-left: 2px;
+        color: $white;
+        font-size: medium;
+      }
+    }
+  }
+  .heading_title{
+    margin-bottom: 10px;
+    font-size: large;
+  }
+
+  .teaching_teachers {
+    margin-top: 20px;
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+
+    &__info{
+      display: flex;
+      flex-direction: row;
+      font-size: medium;
+      &__title{
+        color: $primary-color-1;
+        margin-right: 5px;
+        
+      }
+    }
+  
+  }
+  .studying_classes{
+    margin-top: 20px;
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+
+  }
+  .specs{
+    margin-top: 20px;
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+  }
+}
