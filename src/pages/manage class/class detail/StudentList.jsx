@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./StudentList.module.scss";
 import { Avatar, Button, Table, Typography } from "antd";
-import TeacherDetails from "../../../components/TeacherDetails";
+import PersonDetail from "../../../components/TeacherDetails";
 export const StudentList = () => {
   const dataSource = [
     {
@@ -74,6 +74,7 @@ export const StudentList = () => {
     },
   ];
   const [activeRow, setActiveRow] = useState(0);
+  const [loading, setLoading] = useState(false);
   return (
     <div className={styles.class_student_list}>
       <div className={styles.class_student_list__table}>
@@ -93,12 +94,13 @@ export const StudentList = () => {
                   event.target.parentElement.classList.add("active");
                   return rowIndex;
                 });
+                setLoading(true);
               },
             };
           }}
         />
       </div>
-      <TeacherDetails />
+      <PersonDetail loading={loading} />
     </div>
   );
 };

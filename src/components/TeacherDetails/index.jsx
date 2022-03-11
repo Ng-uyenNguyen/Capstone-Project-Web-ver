@@ -1,9 +1,13 @@
+import { EditOutlined, HomeOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
+import { Image } from "antd";
 import React from "react";
 import styles from "./TeacherDetail.module.scss";
-import clsx from "clsx";
-import { EditOutlined, MailOutlined, PhoneOutlined, HomeOutlined } from "@ant-design/icons";
-function TeacherDetails() {
-  return (
+function PersonDetail({ loading }) {
+  return !loading ? (
+    <div className={styles.loading}>
+      <Image src={require("../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
+    </div>
+  ) : (
     <div className={styles.teacher}>
       <div className={styles.teacher__avatar__form}>
         <img src="https://thumbs.dreamstime.com/b/portrait-young-male-teacher-background-school-blackboard-teacher-s-day-knowledge-day-back-to-school-study-159722312.jpg" alt="" className={styles.teacher__avatar__form__image} />
@@ -95,4 +99,4 @@ function TeacherDetails() {
   );
 }
 
-export default TeacherDetails;
+export default PersonDetail;

@@ -1,4 +1,5 @@
 import { Form, Input, Button, Checkbox } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
 export const Login = () => {
   const onFinish = (values) => {
@@ -8,7 +9,11 @@ export const Login = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
+  let navigate = useNavigate();
+  async function handleSubmit(event) {
+    event.preventDefault();
+    navigate("/management", { replace: true });
+  }
   return (
     <div className="loginContainer">
       <div className="loginForm">
@@ -18,10 +23,7 @@ export const Login = () => {
         <div className="login_input">
           <div className="input_content">
             <div className="logo">
-              <img
-                src={require("../../assets/images/admin_login.png")}
-                alt=""
-              />
+              <img src={require("../../assets/images/admin_login.png")} alt="" />
             </div>
             <Form
               name="basic"
@@ -36,25 +38,14 @@ export const Login = () => {
               }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
-              autoComplete="off"
-            >
-              <Form.Item
-                className="username"
-                name="username"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your username!",
-                  },
-                ]}
-              >
-                <span className="input_icon">
-                  <img
-                    src={require("../../assets/images/usernameicon.png")}
-                    alt=""
-                  />
-                </span>
-                <Input className="input_field username" />
+              autoComplete="off">
+              <Form.Item name="username" rules={[{ required: true, message: "Please input your username!" }]}>
+                <div className="input_block">
+                  <span className="input_icon">
+                    <img src={require("../../assets/images/usernameicon.png")} alt="" />
+                  </span>
+                  <Input className="input_field username" />
+                </div>
               </Form.Item>
 
               <Form.Item
@@ -65,14 +56,10 @@ export const Login = () => {
                     required: true,
                     message: "Please input your password!",
                   },
-                ]}
-              >
+                ]}>
                 <div className="input_block">
                   <span className="input_icon">
-                    <img
-                      src={require("../../assets/images/password.png")}
-                      alt=""
-                    />
+                    <img src={require("../../assets/images/password.png")} alt="" />
                   </span>
                   <Input.Password className="input_field password" />
                 </div>
@@ -84,8 +71,7 @@ export const Login = () => {
                 wrapperCol={{
                   offset: 8,
                   span: 16,
-                }}
-              >
+                }}>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
 
@@ -93,9 +79,8 @@ export const Login = () => {
                 wrapperCol={{
                   offset: 8,
                   span: 16,
-                }}
-              >
-                <Button type="primary" htmlType="submit">
+                }}>
+                <Button type="primary" htmlType="submit" onClick={handleSubmit}>
                   Login
                 </Button>
               </Form.Item>

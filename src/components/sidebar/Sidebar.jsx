@@ -8,7 +8,7 @@ export const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const location = useLocation();
   useEffect(() => {
-    const curPath = window.location.pathname.split("/")[2];
+    const curPath = window.location.pathname.split("/")[2] ? window.location.pathname.split("/")[2] : window.location.pathname.split("/")[1];
     const activeItem = sidebarNav.findIndex((item) => item.section === curPath);
     setActiveIndex(curPath.length === 0 ? 0 : activeItem);
   }, [location]);

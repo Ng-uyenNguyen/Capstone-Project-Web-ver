@@ -1,6 +1,6 @@
 import { Table, Avatar, Typography, Button } from "antd";
 import React, { useState } from "react";
-import TeacherDetails from "../../components/TeacherDetails";
+import PersonDetail from "../../components/TeacherDetails";
 import styles from "./ManageStudent.module.scss";
 const ManageStudent = () => {
   const dataSource = [
@@ -78,11 +78,11 @@ const ManageStudent = () => {
   const { Title } = Typography;
   return (
     <div className={styles.container}>
-      <Title level={3}>Manage Teacher</Title>
+      <Title level={3}>Manage Student</Title>
       <div className={styles.divider} />
-      <div className={styles.teacher_list}>
-        <Button type="primary" className={styles.add_new_teacher_btn}>
-          + New Teacher
+      <div className={styles.student_list}>
+        <Button type="primary" className={styles.add_new_student_btn}>
+          + New Student
         </Button>
         <Table
           className="custom_table_1"
@@ -97,12 +97,13 @@ const ManageStudent = () => {
                   event.target.parentElement.classList.add("active");
                   return rowIndex;
                 });
+                setLoading(true);
               },
             };
           }}
         />
       </div>
-      <TeacherDetails loading />
+      <PersonDetail loading={loading} />
     </div>
   );
 };

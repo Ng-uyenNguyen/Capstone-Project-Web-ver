@@ -5,9 +5,9 @@
   .divider {
     @include divider(25%);
   }
-  .teacher_list {
+  .student_list {
     position: relative;
-    .add_new_teacher_btn {
+    .add_new_student_btn {
       position: absolute;
       top: -45px;
       right: 0;

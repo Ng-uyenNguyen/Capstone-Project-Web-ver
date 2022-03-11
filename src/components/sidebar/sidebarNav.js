@@ -1,7 +1,7 @@
 const sidebarNav = [
   {
-    link: "/",
-    section: "Dashboard",
+    link: "/management",
+    section: "management",
     icon: <img src={require("../../assets/images/dashboard.png")}></img>,
     text: "Dashboard",
   },
