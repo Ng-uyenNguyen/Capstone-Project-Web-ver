@@ -10,10 +10,10 @@
   .admin_dropdown_wrapper {
     width: $sideBarWidth;
     @include flex(center, center);
-    position: fixed;
+    position: absolute;
     padding: 10px 0;
-    top: 0px;
-    right: 0;
+    top: 0;
+    right: -10px;
     z-index: 200;
     background-color: transparent;
     .admin_dropdown {

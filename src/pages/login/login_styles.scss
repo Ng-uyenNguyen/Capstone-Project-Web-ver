@@ -1,0 +1,87 @@
+@use "../../scss/abstracts/" as *;
+
+.loginContainer {
+  box-sizing: border-box;
+  padding: 20px 0;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  background-image: url("../../assets/images/classroom.jpg"), linear-gradient(rgba(186, 186, 186, 0.9), rgba(186, 186, 186, 0.9));
+  background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .logo {
+    padding: 10px 0;
+  }
+}
+.loginForm {
+  background-color: $primary-color-4;
+  margin: 0 auto;
+  margin-bottom: 80px;
+  padding: 3% 3%;
+  overflow: hidden;
+  width: 50%;
+  border-radius: 1em;
+  border: 1px solid whitesmoke;
+  background-color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  .login_image {
+    flex: 1;
+    min-width: 230px;
+  }
+}
+
+.login_input {
+  padding: 5px;
+  flex: 1;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  .input_content {
+    min-width: 230px;
+  }
+  button {
+    box-sizing: content-box;
+    width: 90%;
+    padding: 3px 0;
+    margin-left: 20px;
+    border-radius: 0.6rem;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: $primary-color-1;
+  }
+  form {
+    .ant-col {
+      max-width: 90% !important;
+      margin: 0 auto;
+    }
+    .input_icon {
+      position: absolute;
+      z-index: 99;
+      height: 30px;
+      width: 30px;
+      padding: 6px 0 0 3px;
+      margin-left: 5px;
+      img {
+        height: 28px;
+      }
+    }
+    .input_block {
+      position: relative;
+      top: 0;
+    }
+    .input_field {
+      font-size: 1.2em;
+      height: 2.5rem;
+      border-radius: 1.5rem;
+      font-weight: 500;
+      padding-left: 50px;
+      background-color: #e8f0fe;
+    }
+    .password .ant-input {
+      background-color: transparent;
+    }
+  }
+}

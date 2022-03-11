@@ -9,14 +9,21 @@ export const AttendanceDetail = ({ loading }) => {
     </div>
   ) : (
     <div className={styles.class_attendance_detail}>
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
-      <SubjectBox />
+      <div className={styles.subject_box_wrapper}>
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <SubjectBox />
+        <Button className={styles.download_all}>
+          <DownloadOutlined style={{ color: "white", fontWeight: "bold" }} /> Download all
+        </Button>
+      </div>
     </div>
   );
 };
