@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./chart_styles.module.scss";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -38,18 +39,20 @@ export const data = {
   labels,
   datasets: [
     {
-      label: "Dataset 1",
-      data: labels.map(() => 100),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => 200),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      label: "Attended",
+      data: labels.map(() => Math.random() * 100),
+      backgroundColor: "#21bf73",
     },
   ],
 };
 
 export const Chart = () => {
-  return <Bar options={options} data={data} />;
+  return (
+    <div>
+      <h3 className={styles.title}>Attandance Report</h3>
+      <h3 className={styles.week_text}>This Week: 80%</h3>
+      <h3 className={styles.title}>Summer 2021</h3>
+      <Bar className={styles.chart_container} options={options} data={data} />
+    </div>
+  );
 };
