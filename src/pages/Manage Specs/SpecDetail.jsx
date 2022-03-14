@@ -1,10 +1,18 @@
-import React from 'react'
-import { Image, Button, Typography, Divider } from "antd";
+import React, { useState } from 'react'
+import { Image, Button, Typography, Divider, Modal } from "antd";
 import styles from './Style_Specs.module.scss'
-
+import { UpdateSpecs } from './UpdateSpecs';
 
 export const SpecDetail = ({ loading }) => {
   const { Title } = Typography;
+  // modal 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
   return !loading ? (
     <div className={styles.spec_detail_loading}>
       <Image src={require("../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
@@ -15,8 +23,26 @@ export const SpecDetail = ({ loading }) => {
       <p className={styles.spec_detail__spec}>IS</p>
       <div className={styles.btn_field}>
         <Button className={styles.btn_remove}>Remove</Button>
-        <Button className={styles.btn_update}>Update</Button>
+        <Button className={styles.btn_update} onClick={showModal}>Update</Button>
       </div>
+      <div className={styles.modalStyle}>
+
+        <Modal
+        width={1200}
+        bodyStyle={{height: 900}}
+        title={[
+          <div className={styles.modalTitle}>
+            <Title level={4}>CUSTOMIZE SPECIALIZATIONS</Title>
+          </div>
+
+        ]} visible={isModalVisible} onCancel={handleCancel} footer={[
+          <Button className={styles.btn_done}>Done</Button>
+        ]}>
+          <UpdateSpecs />
+
+        </Modal>
+      </div>
+
       <Divider className={styles.spec_detail__divider} />
       <div className={styles.info}>
         <div className={styles.info__item}>

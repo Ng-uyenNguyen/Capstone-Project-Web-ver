@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Tag, Typography, Button, Table } from 'antd';
+import { Tag, Typography, Button, Table, Modal, Input, Divider, AutoComplete } from 'antd';
 import { SubjectDetail } from './SubjectDetail'
+
 import styles from './StyleSubject.module.scss'
+import Title from "antd/lib/skeleton/Title";
+import { ModalSubject } from "./ModalSubject";
 export const ManageSubject = () => {
   const { Title } = Typography;
   const dataSource = [
@@ -76,15 +79,40 @@ export const ManageSubject = () => {
   ];
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
+  // modal 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
   return (
     <div className={styles.manage_subject} >
       <Title level={3}><b>Manage Subject</b></Title>
       <div className={styles.divider} />
 
       <div className={styles.manage_subject__table}>
-        <Button type="primary" className={styles.add_new_subject_btn}>
+        <Button type="primary" className={styles.add_new_subject_btn} onClick={showModal} >
           + New Subject
         </Button>
+        <div >
+          <Modal title={[
+            <div className={styles.modalTitle}>
+              <img src={require('../../assets/images/icon_addSubject.png')} style={{ width: '30px' }}></img>
+              <Title level={4}>NEW SUBJECT</Title>
+            </div>
+
+          ]} visible={isModalVisible} onCancel={handleCancel} footer={[
+            <Button className={styles.btn_done}>Done</Button>
+          ]}>
+           <ModalSubject />
+
+          </Modal>
+        </div>
+
+        {/* Table Data */}
         <Table className="custom_table_1" dataSource={dataSource} columns={columns}
           onRow={(record, rowIndex) => {
             return {
@@ -106,3 +134,5 @@ export const ManageSubject = () => {
     </div>
   )
 };
+
+

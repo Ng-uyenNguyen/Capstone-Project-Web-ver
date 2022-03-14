@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Typography, Button, Table } from 'antd';
-import {SpecDetail} from './SpecDetail.jsx'
+import { Typography, Button, Table, Modal } from 'antd';
+import { SpecDetail } from './SpecDetail.jsx'
 import styles from './Style_Specs.module.scss'
+import { AddSpecs } from './AddSpecs.jsx';
 export const ManageSpecs = () => {
     const { Title } = Typography;
     const dataSource = [
@@ -47,7 +48,7 @@ export const ManageSpecs = () => {
             numClass: 40,
             numStudent: 800,
         },
-      
+
 
     ];
 
@@ -82,14 +83,36 @@ export const ManageSpecs = () => {
     ];
     const [activeRow, setActiveRow] = useState(0);
     const [loading, setLoading] = useState(false);
+    // modal 
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
     return (
         <div className={styles.manage_spec}>
             <Title level={3}>Manage Specialization</Title>
             <div className={styles.divider} />
             <div className={styles.manage_spec__table}>
-                <Button type="primary" className={styles.add_new_spec_btn}>
+                <Button className={styles.add_new_spec_btn} onClick={showModal}>
                     + Specialization
                 </Button>
+                <div >
+                    <Modal title={[
+                        <div className={styles.modalTitle}>
+                            <img src={require('../../assets/images/icon_addSpecs.png')} style={{ width: '30px' }}></img>
+                            <Title level={4}>NEW SPECIALIZATION</Title>
+                        </div>
+
+                    ]} visible={isModalVisible} onCancel={handleCancel} footer={[
+                        <Button className={styles.btn_done}>Done</Button>
+                    ]}>
+                        <AddSpecs />
+
+                    </Modal>
+                </div>
                 <Table className="custom_table_1" dataSource={dataSource} columns={columns}
                     onRow={(record, rowIndex) => {
                         return {
@@ -107,7 +130,7 @@ export const ManageSpecs = () => {
                     }} />
 
             </div>
-            <SpecDetail loading={loading}/>
+            <SpecDetail loading={loading} />
         </div>
     )
 }

@@ -189,3 +189,34 @@
   }
  
 }
+.ant-modal-content{
+  border-radius: 20px;
+}
+.btn_done {
+  width: 100px;
+  height: 40px;
+  border-color: $primary-color-1;
+  color: $primary-color-1;
+  background-color: $white;
+  border-radius: 40px;
+  font-size: medium;
+  font-weight: bold;
+  &:hover {
+    background-color: $primary-color-1;
+    color: $white;
+  }
+}
+// Add Specs modal 
+
+.modalTitle{
+  @include flex(center, center);
+  flex-direction: row;
+  h4{
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+}
+
+.ant-modal-content{
+  border-radius: 20px;
+}

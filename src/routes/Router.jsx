@@ -9,10 +9,9 @@ import ManageTeacher from "../pages/manage teacher/ManageTeacher";
 import { ClassDetail } from "../pages/manage class/ClassDetail";
 import { Profile } from "../pages/Manage Info/Profile";
 import { ChangePassword } from "../pages/Manage Info/ChangePassword";
-import { ManageStudent } from "../pages/manage student/ManageStudent"
+import ManageStudent from "../pages/manage student/ManageStudent"
 import { ManageSpecs } from "../pages/Manage Specs/ManageSpecs";
 import { Login } from "../pages/login/Login";
-import ManageStudent from "../pages/manage student/ManageStudent";
 import { ClassTimeTable } from "../pages/manage class/time table/ClassTimeTable";
 
 export const Router = () => {
@@ -21,17 +20,16 @@ export const Router = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/management" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />          
+          <Route index element={<Dashboard />} />
           <Route path="schedules" element={<BlankPage />} />
           <Route path="teachers" element={<ManageTeacher />} />
           <Route path="students" element={<ManageStudent />} />
           <Route path="classes" element={<ManageClass />} />
-          <Route path="specilizations" element={<BlankPage />} />
-          <Route path="subjects" element={<BlankPage />} />
+          <Route path="subjects" element={<ManageSubject />} />
           <Route path="classes/classDetail" element={<ClassDetail />} />
           <Route path="classes/classTimeTable" element={<ClassTimeTable />} />
-           <Route path="specilizations" element={<ManageSpecs />} />
-          <Route path="subjects" element={< ManageSubject />} />          
+          <Route path="specilizations" element={<ManageSpecs />} />
+          <Route path="subjects" element={< ManageSubject />} />
           <Route path="profile" element={<Profile />} />
           <Route path="changePassword" element={<ChangePassword />} />
         </Route>
