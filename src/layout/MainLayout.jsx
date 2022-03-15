@@ -28,13 +28,13 @@ export const MainLayout = () => {
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <Link to="profile">
+      <Link to="/management/profile">
         <UserOutlined style={{ marginRight: "5px" }} />
         Profile
       </Link>
     </Menu.Item>
     <Menu.Item key="1">
-      <Link to="changePassword">
+      <Link to="/management/changePassword">
         <HolderOutlined style={{ marginRight: "5px" }} />
         Change Password
       </Link>

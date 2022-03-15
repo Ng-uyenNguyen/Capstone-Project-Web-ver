@@ -11,7 +11,7 @@
   flex-direction: column;
   &__table {
     position: relative;
-    Table > thead{
+    Table > thead {
       background-color: $light-gray;
     }
   }
@@ -26,7 +26,7 @@
     background-color: $primary-color-1;
   }
 }
-//==== common 
+//==== common
 .divider {
   @include divider(25%);
   margin-bottom: 2%;
@@ -61,7 +61,6 @@
   background-color: $primary-color-4;
 }
 
-
 .subject_detail {
   @include flex(center, flex-start);
   font-family: "Roboto", sans-serif;
@@ -90,7 +89,7 @@
     margin: 10px;
     font-size: small;
   }
-  .btn_remove{
+  .btn_remove {
     width: 115px;
     height: 34px;
     background-color: $red;
@@ -99,16 +98,15 @@
     font-size: medium;
     margin-right: 20px;
   }
-  .btn_update{
+  .btn_update {
     width: 115px;
     height: 34px;
     background-color: $yellow;
     color: white;
     border-radius: 40px;
     font-size: medium;
-
   }
-  .btn_field{
+  .btn_field {
     width: 92%;
     padding-top: 40px;
   }
@@ -137,7 +135,7 @@
       }
     }
   }
-  .heading_title{
+  .heading_title {
     margin-bottom: 10px;
     font-size: large;
   }
@@ -148,29 +146,83 @@
     display: flex;
     flex-direction: column;
 
-    &__info{
+    &__info {
       display: flex;
       flex-direction: row;
       font-size: medium;
-      &__title{
+      &__title {
         color: $primary-color-1;
         margin-right: 5px;
-        
       }
     }
-  
   }
-  .studying_classes{
+  .studying_classes {
     margin-top: 20px;
     width: 92%;
     display: flex;
     flex-direction: column;
+  }
+  .specs {
+    margin-top: 20px;
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+  }
+}
 
+// Modal
+.AddSubject {
+  font-family: $fontFamily;
+  padding-left: 0;
+  p {
+    font-weight: bold;
+    color: $grey-1;
   }
-  .specs{
-    margin-top: 20px;
-    width: 92%;
+  .ant-divider-horizontal {
+    width: 0;
+    min-width: 0;
+  }
+  &__divider {
+    background-color: $primary-color-1;
+    margin-top: 0;
+    width: 430px;
+    min-width: 0;
+    margin-left: 32px;
+  }
+  .ant-input-affix-wrapper {
+    padding: 0px 0px;
+  }
+  .input_field {
     display: flex;
-    flex-direction: column;
+    width: 95%;
+    img {
+      width: 30px;
+    }
   }
+}
+.btn_done {
+  width: 100px;
+  height: 40px;
+  border-color: $primary-color-1;
+  color: $primary-color-1;
+  background-color: $white;
+  border-radius: 40px;
+  font-size: medium;
+  font-weight: bold;
+  &:hover {
+    background-color: $primary-color-1;
+    color: $white;
+  }
+}
+.modalTitle{
+  @include flex(center, center);
+  flex-direction: row;
+  h4{
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+}
+
+.ant-modal-content{
+  border-radius: 20px;
 }
