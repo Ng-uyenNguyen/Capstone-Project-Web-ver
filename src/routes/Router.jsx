@@ -9,7 +9,7 @@ import ManageTeacher from "../pages/manage teacher/ManageTeacher";
 import { ClassDetail } from "../pages/manage class/ClassDetail";
 import { Profile } from "../pages/Manage Info/Profile";
 import { ChangePassword } from "../pages/Manage Info/ChangePassword";
-import ManageStudent from "../pages/manage student/ManageStudent";
+import { ManageStudent } from "../pages/manage student/ManageStudent";
 import { ManageSpecs } from "../pages/Manage Specs/ManageSpecs";
 import { Login } from "../pages/login/Login";
 import { ClassTimeTable } from "../pages/manage class/time table/ClassTimeTable";
@@ -25,11 +25,9 @@ export const Router = () => {
           <Route path="teachers" element={<ManageTeacher />} />
           <Route path="students" element={<ManageStudent />} />
           <Route path="classes" element={<ManageClass />} />
-          <Route path="specilizations" element={<BlankPage />} />
-          <Route path="subjects" element={<BlankPage />} />
           <Route path="classes/classDetail" element={<ClassDetail />} />
           <Route path="classes/classTimeTable" element={<ClassTimeTable />} />
-          <Route path="specilizations" element={<ManageSpecs />} />
+          <Route path="specializations" element={<ManageSpecs />} />
           <Route path="subjects" element={<ManageSubject />} />
           <Route path="profile" element={<Profile />} />
           <Route path="changePassword" element={<ChangePassword />} />

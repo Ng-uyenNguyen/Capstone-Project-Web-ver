@@ -28,21 +28,23 @@ export const MainLayout = () => {
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <Link to="/profile">
+      <Link to="profile">
         <UserOutlined style={{ marginRight: "5px" }} />
         Profile
       </Link>
     </Menu.Item>
     <Menu.Item key="1">
-      <Link to="/changePassword">
+      <Link to="changePassword">
         <HolderOutlined style={{ marginRight: "5px" }} />
         Change Password
       </Link>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3">
-      <LogoutOutlined style={{ marginRight: "5px" }} />
-      Log Out
+      <Link to="/">
+        <LogoutOutlined style={{ marginRight: "5px" }} />
+        Log Out
+      </Link>
     </Menu.Item>
   </Menu>
 );

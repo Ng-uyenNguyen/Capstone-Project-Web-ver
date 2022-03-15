@@ -1,18 +1,7 @@
 @use "../../scss/abstracts" as *;
 
 .teacher {
-  @include flex(stretch, flex-start);
-  font-family: "Roboto", sans-serif;
-  flex-direction: column;
-  width: $sideBarWidth;
-  padding: 35px 10px 0px 10px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
-  border: solid 1px lightgray;
-  background-color: $primary-color-4;
+  @include right_side_bar;
   &__button__remove {
     margin-top: 5%;
     width: 30%;
@@ -41,7 +30,6 @@
     }
   }
   &__avatar__form {
-    padding-top: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
