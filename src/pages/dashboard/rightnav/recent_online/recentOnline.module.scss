@@ -1,0 +1,60 @@
+@use "../../../../scss/abstracts/" as *;
+
+.user_status_container {
+  height: 400px;
+  overflow: auto;
+  width: 100%;
+}
+
+.recent_online {
+  margin-top: 10px;
+}
+.user_status {
+  display: flex;
+  margin-bottom: 10px;
+  .status_userimage {
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      background-image: url("../../../../assets/images/online_status.png");
+      height: 30px;
+      width: 30px;
+      background-repeat: no-repeat;
+      right: -11px;
+      bottom: -14px;
+    }
+  }
+  .status_username {
+    padding-top: 10px;
+    margin-left: 30px;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    font-family: Roboto;
+  }
+}
+.divider {
+  align-items: center;
+  margin-bottom: 15px;
+
+  h4 {
+    margin: 10px;
+    width: 100%;
+    font-weight: bold;
+  }
+  .center_divider {
+    position: relative;
+    height: 2px;
+    margin: 0 2%;
+    background-color: #c4c4c4;
+    &::before {
+      content: "";
+      background-color: $primary-color-1;
+      position: absolute;
+      width: 10%;
+      height: 2px;
+    }
+  }
+}
