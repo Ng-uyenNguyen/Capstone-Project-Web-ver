@@ -41,8 +41,10 @@ const menu = (
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3">
-      <LogoutOutlined style={{ marginRight: "5px" }} />
-      Log Out
+      <Link to="/">
+        <LogoutOutlined style={{ marginRight: "5px" }} />
+        Log Out
+      </Link>
     </Menu.Item>
   </Menu>
 );

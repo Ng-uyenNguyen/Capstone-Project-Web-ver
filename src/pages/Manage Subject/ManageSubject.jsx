@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Tag, Typography, Button, Table, Modal, Input, Divider, AutoComplete } from 'antd';
 import { SubjectDetail } from './SubjectDetail'
-
 import styles from './StyleSubject.module.scss'
 import Title from "antd/lib/skeleton/Title";
 import { ModalSubject } from "./ModalSubject";
@@ -12,37 +11,37 @@ export const ManageSubject = () => {
       no: "01",
       nameCode: "DBW301",
       name: "Data Warehouse",
-      specializations: ['IS ', 'JS'],
+      specializations: ["IS ", "JS"],
     },
     {
       no: "02",
       nameCode: "WEB201c",
       name: "Web Design",
-      specializations: ['IS'],
+      specializations: ["IS"],
     },
     {
       no: "03",
       nameCode: "ACC101",
       name: "Accounting Principles",
-      specializations: ['IS ', 'BA'],
+      specializations: ["IS ", "BA"],
     },
     {
       no: "01",
       nameCode: "DBW301",
       name: "Data Warehouse",
-      specializations: ['IS ', 'JS'],
+      specializations: ["IS ", "JS"],
     },
     {
       no: "02",
       nameCode: "WEB201c",
       name: "Web Design",
-      specializations: ['IS'],
+      specializations: ["IS"],
     },
     {
       no: "03",
       nameCode: "ACC101",
       name: "Accounting Principles",
-      specializations: ['IS ', 'BA'],
+      specializations: ["IS ", "BA"],
     },
   ];
 
@@ -66,11 +65,13 @@ export const ManageSubject = () => {
       title: "Specialization",
       dataIndex: "specializations",
       key: "specializations",
-      render: specializations => (
+      render: (specializations) => (
         <>
-          {specializations.map(specialization => {
+          {specializations.map((specialization) => {
             return (
-              <Tag key={specialization} className={styles.subject_tag}>{specialization.toUpperCase()}</Tag>
+              <Tag key={specialization} className={styles.subject_tag}>
+                {specialization.toUpperCase()}
+              </Tag>
             );
           })}
         </>
@@ -89,8 +90,10 @@ export const ManageSubject = () => {
   };
 
   return (
-    <div className={styles.manage_subject} >
-      <Title level={3}><b>Manage Subject</b></Title>
+    <div className={styles.manage_subject}>
+      <Title level={3}>
+        <b>Manage Subject</b>
+      </Title>
       <div className={styles.divider} />
 
       <div className={styles.manage_subject__table}>
@@ -124,15 +127,14 @@ export const ManageSubject = () => {
                   return rowIndex;
                 });
                 setLoading(true);
-
               },
             };
-          }} />
-
+          }}
+        />
       </div>
       <SubjectDetail loading={loading} />
     </div>
-  )
+  );
 };
 
 

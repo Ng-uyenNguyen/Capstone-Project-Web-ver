@@ -1,13 +1,10 @@
-@use "../../scss/abstracts" as *;
-.class_course_detail {
-  @include right_side_bar;
-}
-.class_course_detail_loading {
-  @include flex(center, center);
+@use "../../../scss/abstracts/" as *;
+
+.right-nav {
   font-family: "Roboto", sans-serif;
   flex-direction: column;
-  overflow: scroll;
   width: $sideBarWidth;
+  padding: 60px 10px 0px 10px;
   height: 100vh;
   position: fixed;
   top: 0;
