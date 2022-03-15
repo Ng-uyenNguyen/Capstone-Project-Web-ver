@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Tag, Typography, Button, Table } from 'antd';
-import { SubjectDetail } from './SubjectDetail'
-import styles from './StyleSubject.module.scss'
+import { Tag, Typography, Button, Table } from "antd";
+import { SubjectDetail } from "./SubjectDetail";
+import styles from "./StyleSubject.module.scss";
 export const ManageSubject = () => {
   const { Title } = Typography;
   const dataSource = [
@@ -9,37 +9,37 @@ export const ManageSubject = () => {
       no: "01",
       nameCode: "DBW301",
       name: "Data Warehouse",
-      specializations: ['IS ', 'JS'],
+      specializations: ["IS ", "JS"],
     },
     {
       no: "02",
       nameCode: "WEB201c",
       name: "Web Design",
-      specializations: ['IS'],
+      specializations: ["IS"],
     },
     {
       no: "03",
       nameCode: "ACC101",
       name: "Accounting Principles",
-      specializations: ['IS ', 'BA'],
+      specializations: ["IS ", "BA"],
     },
     {
       no: "01",
       nameCode: "DBW301",
       name: "Data Warehouse",
-      specializations: ['IS ', 'JS'],
+      specializations: ["IS ", "JS"],
     },
     {
       no: "02",
       nameCode: "WEB201c",
       name: "Web Design",
-      specializations: ['IS'],
+      specializations: ["IS"],
     },
     {
       no: "03",
       nameCode: "ACC101",
       name: "Accounting Principles",
-      specializations: ['IS ', 'BA'],
+      specializations: ["IS ", "BA"],
     },
   ];
 
@@ -63,11 +63,13 @@ export const ManageSubject = () => {
       title: "Specialization",
       dataIndex: "specializations",
       key: "specializations",
-      render: specializations => (
+      render: (specializations) => (
         <>
-          {specializations.map(specialization => {
+          {specializations.map((specialization) => {
             return (
-              <Tag key={specialization} className={styles.subject_tag}>{specialization.toUpperCase()}</Tag>
+              <Tag key={specialization} className={styles.subject_tag}>
+                {specialization.toUpperCase()}
+              </Tag>
             );
           })}
         </>
@@ -77,15 +79,20 @@ export const ManageSubject = () => {
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
   return (
-    <div className={styles.manage_subject} >
-      <Title level={3}><b>Manage Subject</b></Title>
+    <div className={styles.manage_subject}>
+      <Title level={3}>
+        <b>Manage Subject</b>
+      </Title>
       <div className={styles.divider} />
 
       <div className={styles.manage_subject__table}>
         <Button type="primary" className={styles.add_new_subject_btn}>
           + New Subject
         </Button>
-        <Table className="custom_table_1" dataSource={dataSource} columns={columns}
+        <Table
+          className="custom_table_1"
+          dataSource={dataSource}
+          columns={columns}
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
@@ -96,13 +103,12 @@ export const ManageSubject = () => {
                   return rowIndex;
                 });
                 setLoading(true);
-
               },
             };
-          }} />
-
+          }}
+        />
       </div>
       <SubjectDetail loading={loading} />
     </div>
-  )
+  );
 };
