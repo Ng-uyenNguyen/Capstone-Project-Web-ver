@@ -69,7 +69,11 @@ export const CurrentClassTable = () => {
 
   return (
     <div className={styles.class_management}>
-      <YearCourse title="K15" dataSource={dataSource} columns={columns} />
+      <YearCourse
+        title="On-Going Classes"
+        dataSource={dataSource}
+        columns={columns}
+      />
     </div>
   );
 };
