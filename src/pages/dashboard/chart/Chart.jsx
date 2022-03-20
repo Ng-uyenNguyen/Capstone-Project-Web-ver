@@ -42,6 +42,12 @@ export const data = {
       label: "Attended",
       data: labels.map(() => Math.random() * 100),
       backgroundColor: "#21bf73",
+      scales: {
+        yAxis: {
+          min: 0,
+          max: 100,
+        },
+      },
     },
   ],
 };
