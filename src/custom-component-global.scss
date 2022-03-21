@@ -1,0 +1,479 @@
+@use "./scss/abstracts/" as *;
+.custom_table_1 {
+  table {
+    .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+      content: "";
+      width: 0;
+      height: 0;
+      background-color: #000;
+    }
+    thead {
+      th {
+        background: transparent;
+        border-width: 0;
+        .ant-table-column-sorter {
+          color: black;
+        }
+      }
+    }
+
+    .ant-table-tbody > tr {
+      cursor: pointer;
+      .ant-table-cell-row-hover {
+        background-color: unset;
+      }
+      &:nth-child(even) {
+        background-color: $primary-color-3;
+      }
+      td {
+        border-width: 0;
+      }
+    }
+    .active {
+      background-color: $primary-color-1 !important;
+      color: white;
+    }
+  }
+}
+
+.person_update_modal {
+  font-family: $fontFamily;
+  padding: 0;
+  background-color: #000;
+  .ant-modal-body {
+    display: flex;
+    padding: 0;
+    .modal_person_info {
+      @include flex(center, flex-start);
+      flex-direction: column;
+      background-color: $primary-color-1;
+      width: 40%;
+      padding: 10% 20px;
+      .modal_person_personal {
+        @include flex(center, flex-start);
+        margin-bottom: 15%;
+        flex-direction: column;
+        .modal_person_name {
+          margin-top: 5px;
+          color: #fff;
+          font-weight: bolder;
+          font-size: 1.2rem;
+          margin-bottom: 2px;
+        }
+        h4 {
+          font-weight: bold;
+          color: #fff;
+          text-align: center;
+          font-size: 1rem;
+          margin-bottom: 2px;
+        }
+      }
+      .modal_person_social {
+        @include flex(flex-start, flex-start);
+        flex-direction: column;
+        width: 100%;
+        h4 {
+          font-weight: bold;
+          color: #fff;
+          font-size: 1.2rem;
+          text-align: center;
+        }
+        .divider {
+          @include divider(0, #fff);
+        }
+        .school_info_item_wrapper {
+          margin-top: 5%;
+          width: 100%;
+          @include flex(center, flex-start);
+          flex-wrap: wrap;
+          column-gap: 0.5em;
+          row-gap: 0.5em;
+          .school_info_item {
+            display: flex;
+            justify-content: center;
+            width: 76px;
+            height: 28px;
+            padding: 0.2rem;
+            background-color: rgb(243, 242, 242);
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease-in-out;
+            &:not([disabled]):focus {
+              box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem rgba(224, 206, 209, 0.5), 0.125rem 0.125rem 1rem rgba(143, 118, 103, 0.5);
+            }
+            &:not([disabled]):hover {
+              box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem rgba(189, 169, 173, 0.5), 0.125rem 0.125rem 1rem rgba(143, 118, 103, 0.5);
+            }
+          }
+        }
+      }
+    }
+    .modal_update_info {
+      padding: 3% 4%;
+      width: 60%;
+      @include flex(center, flex-start);
+      flex-direction: column;
+      width: 100%;
+      h1 {
+        color: $primary-color-1;
+        margin-bottom: 5%;
+      }
+      form {
+        width: 100%;
+        .ant-form-item-control {
+          max-width: 100%;
+        }
+        .ant-input-group-addon {
+          background-color: transparent;
+          border-width: 0;
+        }
+        span {
+          padding-left: 0;
+        }
+        input {
+          padding: 0;
+          border-width: 0;
+          border-bottom: 1px solid $primary-color-1;
+          border-radius: 0;
+          &:focus {
+            border-color: #2ce98e;
+          }
+        }
+        .ant-form-item-label {
+          max-width: 100%;
+        }
+        label {
+          color: #636363;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+          text-align: center;
+          letter-spacing: 0.0015em;
+        }
+        .ant-picker {
+          padding: 0;
+          border-width: 0;
+        }
+        .ant-select {
+          .ant-select-selector {
+            padding: 0;
+            &::before {
+              font-family: "Font Awesome 5 Free";
+              font-weight: 900;
+              content: "\f228";
+              font-size: 1.5em;
+              color: $primary-color-1;
+              margin-right: 11px;
+            }
+            .ant-select-selection-item {
+              border-bottom: 1px solid $primary-color-1;
+              height: 27px;
+              width: 50%;
+            }
+          }
+        }
+        .ant-picker-input {
+          &::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f133";
+            font-size: 1.5em;
+            color: $primary-color-1;
+            margin-right: 11px;
+          }
+        }
+      }
+      .form_row {
+        display: flex;
+        justify-content: space-between;
+        .item1 {
+          width: 55%;
+        }
+        .item2 {
+          width: 35%;
+        }
+      }
+      .submit_button {
+        @include outline_button($primary-color-1);
+        margin-right: 20px;
+      }
+      .cancel_button {
+        @include outline_button($red);
+      }
+    }
+  }
+}
+.person_addnew_modal {
+  .ant-modal-content {
+    border-radius: 20px;
+    .ant-modal-body {
+      padding: 24px 0;
+    }
+    h2 {
+      color: $primary-color-1;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .modal_addnew_form {
+      padding: 3% 10%;
+      width: 100%;
+      @include flex(center, flex-start);
+      flex-direction: column;
+      width: 100%;
+      h1 {
+        color: $primary-color-1;
+        margin-bottom: 5%;
+      }
+      form {
+        width: 100%;
+        .ant-form-item-control {
+          max-width: 100%;
+        }
+        .ant-input-group-addon {
+          background-color: transparent;
+          border-width: 0;
+        }
+        span {
+          padding-left: 0;
+        }
+        input {
+          padding: 0;
+          border-width: 0;
+          border-bottom: 1px solid $primary-color-1;
+          border-radius: 0;
+          &:focus {
+            border-color: #2ce98e;
+          }
+        }
+        .ant-form-item-label {
+          max-width: 100%;
+        }
+        label {
+          color: #636363;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+          text-align: center;
+          letter-spacing: 0.0015em;
+        }
+        .ant-picker {
+          padding: 0;
+          border-width: 0;
+        }
+        .ant-select {
+          .ant-select-selector {
+            padding: 0;
+            &::before {
+              font-family: "Font Awesome 5 Free";
+              font-weight: 900;
+              content: "\f228";
+              font-size: 1.5em;
+              color: $primary-color-1;
+              margin-right: 11px;
+            }
+            .ant-select-selection-item {
+              border-bottom: 1px solid $primary-color-1;
+              height: 27px;
+              width: 50%;
+            }
+          }
+        }
+        .ant-picker-input {
+          &::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f133";
+            font-size: 1.5em;
+            color: $primary-color-1;
+            margin-right: 11px;
+          }
+        }
+      }
+      .form_row {
+        display: flex;
+        justify-content: space-between;
+        .item1 {
+          width: 55%;
+        }
+        .item2 {
+          width: 35%;
+        }
+      }
+      .submit_button {
+        @include outline_button($primary-color-1);
+        margin-right: 20px;
+      }
+      .cancel_button {
+        @include outline_button($red);
+      }
+    }
+  }
+}
+.add_newClass_modal {
+  display: flex;
+  flex-direction: column;
+  .ant-modal-content {
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .ant-modal-body {
+    @include flex(center, flex-start);
+    flex-direction: column;
+    padding: 0;
+    padding-top: 5%;
+    .header {
+      @include flex(center, flex-start);
+      flex-direction: column;
+    }
+    .divider {
+      @include divider(0);
+      height: 1px;
+    }
+    #add_class_form {
+      width: 100%;
+      padding: 5% 0 0 0;
+      @include flex(center, flex-start);
+      flex-direction: column;
+      .input_wrapper {
+        width: 70%;
+        .ant-form-item-label {
+          text-align: left;
+          label {
+            font-weight: bold;
+          }
+        }
+      }
+      .buttons_wrapper {
+        margin-top: 6%;
+        width: 100%;
+        @include flex(center, center);
+        .ant-form-item-control-input {
+          width: 100%;
+          .ant-form-item-control-input-content {
+            width: 100%;
+            @include flex(center, center);
+            .cancel_btn {
+              @include outline_button($red);
+              border-radius: 10px;
+            }
+            .submit_btn {
+              @include solid_button($primary-color-1);
+              border-radius: 10px;
+              margin-left: 10%;
+              &:hover {
+                background-color: $primary-color-1-hover-dark;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.course_addnew_modal {
+  .ant-modal-content {
+    border-radius: 20px;
+    .ant-modal-body {
+      padding: 24px 0;
+    }
+    h2 {
+      color: $primary-color-1;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .modal_addnew_form {
+      padding: 3% 10%;
+      width: 100%;
+      @include flex(center, flex-start);
+      flex-direction: column;
+      width: 100%;
+      h1 {
+        color: $primary-color-1;
+        margin-bottom: 5%;
+      }
+      form {
+        width: 100%;
+        .ant-form-item-control {
+          max-width: 100%;
+        }
+        .ant-input-group-addon {
+          background-color: transparent;
+          border-width: 0;
+        }
+        span {
+          padding-left: 0;
+        }
+        .ant-form-item-label {
+          max-width: 100%;
+        }
+        label {
+          color: #636363;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+          text-align: center;
+          letter-spacing: 0.0015em;
+        }
+        input {
+          padding: 0;
+          border-bottom: 1px solid $primary-color-1;
+          &:focus {
+            border-color: #2ce98e;
+          }
+        }
+        .ant-select {
+          &:hover {
+            border: none;
+          }
+          .ant-select-selector {
+            .ant-select-selection-search {
+              width: 100%;
+              top: 0;
+              left: 0;
+            }
+            padding: 0;
+            border-radius: 0;
+            .ant-select-selection-search {
+              input {
+                padding: 0;
+                border-bottom: 1px solid $primary-color-1;
+                &:focus {
+                  border-color: #2ce98e;
+                }
+              }
+            }
+            // &::before {
+            //   font-family: "Font Awesome 5 Free";
+            //   font-weight: 900;
+            //   content: "\f228";
+            //   font-size: 1.5em;
+            //   color: $primary-color-1;
+            //   margin-right: 11px;
+            // }
+            // .ant-select-selection-item {
+            //   border-bottom: 1px solid $primary-color-1;
+            //   height: 27px;
+            //   width: 50%;
+            // }
+          }
+        }
+      }
+      .submit_button {
+        @include outline_button($primary-color-1);
+        margin-right: 20px;
+      }
+      .cancel_button {
+        @include outline_button($red);
+      }
+    }
+  }
+}
+
+.studentList_addnew_modal {
+}

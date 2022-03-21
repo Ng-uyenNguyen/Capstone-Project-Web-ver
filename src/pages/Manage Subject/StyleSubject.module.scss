@@ -90,21 +90,25 @@
     font-size: small;
   }
   .btn_remove {
-    width: 115px;
-    height: 34px;
-    background-color: $red;
-    color: white;
-    border-radius: 40px;
-    font-size: medium;
+    @include solid_button($red);
     margin-right: 20px;
+    &:not([disabled]):focus {
+      border: none;
+    }
+    &:not([disabled]):hover {
+      border: none;
+      box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem rgba(239, 71, 101, 0.5), 0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
+    }
   }
   .btn_update {
-    width: 115px;
-    height: 34px;
-    background-color: $yellow;
-    color: white;
-    border-radius: 40px;
-    font-size: medium;
+    @include solid_button($yellow);
+    &:not([disabled]):focus {
+      border: none;
+    }
+    &:not([disabled]):hover {
+      border: none;
+      box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem rgba(251, 255, 0, 0.5), 0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
+    }
   }
   .btn_field {
     width: 92%;
@@ -214,15 +218,15 @@
     color: $white;
   }
 }
-.modalTitle{
+.modalTitle {
   @include flex(center, center);
   flex-direction: row;
-  h4{
+  h4 {
     margin-left: 10px;
     margin-bottom: 0;
   }
 }
 
-.ant-modal-content{
+.ant-modal-content {
   border-radius: 20px;
 }

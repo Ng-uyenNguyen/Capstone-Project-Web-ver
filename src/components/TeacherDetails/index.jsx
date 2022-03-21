@@ -1,8 +1,8 @@
 import { EditOutlined, HomeOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Image } from "antd";
+import { Image, Space } from "antd";
 import React from "react";
 import styles from "./TeacherDetail.module.scss";
-function PersonDetail({ loading }) {
+function PersonDetail({ loading, showModal }) {
   return !loading ? (
     <div className={styles.loading}>
       <Image src={require("../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
@@ -11,10 +11,7 @@ function PersonDetail({ loading }) {
     <div className={styles.teacher}>
       <div className={styles.teacher__avatar__form}>
         <img src="https://thumbs.dreamstime.com/b/portrait-young-male-teacher-background-school-blackboard-teacher-s-day-knowledge-day-back-to-school-study-159722312.jpg" alt="" className={styles.teacher__avatar__form__image} />
-        <div className={styles.teacher__avatar__form__name}>
-          Cody Fisher
-          <EditOutlined style={{ fontSize: "1rem", marginLeft: "0.5rem" }} />
-        </div>
+        <div className={styles.teacher__avatar__form__name}>Cody Fisher</div>
         <div className={styles.teacher__avatar__form__class}>SE1402</div>
         <div className={styles.teacher__avatar__form__role}>IT Lecturer</div>
       </div>
@@ -94,7 +91,16 @@ function PersonDetail({ loading }) {
         <div className={styles.teacher__teaching__subject__form__item}>SSC102</div>
         <div className={styles.teacher__teaching__subject__form__item}>SSC102</div>
       </div>
-      <button className={styles.teacher__button__remove}>Remove</button>
+      <div className={styles.button_wrapper}>
+        <button className={styles.remove_button}>Remove</button>
+        {showModal ? (
+          <button className={styles.update_button} onClick={showModal}>
+            Update
+          </button>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

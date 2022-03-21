@@ -1,8 +1,7 @@
-import { Table, Avatar, Typography, Button, Modal, Form, Input, DatePicker, Image } from "antd";
+import { Table, Avatar, Typography, Button, Modal, Form, Input, DatePicker, Image, Select } from "antd";
 import React, { useState } from "react";
-import { PersonUpdateModal } from "../../components/modal/update person/PersonUpdateModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCalendar, faLocationDot, faMobileScreenButton, faVenusMars, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUserPlus, faLocationDot, faMobileScreenButton, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import PersonDetail from "../../components/TeacherDetails";
 import styles from "./ManageStudent.module.scss";
 export const ManageStudent = () => {
@@ -79,34 +78,68 @@ export const ManageStudent = () => {
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
   const { Title } = Typography;
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    setIsModalVisible(false);
+  const [form] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState({
+    addNew: false,
+    update: false,
+  });
+  const onUpdateFinish = (fieldsValue) => {
+    const values = {
+      ...fieldsValue,
+      birthdate: fieldsValue["birthdate"].format("YYYY-MM-DD"),
+    };
+    console.log(values);
+    setIsModalVisible((prev) => {
+      return { ...prev, update: false };
+    });
   };
-
-  const onFinishFailed = (errorInfo) => {
+  const onUpdateFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    setIsModalVisible(false);
+    setIsModalVisible((prev) => {
+      return { ...prev, update: false };
+    });
+  };
+  const onAddNewFinish = (fieldsValue) => {
+    form.resetFields();
+    const values = {
+      ...fieldsValue,
+      birthdate: fieldsValue["birthdate"].format("YYYY-MM-DD"),
+    };
+    console.log(values);
+    setIsModalVisible((prev) => {
+      return { ...prev, addNew: false };
+    });
+  };
+  const onAddNewFinishFailed = (err) => {
+    console.log(err);
+    setIsModalVisible((prev) => {
+      return { ...prev, addNew: false };
+    });
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
+  const showModal = (method) => {
+    setIsModalVisible((prev) => {
+      return { ...prev, [method]: true };
+    });
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
+  const handleCancel = (method) => {
+    setIsModalVisible((prev) => {
+      return { ...prev, [method]: false };
+    });
   };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const { Option } = Select;
   return (
     <div className={styles.container}>
       <Title level={3}>Manage Student</Title>
       <div className={styles.divider} />
       <div className={styles.student_list}>
-        <Button type="primary" className={styles.add_new_student_btn} onClick={showModal}>
+        <Button
+          type="primary"
+          className={styles.add_new_student_btn}
+          onClick={() => {
+            showModal("addNew");
+          }}>
           + New Student
         </Button>
         <Table
@@ -128,9 +161,14 @@ export const ManageStudent = () => {
           }}
         />
       </div>
-      <PersonDetail loading={loading} />
+      <PersonDetail
+        loading={loading}
+        showModal={() => {
+          showModal("update");
+        }}
+      />
       {/* Modal update student */}
-      <Modal title="" maskClosable={false} visible={isModalVisible} width="50%" className="person_update_modal" footer={null} closable={false}>
+      <Modal title="" maskClosable={false} visible={isModalVisible.update} width="50%" className="person_update_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <div className="modal_person_info">
           <div className="modal_person_personal">
             <Avatar src="https://joeschmoe.io/api/v1/random" size={140}></Avatar>
@@ -155,15 +193,14 @@ export const ManageStudent = () => {
           <h1>
             Update Information <Image src={require("../../assets/images/update_icon.png")} />
           </h1>
-          <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" layout="vertical">
+          <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onUpdateFinish} onFinishFailed={onUpdateFinishFailed} autoComplete="off" layout="vertical">
             <div className="form_row">
               <Form.Item label="Name" name="name" className="item1">
                 <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faUser} size="xl" color="#21bf73" />} />
               </Form.Item>
               <Form.Item label="Birthdate" name="birthdate" className="item2">
-                {/* <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faCalendar} size="xl" color="#21bf73" />} /> */}
-                <FontAwesomeIcon icon={faCalendar} size="xl" color="#21bf73" style={{ marginRight: "10px" }} />
                 <DatePicker bordered={false} suffixIcon={<></>} placeholder="" />
+                {/* <FontAwesomeIcon icon={faCalendar} size="xl" color="#21bf73" style={{ marginRight: "10px" }} /> */}
               </Form.Item>
             </div>
             <Form.Item label="Address" name="address">
@@ -174,17 +211,82 @@ export const ManageStudent = () => {
                 <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faMobileScreenButton} size="xl" color="#21bf73" />} />
               </Form.Item>
               <Form.Item label="Gender" name="gender" className="item2">
-                <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faVenusMars} size="xl" color="#21bf73" />} />
+                {/* <FontAwesomeIcon icon={faVenusMars} size="xl" color="#21bf73" style={{ marginRight: "10px" }} /> */}
+                <Select bordered={false} defaultValue="male">
+                  <Option value="male">Male</Option>
+                  <Option value="female">Female</Option>
+                </Select>
               </Form.Item>
             </div>
             <Form.Item label="Email" name="email">
               <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
             </Form.Item>
-            <Form.Item style={{ float: "right", marginTop: "7%" }}>
+            <Form.Item style={{ float: "right", marginTop: "7%", marginBottom: "0" }}>
               <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel}>
                 Done
               </Button>
-              <Button type="primary" htmlType="submit" className="cancel_button">
+              <Button
+                type="primary"
+                className="cancel_button"
+                onClick={() =>
+                  setIsModalVisible((prev) => {
+                    return { ...prev, update: false };
+                  })
+                }>
+                Cancel
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </Modal>
+      {/* ============== Add new modal ==============*/}
+      <Modal title="" maskClosable={false} visible={isModalVisible.addNew} width="30%" className="person_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
+        <h2>
+          <FontAwesomeIcon icon={faUserPlus} size="lg" color="#21bf73" style={{ marginRight: "10px" }} />
+          Add new student
+        </h2>
+
+        <div className="modal_addnew_form">
+          <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onAddNewFinish} onFinishFailed={onAddNewFinishFailed} autoComplete="off" layout="vertical">
+            <div className="form_row">
+              <Form.Item label="Name" name="name" className="item1">
+                <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faUser} size="xl" color="#21bf73" />} />
+              </Form.Item>
+              <Form.Item label="Birthdate" name="birthdate" className="item2">
+                <DatePicker bordered={false} suffixIcon={<></>} placeholder="" />
+                {/* <FontAwesomeIcon icon={faCalendar} size="xl" color="#21bf73" style={{ marginRight: "10px" }} /> */}
+              </Form.Item>
+            </div>
+            <Form.Item label="Address" name="address">
+              <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faLocationDot} size="xl" color="#21bf73" />} />
+            </Form.Item>
+            <div className="form_row">
+              <Form.Item label="Contact" name="contact" className="item1">
+                <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faMobileScreenButton} size="xl" color="#21bf73" />} />
+              </Form.Item>
+              <Form.Item label="Gender" name="gender" className="item2">
+                {/* <FontAwesomeIcon icon={faVenusMars} size="xl" color="#21bf73" style={{ marginRight: "10px" }} /> */}
+                <Select bordered={false} defaultValue="male">
+                  <Option value="male">Male</Option>
+                  <Option value="female">Female</Option>
+                </Select>
+              </Form.Item>
+            </div>
+            <Form.Item label="Email" name="email">
+              <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
+            </Form.Item>
+            <Form.Item style={{ float: "right", margin: "0" }}>
+              <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel}>
+                Done
+              </Button>
+              <Button
+                type="primary"
+                className="cancel_button"
+                onClick={() =>
+                  setIsModalVisible((prev) => {
+                    return { ...prev, addNew: false };
+                  })
+                }>
                 Cancel
               </Button>
             </Form.Item>

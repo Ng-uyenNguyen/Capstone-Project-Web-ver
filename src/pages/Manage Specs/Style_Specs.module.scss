@@ -44,6 +44,69 @@
   border: solid 1px lightgray;
   background-color: $primary-color-4;
 }
+.spec_detail {
+  @include right_side_bar;
+  h5 {
+    font-weight: bold;
+    margin-bottom: 2%;
+    text-align-last: center;
+    padding-left: 20px;
+  }
+  &__spec {
+    color: $primary-color-1;
+    font-weight: bold;
+    font-size: medium;
+  }
+  &__divider {
+    width: 10%;
+    background-color: $primary-color-1;
+    margin-top: 10px;
+  }
+  .btn_remove {
+    width: 110px;
+    height: 34px;
+    border-color: $red;
+    color: $red;
+    border-radius: 40px;
+    font-size: medium;
+    margin-right: 20px;
+    font-weight: bold;
+    &:hover {
+      background-color: $red;
+      color: $white;
+    }
+  }
+  .btn_update {
+    width: 110px;
+    height: 34px;
+    border-color: $yellow;
+    color: $yellow;
+    background-color: $white;
+    border-radius: 40px;
+    font-size: medium;
+    font-weight: bold;
+    &:hover {
+      background-color: $yellow;
+      color: $white;
+    }
+  }
+  .btn_field {
+    width: 92%;
+    padding-top: 3px;
+    @include flex(center, center);
+  }
+  .info {
+    &__item {
+      @include flex(center, flex-start);
+      flex-direction: row;
+      padding-left: 20px;
+      &__title {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+    }
+  }
+}
 .spec_detail_wrapper {
   width: $sideBarWidth;
   height: 100vh;
@@ -54,74 +117,6 @@
   border: solid 1px lightgray;
   padding: 80px 10px 0px 10px;
   font-family: "Roboto", sans-serif;
-  .spec_detail {
-    @include flex(center, flex-start);
-    overflow: overlay;
-    flex-direction: column;
-    height: 100%;
-    background-color: $primary-color-4;
-
-    h5 {
-      font-weight: bold;
-      margin-bottom: 2%;
-      text-align-last: center;
-      padding-left: 20px;
-    }
-    &__spec {
-      color: $primary-color-1;
-      font-weight: bold;
-      font-size: medium;
-    }
-    &__divider {
-      width: 10%;
-      background-color: $primary-color-1;
-      margin-top: 10px;
-    }
-    .btn_remove {
-      width: 110px;
-      height: 34px;
-      border-color: $red;
-      color: $red;
-      border-radius: 40px;
-      font-size: medium;
-      margin-right: 20px;
-      font-weight: bold;
-      &:hover {
-        background-color: $red;
-        color: $white;
-      }
-    }
-    .btn_update {
-      width: 110px;
-      height: 34px;
-      border-color: $yellow;
-      color: $yellow;
-      background-color: $white;
-      border-radius: 40px;
-      font-size: medium;
-      font-weight: bold;
-      &:hover {
-        background-color: $yellow;
-        color: $white;
-      }
-    }
-    .btn_field {
-      width: 92%;
-      padding-top: 3px;
-      @include flex(center, center);
-    }
-    .info {
-      &__item {
-        @include flex(center, flex-start);
-        flex-direction: row;
-        padding-left: 20px;
-        &__title {
-          font-weight: bold;
-          margin-right: 10px;
-        }
-      }
-    }
-  }
 }
 .sem_detail {
   margin-top: 10px;
@@ -189,7 +184,7 @@
     }
   }
 }
-.ant-modal-content{
+.ant-modal-content {
   border-radius: 20px;
 }
 .btn_done {
@@ -206,17 +201,17 @@
     color: $white;
   }
 }
-// Add Specs modal 
+// Add Specs modal
 
-.modalTitle{
+.modalTitle {
   @include flex(center, center);
   flex-direction: row;
-  h4{
+  h4 {
     margin-left: 10px;
     margin-bottom: 0;
   }
 }
 
-.ant-modal-content{
+.ant-modal-content {
   border-radius: 20px;
 }

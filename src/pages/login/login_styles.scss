@@ -51,6 +51,10 @@
     font-size: 1.1em;
     font-weight: bold;
     background-color: $primary-color-1;
+    &:hover {
+      background-color: $primary-color-1-hover-light;
+      border-color: $primary-color-1;
+    }
   }
   form {
     .ant-col {

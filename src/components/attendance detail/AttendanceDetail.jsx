@@ -15,11 +15,6 @@ export const AttendanceDetail = ({ loading }) => {
         <SubjectBox />
         <SubjectBox />
         <SubjectBox />
-        <SubjectBox />
-        <SubjectBox />
-        <SubjectBox />
-        <SubjectBox />
-        <SubjectBox />
         <Button className={styles.download_all}>
           <DownloadOutlined style={{ color: "white", fontWeight: "bold" }} /> Download all
         </Button>

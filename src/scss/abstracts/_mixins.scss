@@ -64,11 +64,25 @@
   color: $color;
   border-radius: 40px;
   font-size: medium;
-  margin-right: 20px;
   font-weight: bold;
   background-color: $white;
+  transition: all 0.3s;
+  text-transform: uppercase;
   &:hover {
     background-color: $color;
     color: $white;
   }
+}
+@mixin solid_button($color: $red) {
+  width: 115px;
+  height: 34px;
+  background-color: $color;
+  color: white;
+  border-radius: 40px;
+  font-size: medium;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: all 0.3s;
 }

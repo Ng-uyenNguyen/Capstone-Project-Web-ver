@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { Image, Tag, Button, AutoComplete, Modal, Divider, Input, Typography } from "antd";
-import styles from './StyleSubject.module.scss'
+import styles from "./StyleSubject.module.scss";
 
-import { ModalSubject } from './ModalSubject';
+import { ModalSubject } from "./ModalSubject";
 export const SubjectDetail = ({ loading }) => {
   const { Title } = Typography;
-  // modal 
+  // modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -21,11 +21,9 @@ export const SubjectDetail = ({ loading }) => {
     <div className={styles.subject_detail}>
       <div className={styles.subject_banner}>
         <div className={styles.subject_info}>
-          <Image src={require('../../assets/images/icon_subject.png')} alt='icon_subject' width={56} height={53}></Image>
+          <Image src={require("../../assets/images/icon_subject.png")} alt="icon_subject" width={56} height={53}></Image>
           <div>
-            <h4>
-              Accounting Principles
-            </h4>
+            <h4>Accounting Principles</h4>
             <p>ACC101</p>
           </div>
         </div>
@@ -33,7 +31,9 @@ export const SubjectDetail = ({ loading }) => {
       {/* Subject Info detail*/}
       <div className={styles.teaching_teachers}>
         <div className={styles.heading_title}>
-          <h4><b>Teaching teachers</b></h4>
+          <h4>
+            <b>Teaching teachers</b>
+          </h4>
           <div className={styles.divider}></div>
         </div>
         <div className={styles.teaching_teachers__info}>
@@ -46,7 +46,9 @@ export const SubjectDetail = ({ loading }) => {
       </div>
       <div className={styles.studying_classes}>
         <div className={styles.heading_title}>
-          <h4><b>Studying classes</b></h4>
+          <h4>
+            <b>Studying classes</b>
+          </h4>
           <div className={styles.divider}></div>
         </div>
         <div>
@@ -56,12 +58,13 @@ export const SubjectDetail = ({ loading }) => {
           <Tag className={styles.subject_detail__subject_tag}>SE1401</Tag>
           <Tag className={styles.subject_detail__subject_tag}>SE1401</Tag>
           <Tag className={styles.subject_detail__subject_tag}>SE1401</Tag>
-
         </div>
       </div>
       <div className={styles.specs}>
         <div className={styles.heading_title}>
-          <h4><b>Specializations</b></h4>
+          <h4>
+            <b>Specializations</b>
+          </h4>
           <div className={styles.divider}></div>
         </div>
         <div>
@@ -72,26 +75,24 @@ export const SubjectDetail = ({ loading }) => {
       {/* ======= button  */}
       <div className={styles.btn_field}>
         <Button className={styles.btn_remove}>REMOVE</Button>
-        <Button className={styles.btn_update} onClick={showModal}>UPDATE</Button>
+        <Button className={styles.btn_update} onClick={showModal}>
+          UPDATE
+        </Button>
       </div>
       <div className={styles.modalStyle}>
-        <Modal title={[
-          <div className={styles.modalTitle}>
-            <img src={require('../../assets/images/icon_addSubject.png')} style={{ width: '30px' }}></img>
-            <Title level={4}>UPDATE SUBJECT</Title>
-          </div>
-
-        ]} visible={isModalVisible} onCancel={handleCancel} footer={[
-          <Button className={styles.btn_done}>Done</Button>
-        ]}>
+        <Modal
+          title={[
+            <div className={styles.modalTitle}>
+              <img src={require("../../assets/images/icon_addSubject.png")} style={{ width: "30px" }}></img>
+              <Title level={4}>UPDATE SUBJECT</Title>
+            </div>,
+          ]}
+          visible={isModalVisible}
+          onCancel={handleCancel}
+          footer={[<Button className={styles.btn_done}>Done</Button>]}>
           <ModalSubject />
-
         </Modal>
       </div>
     </div>
-
   );
-
-
-
-}
+};
