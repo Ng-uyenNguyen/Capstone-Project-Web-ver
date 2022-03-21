@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { Image, Button, Typography, Divider, Modal } from "antd";
-import styles from './Style_Specs.module.scss'
-import { UpdateSpecs } from './UpdateSpecs';
-
+import styles from "./Style_Specs.module.scss";
+import { UpdateSpecs } from "./UpdateSpecs";
 
 export const SpecDetail = ({ loading }) => {
   const { Title } = Typography;
-  // modal 
+  // modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -24,50 +23,43 @@ export const SpecDetail = ({ loading }) => {
       <p className={styles.spec_detail__spec}>IS</p>
       <div className={styles.btn_field}>
         <Button className={styles.btn_remove}>Remove</Button>
-        <Button className={styles.btn_update} onClick={showModal}>Update</Button>
+        <Button className={styles.btn_update} onClick={showModal}>
+          Update
+        </Button>
       </div>
-      <div className={styles.modalStyle}>
 
-        <Modal
+      <Modal
         width={1200}
-        bodyStyle={{height: 900}}
+        bodyStyle={{ height: 900 }}
         title={[
           <div className={styles.modalTitle}>
             <Title level={4}>CUSTOMIZE SPECIALIZATIONS</Title>
-          </div>
-
-        ]} visible={isModalVisible} onCancel={handleCancel} footer={[
-          <Button className={styles.btn_done}>Done</Button>
-        ]}>
-          <UpdateSpecs />
-
-        </Modal>
-      </div>
+          </div>,
+        ]}
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={[<Button className={styles.btn_done}>Done</Button>]}>
+        <UpdateSpecs />
+      </Modal>
 
       <Divider className={styles.spec_detail__divider} />
+
       <div className={styles.info}>
         <div className={styles.info__item}>
           <p className={styles.info__item__title}>No.Classes</p>
           <p>40</p>
         </div>
-        <Divider className={styles.spec_detail__divider} />
-        <div className={styles.info}>
-          <div className={styles.info__item}>
-            <p className={styles.info__item__title}>No.Classes</p>
-            <p>40</p>
-          </div>
-          <div className={styles.info__item}>
-            <p className={styles.info__item__title}>No.Students</p>
-            <p>800</p>
-          </div>
-          <div className={styles.info__item}>
-            <p className={styles.info__item__title}>Description </p>
-            <p>Lorem ipsum dolor sit amet </p>
-          </div>
+        <div className={styles.info__item}>
+          <p className={styles.info__item__title}>No.Students</p>
+          <p>800</p>
         </div>
-        <div>
-          <Semester_Box />
+        <div className={styles.info__item}>
+          <p className={styles.info__item__title}>Description </p>
+          <p>Lorem ipsum dolor sit amet </p>
         </div>
+      </div>
+      <div>
+        <Semester_Box />
       </div>
     </div>
   );

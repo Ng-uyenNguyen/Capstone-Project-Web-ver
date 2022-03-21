@@ -275,6 +275,9 @@ export const ManageStudent = () => {
             <Form.Item label="Email" name="email">
               <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
             </Form.Item>
+            <Form.Item label="Avatar" name="avatar">
+              <input type="file" bordered={false} style={{ border: "none", width: "auto" }} />
+            </Form.Item>
             <Form.Item style={{ float: "right", margin: "0" }}>
               <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel}>
                 Done

@@ -175,35 +175,6 @@
 }
 
 // Modal
-.AddSubject {
-  font-family: $fontFamily;
-  padding-left: 0;
-  p {
-    font-weight: bold;
-    color: $grey-1;
-  }
-  .ant-divider-horizontal {
-    width: 0;
-    min-width: 0;
-  }
-  &__divider {
-    background-color: $primary-color-1;
-    margin-top: 0;
-    width: 430px;
-    min-width: 0;
-    margin-left: 32px;
-  }
-  .ant-input-affix-wrapper {
-    padding: 0px 0px;
-  }
-  .input_field {
-    display: flex;
-    width: 95%;
-    img {
-      width: 30px;
-    }
-  }
-}
 .btn_done {
   width: 100px;
   height: 40px;
@@ -225,8 +196,4 @@
     margin-left: 10px;
     margin-bottom: 0;
   }
-}
-
-.ant-modal-content {
-  border-radius: 20px;
 }

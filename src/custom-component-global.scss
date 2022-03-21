@@ -477,3 +477,37 @@
 
 .studentList_addnew_modal {
 }
+.addNew_subject_modal {
+  .ant-modal-content {
+    border-radius: 20px;
+  }
+  .modal_content {
+    font-family: $fontFamily;
+    padding-left: 0;
+    p {
+      font-weight: bold;
+      color: $grey-1;
+    }
+    &__divider {
+      background-color: $primary-color-1;
+      margin-top: 0;
+      width: 430px;
+      min-width: 0;
+      margin-left: 32px;
+    }
+    .input_field {
+      display: flex;
+      width: 95%;
+      .ant-select-selection-search-input {
+        border-bottom: 1px solid $primary-color-1;
+      }
+      img {
+        width: 30px;
+      }
+      input {
+        border-radius: 0;
+        border-bottom: 1px solid $primary-color-1;
+      }
+    }
+  }
+}

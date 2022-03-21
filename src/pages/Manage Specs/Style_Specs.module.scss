@@ -44,8 +44,20 @@
   border: solid 1px lightgray;
   background-color: $primary-color-4;
 }
+.spec_detail_wrapper {
+  width: $sideBarWidth;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  padding: 80px 10px 0px 10px;
+  font-family: "Roboto", sans-serif;
+}
 .spec_detail {
   @include right_side_bar;
+  overflow: scroll;
   h5 {
     font-weight: bold;
     margin-bottom: 2%;
@@ -58,9 +70,10 @@
     font-size: medium;
   }
   &__divider {
-    width: 10%;
+    @include divider(0);
     background-color: $primary-color-1;
-    margin-top: 10px;
+    width: 40%;
+    height: 1px;
   }
   .btn_remove {
     width: 110px;
@@ -107,17 +120,7 @@
     }
   }
 }
-.spec_detail_wrapper {
-  width: $sideBarWidth;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 100;
-  border: solid 1px lightgray;
-  padding: 80px 10px 0px 10px;
-  font-family: "Roboto", sans-serif;
-}
+
 .sem_detail {
   margin-top: 10px;
   .custom_box {
