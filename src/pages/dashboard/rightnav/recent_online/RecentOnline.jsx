@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./recentOnline.module.scss";
-import { Avatar, Typography } from "antd";
+import { Avatar, Typography, Divider } from "antd";
 
 export const RecentOnline = () => {
   return (
@@ -15,14 +15,6 @@ export const RecentOnline = () => {
         <UserStatus username={"Bro1191"} imgurl="" />
         <UserStatus username={"Bro1191"} imgurl="" />
         <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
-        <UserStatus username={"Bro1191"} imgurl="" />
       </div>
     </div>
   );
@@ -30,13 +22,16 @@ export const RecentOnline = () => {
 const UserStatus = ({ username, imgurl }) => {
   const { Text } = Typography;
   return (
-    <div className={styles.user_status}>
-      <div className={styles.status_userimage}>
-        <Avatar src={imgurl} size="large" />
+    <>
+      <div className={styles.user_status}>
+        <div className={styles.status_userimage}>
+          <Avatar src={imgurl} size="large" />
+        </div>
+        <Text className={styles.status_username} level={5}>
+          {username}
+        </Text>
       </div>
-      <Text className={styles.status_username} level={5}>
-        {username}
-      </Text>
-    </div>
+      <Divider style={{ margin: "10px 0" }} />
+    </>
   );
 };
