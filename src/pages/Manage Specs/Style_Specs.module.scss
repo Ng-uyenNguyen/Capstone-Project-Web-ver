@@ -1,0 +1,220 @@
+@use "../../scss/abstracts/" as *;
+.manage_spec {
+  font-family: $fontFamily;
+  h3 {
+    font-weight: bold;
+    margin-bottom: 2%;
+  }
+  .divider {
+    @include divider(25%);
+    margin-bottom: 2%;
+  }
+  padding-right: $sideBarWidth + 50px;
+  display: flex;
+  flex-direction: column;
+  &__table {
+    position: relative;
+    Table > thead {
+      background-color: $light-gray;
+    }
+  }
+  .add_new_spec_btn {
+    position: relative;
+    right: 0;
+    @include add_button;
+    margin-bottom: 10px;
+    float: right;
+    width: fit-content;
+    height: fit-content;
+    background-color: $primary-color-1;
+  }
+}
+//--- DETAILS
+.spec_detail_loading {
+  @include flex(center, center);
+  font-family: "Roboto", sans-serif;
+  flex-direction: column;
+  overflow: scroll;
+  width: $sideBarWidth;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  background-color: $primary-color-4;
+}
+.spec_detail_wrapper {
+  width: $sideBarWidth;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  border: solid 1px lightgray;
+  padding: 80px 10px 0px 10px;
+  font-family: "Roboto", sans-serif;
+}
+.spec_detail {
+  @include right_side_bar;
+  overflow: scroll;
+  h5 {
+    font-weight: bold;
+    margin-bottom: 2%;
+    text-align-last: center;
+    padding-left: 20px;
+  }
+  &__spec {
+    color: $primary-color-1;
+    font-weight: bold;
+    font-size: medium;
+  }
+  &__divider {
+    @include divider(0);
+    background-color: $primary-color-1;
+    width: 40%;
+    height: 1px;
+  }
+  .btn_remove {
+    width: 110px;
+    height: 34px;
+    border-color: $red;
+    color: $red;
+    border-radius: 40px;
+    font-size: medium;
+    margin-right: 20px;
+    font-weight: bold;
+    &:hover {
+      background-color: $red;
+      color: $white;
+    }
+  }
+  .btn_update {
+    width: 110px;
+    height: 34px;
+    border-color: $yellow;
+    color: $yellow;
+    background-color: $white;
+    border-radius: 40px;
+    font-size: medium;
+    font-weight: bold;
+    &:hover {
+      background-color: $yellow;
+      color: $white;
+    }
+  }
+  .btn_field {
+    width: 92%;
+    padding-top: 3px;
+    @include flex(center, center);
+  }
+  .info {
+    &__item {
+      @include flex(center, flex-start);
+      flex-direction: row;
+      padding-left: 20px;
+      &__title {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.sem_detail {
+  margin-top: 10px;
+  .custom_box {
+    @include flex(baseline, flex-start);
+    margin-bottom: 5px;
+
+    &__divider {
+      min-width: 20px;
+      width: 10%;
+      height: 2px;
+      background-color: $primary-color-1;
+    }
+    .box {
+      border: 1px solid $primary-color-1;
+      width: 240px;
+      height: 56px;
+      border-radius: 10px;
+      position: relative;
+      @include flex(center, center);
+      box-sizing: border-box;
+      margin-bottom: 10px;
+
+      h2 {
+        margin: 0;
+        color: $primary-color-1;
+        font-weight: 400;
+      }
+      &::before {
+        content: "";
+        background-color: $primary-color-1;
+        position: absolute;
+        left: -1px;
+        top: 0px;
+        width: 10%;
+        height: 101%;
+        border-radius: 10px 0px 0px 10px;
+        border: 1px solid $primary-color-1;
+      }
+    }
+  }
+  .subject_list {
+    font-family: $fontFamily;
+    @include flex(baseline, flex-start);
+    margin-left: 30px;
+    flex-direction: column;
+    &__subject_items {
+      @include flex(baseline, flex-start);
+      flex-direction: row;
+    }
+  }
+  .subject_tag {
+    background-color: $primary-color-1;
+    width: 61px;
+    height: 20px;
+    border-radius: 5px;
+    color: $white;
+    text-align: center;
+    &__divider {
+      min-width: 10px;
+      height: 2px;
+      width: 5%;
+      background-color: $primary-color-1;
+      margin: 5px 10px 5px 0;
+    }
+  }
+}
+.ant-modal-content {
+  border-radius: 20px;
+}
+.btn_done {
+  width: 100px;
+  height: 40px;
+  border-color: $primary-color-1;
+  color: $primary-color-1;
+  background-color: $white;
+  border-radius: 40px;
+  font-size: medium;
+  font-weight: bold;
+  &:hover {
+    background-color: $primary-color-1;
+    color: $white;
+  }
+}
+// Add Specs modal
+
+.modalTitle {
+  @include flex(center, center);
+  flex-direction: row;
+  h4 {
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+}
+
+.ant-modal-content {
+  border-radius: 20px;
+}

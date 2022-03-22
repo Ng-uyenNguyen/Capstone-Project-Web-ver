@@ -4,6 +4,7 @@
   @include flex(strech, flex-start);
   font-family: "Roboto", sans-serif;
   flex-direction: column;
+  background-color: #ffffff;
   width: $sideBarWidth;
   padding: 20px 10px 0px 10px;
   height: 100vh;
@@ -51,7 +52,7 @@
     }
     &__active {
       color: $primary-color-1;
-      box-shadow: 0px -2px 4px rgba(169, 169, 169, 0.15), 0px 2px 5.5px rgba(169, 169, 169, 0.15);
+      box-shadow: 0px -2px 4px rgba(169, 169, 169, 0.367), 0px 2px 5.5px rgba(169, 169, 169, 0.341);
     }
   }
 }

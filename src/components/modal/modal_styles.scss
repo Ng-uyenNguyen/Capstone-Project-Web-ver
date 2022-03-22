@@ -1,0 +1,41 @@
+@use "../../scss/abstracts/" as *;
+
+.customModal {
+  text-align: center !important;
+  width: 500px !important;
+  .ant-modal-body {
+    height: 300px;
+    display: grid;
+    align-items: center;
+    border-radius: 5rem;
+  }
+  .ant-modal-header {
+    border-bottom: none;
+  }
+  .icon_container {
+    display: grid;
+    justify-content: center;
+    width: 100%;
+    img {
+      margin: 0 auto;
+    }
+  }
+  p {
+    font-weight: 600;
+    font-size: 1.8em;
+    margin: 0;
+  }
+  button {
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    padding: 0 30px;
+    width: auto;
+    color: $white;
+  }
+  .btn_danger {
+    background-color: $red;
+  }
+  .btn_success {
+    background-color: $primary-color-1;
+  }
+}

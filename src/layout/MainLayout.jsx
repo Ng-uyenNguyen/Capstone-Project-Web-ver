@@ -10,13 +10,15 @@ export const MainLayout = () => {
     <div>
       <Sidebar />
       <div className={styles.main}>
-        <div className={styles.admin_dropdown}>
-          <Avatar src={<Image src="https://joeschmoe.io/api/v1/random" />} size="large" />
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <p className={styles.admin_name}>
-              Hello, My Nguyen <DownOutlined style={{ marginLeft: "15px" }} />
-            </p>
-          </Dropdown>
+        <div className={styles.admin_dropdown_wrapper}>
+          <div className={styles.admin_dropdown}>
+            <Avatar src={<Image src="https://joeschmoe.io/api/v1/random" />} size="large" />
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <p className={styles.admin_name}>
+                Hello, My Nguyen <DownOutlined style={{ marginLeft: "25px" }} />
+              </p>
+            </Dropdown>
+          </div>
         </div>
         <Outlet />
       </div>
@@ -26,21 +28,23 @@ export const MainLayout = () => {
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <Link to="/classDetail">
+      <Link to="/management/profile">
         <UserOutlined style={{ marginRight: "5px" }} />
         Profile
       </Link>
     </Menu.Item>
     <Menu.Item key="1">
-      <Link to="/classDetail">
+      <Link to="/management/changePassword">
         <HolderOutlined style={{ marginRight: "5px" }} />
         Change Password
       </Link>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3">
-      <LogoutOutlined style={{ marginRight: "5px" }} />
-      Log Out
+      <Link to="/">
+        <LogoutOutlined style={{ marginRight: "5px" }} />
+        Log Out
+      </Link>
     </Menu.Item>
   </Menu>
 );
