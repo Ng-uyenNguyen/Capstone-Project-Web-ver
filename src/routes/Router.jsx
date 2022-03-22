@@ -7,14 +7,15 @@ import { ManageSubject } from "../pages/ManageSubject";
 import { ManageClass } from "../pages/manage class/ManageClass";
 import  ManageTeacher  from "../pages/manage teacher/ManageTeacher";
 import { ClassDetail } from "../pages/manage class/ClassDetail";
-import sidebarNav from "../components/sidebar/sidebarNav";
+import { SchedulerManagement } from "../pages/manageScheduler";
+
 export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="/schedules" element={<BlankPage />} />
+          <Route path="/schedules" element={<SchedulerManagement />} />
           <Route path="/teachers" element={<ManageTeacher />} />
           <Route path="/students" element={<ManageTeacher/>} />
           <Route path="/classes" element={<ManageClass />} />
