@@ -1,7 +1,10 @@
 import { CheckCircleFilled, EditOutlined } from "@ant-design/icons";
 import { Button, Image, Progress, Select, Space } from "antd";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./CourseListDetail.module.scss";
+
 export const CourseListDetail = ({ loading }) => {
   const { Option } = Select;
   const [isDisable, setIsDisable] = useState(true);
@@ -77,6 +80,9 @@ export const CourseListDetail = ({ loading }) => {
               </td>
             </tr>
           </table>
+          <Button className={styles.remove_button}>
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
         </Space>
       </div>
     </div>
