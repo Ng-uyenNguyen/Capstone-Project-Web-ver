@@ -1,0 +1,41 @@
+@use "../../../scss/abstracts" as *;
+
+.dropdown {
+    width: 15%;
+    position: relative;
+    border: solid 1px lightgray;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    font-family: Roboto;
+    font-size: smaller;
+    margin-bottom: 1%;
+    &__btn{
+        padding: 0px 15px ;
+        background: #fff;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__content{
+        position: absolute;
+        top:110%;
+        padding:15px;
+        background: #fff;
+        font-weight: 500;
+        color: #333;
+        width: 100%;
+        border: solid 1px lightgray;
+        &__item{
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0,2s;
+        &:hover {
+            background: #f4f4f4;
+        }
+        }
+    }
+}
+
