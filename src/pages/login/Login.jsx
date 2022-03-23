@@ -2,8 +2,48 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
 export const Login = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
+    // console.log(values);
+    // const url = "https://capstone-web-server-nabati.herokuapp.com/login";
+    // const form = new FormData();
+    // form.append("email", "NguyenNDB@capstone.com");
+    // form.append("password", "ERPsTGsKbi");
+    // fetch(url, {
+    //   body: form,
+    //   method: "post",
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+
+    // const data = {
+    //   khoa: 0,
+    //   roleId: 1,
+    //   specializationId: 1,
+    //   personalEmail: "Nguyenndb511@gmail.com",
+    //   name: "Nguyen",
+    //   age: 20,
+    //   avatar: "string",
+    //   phone: "string",
+    //   gender: 0,
+    //   address: "string",
+    // };
+    // const response = await fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+    // if (response.status === 200)
+    navigate("/management", { replace: true });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -12,6 +52,7 @@ export const Login = () => {
   let navigate = useNavigate();
   async function handleSubmit(event) {
     event.preventDefault();
+
     navigate("/management", { replace: true });
   }
   return (
@@ -80,7 +121,7 @@ export const Login = () => {
                   offset: 8,
                   span: 16,
                 }}>
-                <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+                <Button type="primary" htmlType="submit">
                   Login
                 </Button>
               </Form.Item>
