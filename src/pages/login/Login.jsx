@@ -3,25 +3,25 @@ import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
 export const Login = () => {
   const onFinish = async (values) => {
-    // console.log(values);
-    // const url = "https://capstone-web-server-nabati.herokuapp.com/login";
-    // const form = new FormData();
-    // form.append("email", "NguyenNDB@capstone.com");
-    // form.append("password", "ERPsTGsKbi");
-    // fetch(url, {
-    //   body: form,
-    //   method: "post",
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+    console.log(values);
+    const url = "https://capstone-web-server-nabati.herokuapp.com/login";
+    const form = new FormData();
+    form.append("email", "NguyenNDB@capstone.com");
+    form.append("password", "ERPsTGsKbi");
+    fetch(url, {
+      body: form,
+      method: "post",
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     // const data = {
     //   khoa: 0,

@@ -482,6 +482,25 @@
 }
 
 .studentList_addnew_modal {
+  .divider {
+    @include divider(0, $primary-color-1);
+    margin-bottom: 20px;
+  }
+  .button_wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 2%;
+    .cancel_button {
+      @include solid_button($red);
+      border-radius: 7px;
+      margin-left: 10px;
+    }
+    .save_button {
+      @include solid_button($blue);
+      border-radius: 7px;
+    }
+  }
 }
 
 .addNew_subject_modal {

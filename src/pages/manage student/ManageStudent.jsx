@@ -1,7 +1,8 @@
-import { Table, Avatar, Typography, Button, Modal, Form, Input, DatePicker, Image, Select } from "antd";
-import React, { useState } from "react";
+import { faEnvelope, faLocationDot, faMobileScreenButton, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faUserPlus, faLocationDot, faMobileScreenButton, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import useDrivePicker from "react-google-drive-picker";
 import PersonDetail from "../../components/TeacherDetails";
 import styles from "./ManageStudent.module.scss";
 export const ManageStudent = () => {
@@ -10,7 +11,7 @@ export const ManageStudent = () => {
       key: "1",
       name: (
         <>
-          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar> Nguyen Duy Bao Nguyen
+          <Avatar src="https://drive.google.com/uc?export=view&id=1ACIeUGM2GYFQ4yK_4uf4I_sarLJvdcXo" style={{ marginRight: "10px" }}></Avatar> Nguyen Duy Bao Nguyen
         </>
       ),
       id: "ST0001",
@@ -75,10 +76,12 @@ export const ManageStudent = () => {
       key: "email",
     },
   ];
+  const [openPicker, data, authResponse] = useDrivePicker();
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
   const { Title } = Typography;
   const [form] = Form.useForm();
+  const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState({
     addNew: false,
     update: false,
@@ -128,7 +131,25 @@ export const ManageStudent = () => {
       return { ...prev, [method]: false };
     });
   };
-  const { Option } = Select;
+  const handleOpenPicker = () => {
+    openPicker({
+      clientId: "783817650711-i61ag5smqtp7r7idjfdr689vo3jabh9p.apps.googleusercontent.com",
+      developerKey: "AIzaSyDmk-kVoNPTD8_jjT58mClo8SRtJfF-fVo",
+      viewId: "DOCS",
+      token: "ya29.A0ARrdaM-8VZ0_3vgPRI12PZQ9ee1qwUcqFiq5NLvLUkzW7DyBIbYX7x9yaNjZ3lrfWnacU3HhXSi_kzz85QcmNR-6in8Rl-GordnKoLITqmx1s6CQ1DMbKyKCKGTtzyMeJu9fQj2eDdGolLlbI_TfkVJFr8JA", // pass oauth token in case you already have one
+      showUploadView: true,
+      showUploadFolders: true,
+      supportDrives: true,
+      multiselect: true,
+      // customViews: customViewsArray, // custom view
+    });
+  };
+  useEffect(() => {
+    // do anything with the selected/uploaded files
+    if (data) {
+      data.docs.map((i) => console.log(i));
+    }
+  }, [data]);
   return (
     <div className={styles.container}>
       <Title level={3}>Manage Student</Title>
@@ -276,7 +297,7 @@ export const ManageStudent = () => {
               <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
             </Form.Item>
             <Form.Item label="Avatar" name="avatar">
-              <input type="file" bordered={false} style={{ border: "none", width: "auto" }} />
+              <button onClick={() => handleOpenPicker()}>Open Picker</button>
             </Form.Item>
             <Form.Item style={{ float: "right", margin: "0" }}>
               <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel}>

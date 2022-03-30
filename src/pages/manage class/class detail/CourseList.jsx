@@ -64,7 +64,7 @@ export const CourseList = () => {
   };
   const { Option } = Select;
   return (
-    <div class={styles.class_course_list}>
+    <div className={styles.class_course_list}>
       <div className={styles.class_course_list__table}>
         <Button type="primary" className={styles.add_new_course_btn} onClick={showModal}>
           + New Course
