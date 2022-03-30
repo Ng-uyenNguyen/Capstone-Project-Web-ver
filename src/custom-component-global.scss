@@ -1,7 +1,9 @@
 @use "./scss/abstracts/" as *;
 .custom_table_1 {
   table {
-    .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    .ant-table-thead
+      > tr
+      > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
       content: "";
       width: 0;
       height: 0;
@@ -102,10 +104,14 @@
             cursor: pointer;
             transition: box-shadow 0.2s ease-in-out;
             &:not([disabled]):focus {
-              box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem rgba(224, 206, 209, 0.5), 0.125rem 0.125rem 1rem rgba(143, 118, 103, 0.5);
+              box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+                -0.125rem -0.125rem 1rem rgba(224, 206, 209, 0.5),
+                0.125rem 0.125rem 1rem rgba(143, 118, 103, 0.5);
             }
             &:not([disabled]):hover {
-              box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem rgba(189, 169, 173, 0.5), 0.125rem 0.125rem 1rem rgba(143, 118, 103, 0.5);
+              box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+                -0.125rem -0.125rem 1rem rgba(189, 169, 173, 0.5),
+                0.125rem 0.125rem 1rem rgba(143, 118, 103, 0.5);
             }
           }
         }
@@ -496,16 +502,20 @@
     }
   }
 }
+
 .addNew_subject_modal {
   .ant-modal-content {
     border-radius: 20px;
   }
+
   .modal_content {
     font-family: $fontFamily;
     padding-left: 0;
-    p {
+    .ant-form-item-label > label {
       font-weight: bold;
+      font-size: 16px;
       color: $grey-1;
+      margin: 10px auto 10px;
     }
     &__divider {
       background-color: $primary-color-1;
@@ -520,8 +530,13 @@
       .ant-select-selection-search-input {
         border-bottom: 1px solid $primary-color-1;
       }
+      .ant-select-selector {
+        border: none;
+        border-bottom: 1px solid $primary-color-1;
+      }
       img {
         width: 30px;
+        height: 30px;
       }
       input {
         border-radius: 0;
