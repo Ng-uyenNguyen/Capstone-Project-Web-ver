@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Tag, Button, Modal, Select, Input, Typography, Form } from "antd";
 import styles from "./StyleSubject.module.scss";
-
+import { apiStore } from "../../constant/apiStore";
 
 export const SubjectDetail = ({ loading, id }) => {
   const { Title } = Typography;
@@ -13,6 +13,16 @@ export const SubjectDetail = ({ loading, id }) => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+  const [subDetails, setSubDetails] = useState([])
+  // ==== API 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const res = await fetch(apiStore.getAllSubjects);
+  //     const data = await res.json();
+  //     setSubDetails(data)
+  //   }
+  //   setTimeout(fetchData, 1000);
+  // }, []);
   // Select Input 
   const lsTeacher = ['Lý Quỳnh Trân', 'Nguyễn Quốc Long', 'Nguyễn Xuân Long', 'Nguyễn Thị Mai Sau'];
   const [selectedItems, setSelectedItems] = useState([]);

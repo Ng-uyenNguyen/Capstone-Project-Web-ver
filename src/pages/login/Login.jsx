@@ -1,13 +1,14 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
+
 export const Login = () => {
   const onFinish = async (values) => {
     console.log(values);
     const url = "https://capstone-web-server-nabati.herokuapp.com/login";
     const form = new FormData();
-    form.append("email", "NguyenNDB@capstone.com");
-    form.append("password", "ERPsTGsKbi");
+    form.append("email", "HoangVD@capstone.com");
+    form.append("password", "megSnJXLqc");
     fetch(url, {
       body: form,
       method: "post",

@@ -2,60 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Tag, Typography, Button, Table, Modal, Input, Select, Form } from "antd";
 import { SubjectDetail } from "./SubjectDetail";
 import styles from "./StyleSubject.module.scss";
-import Title from "antd/lib/skeleton/Title";
-import { apiStore } from "../../constant/apiStore";
+
+import { apiStore } from '../../constant/apiStore'
 export const ManageSubject = () => {
   const { Title } = Typography;
-  const [listClass, setListClass] = useState([]);
-  const [subjectID, setSubID] = useState();
-  let subID = 0
-  useEffect(() => {
-    const fetchData = async () => {
-      const response  = await fetch(apiStore.subjects);
-      const data = await response.json();
-      setListClass(data);
-    }
-    fetchData()
-  }, [])
+  const [listSubjects, setListSub] = useState([]);
 
-  // const dataSource = [
-  //   {
-  //     no: "01",
-  //     nameCode: "DBW301",
-  //     name: "Data Warehouse",
-  //     specializations: ["IS ", "JS"],
-  //   },
-  //   {
-  //     no: "02",
-  //     nameCode: "WEB201c",
-  //     name: "Web Design",
-  //     specializations: ["IS"],
-  //   },
-  //   {
-  //     no: "03",
-  //     nameCode: "ACC101",
-  //     name: "Accounting Principles",
-  //     specializations: ["IS ", "BA"],
-  //   },
-  //   {
-  //     no: "01",
-  //     nameCode: "DBW301",
-  //     name: "Data Warehouse",
-  //     specializations: ["IS ", "JS"],
-  //   },
-  //   {
-  //     no: "02",
-  //     nameCode: "WEB201c",
-  //     name: "Web Design",
-  //     specializations: ["IS"],
-  //   },
-  //   {
-  //     no: "03",
-  //     nameCode: "ACC101",
-  //     name: "Accounting Principles",
-  //     specializations: ["IS ", "BA"],
-  //   },
-  // ];
+  let subID = ''
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(apiStore.getAllSubjects);
+      const data = await res.json();
+      setListSub(data)
+    }
+    setTimeout(fetchData, 1000);
+  }, []);
 
   const columns = [
     {
@@ -167,30 +129,29 @@ export const ManageSubject = () => {
         {/* Table Data */}
         <Table
           className="custom_table_1"
-          dataSource={listClass}
+          dataSource={listSubjects}
           columns={columns}
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
                 subID = record.id
                 console.log(subID)
-               
                 const rows = event.target.parentElement.parentElement.children;
                 setActiveRow((prev) => {
                   rows[[prev]].classList.remove("active");
                   event.target.parentElement.classList.add("active");
                   return rowIndex;
                 });
-                
+
                 setLoading(true);
-              
+
               },
             };
-           
+
           }}
         />
       </div>
-      <SubjectDetail loading={loading}  />
+      <SubjectDetail loading={loading} />
     </div>
   );
 };
