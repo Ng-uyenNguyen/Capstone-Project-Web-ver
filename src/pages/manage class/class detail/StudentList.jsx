@@ -127,9 +127,16 @@ export const StudentList = () => {
       <PersonDetail loading={loading} />
       <Modal title="" maskClosable={false} visible={isModalVisible} width="60%" className="studentList_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <h2>Add new students</h2>
+        <div className="divider" />
         <Table dataSource={dataSource} columns={columns} rowSelection={rowSelection} />
-        <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleSave}>Save</Button>
+        <div className="button_wrapper">
+          <Button onClick={handleSave} className="save_button">
+            Save
+          </Button>
+          <Button onClick={handleCancel} className="cancel_button">
+            Cancel
+          </Button>
+        </div>
       </Modal>
     </div>
   );
