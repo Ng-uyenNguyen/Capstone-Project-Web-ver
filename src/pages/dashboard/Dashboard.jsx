@@ -12,17 +12,17 @@ export const Dashboard = () => {
         <div className="dashboard_left">
           <div className="pill_container">
             <PillButton
-              title="Student"
+              title="Students"
               amount={1500}
               img_scr={require("../../assets/images/icon_student.png")}
             />
             <PillButton
-              title="Student"
+              title="Teachers"
               amount={1500}
               img_scr={require("../../assets/images/icon_teacher.png")}
             />
             <PillButton
-              title="Student"
+              title="Classes"
               amount={1500}
               img_scr={require("../../assets/images/icon_classes.png")}
             />
