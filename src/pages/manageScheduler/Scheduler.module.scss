@@ -5,3 +5,10 @@
   padding-top: 3%;
   padding-right: 4%;
 }
+.navbar {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  flex-direction: row;
+  column-gap: 0.5rem;
+}

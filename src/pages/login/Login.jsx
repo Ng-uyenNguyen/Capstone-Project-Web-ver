@@ -1,61 +1,54 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
-
+import { apiStore } from "../../constant/apiStore";
+import axios from "axios";
+import { wrapper } from "axios-cookiejar-support";
 export const Login = () => {
+  let navigate = useNavigate();
+
   const onFinish = async (values) => {
     console.log(values);
-    const url = "https://capstone-web-server-nabati.herokuapp.com/login";
     const form = new FormData();
-    form.append("email", "HoangVD@capstone.com");
-    form.append("password", "megSnJXLqc");
-    fetch(url, {
-      body: form,
-      method: "post",
-    })
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    form.append("email", "XuanNT@capstone.com");
+    form.append("password", "123456");
+    // fetch(apiStore.login, {
+    //   body: form,
+    //   method: "post",
+    //   credentials: "same-origin",
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
-    // const data = {
-    //   khoa: 0,
-    //   roleId: 1,
-    //   specializationId: 1,
-    //   personalEmail: "Nguyenndb511@gmail.com",
-    //   name: "Nguyen",
-    //   age: 20,
-    //   avatar: "string",
-    //   phone: "string",
-    //   gender: 0,
-    //   address: "string",
-    // };
-    // const response = await fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-    // if (response.status === 200)
-    navigate("/management", { replace: true });
+    const res = await axios.post(apiStore.login, form);
+    console.log(res);
+    const config = {
+      url: apiStore.getProfile,
+      method: "get",
+      withCredentials: true,
+    };
+    const profileRes = await axios.get(apiStore.getProfile, { withCredentials: true });
+    console.log(profileRes);
+    // if (res.status === 200) {
+    //   const accountId = res.data;
+    //   console.log(accountId);
+    // const profileRes = await axios.get(apiStore.getProfile);
+    // const profile = await profileRes.json();
+    // console.log(profile);
+    // if (profile.roles[0] === "ROLE_MANAGER");
+    // navigate("management", { replace: true });
+    // console.log("Login successfully");
+    // }
+    // console.log(res);
   };
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  let navigate = useNavigate();
-  async function handleSubmit(event) {
-    event.preventDefault();
 
-    navigate("/management", { replace: true });
-  }
   return (
     <div className="loginContainer">
       <div className="loginForm">

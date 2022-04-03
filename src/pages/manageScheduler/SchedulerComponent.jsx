@@ -1,320 +1,267 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
-import { Select } from "antd";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import { Typography } from "@mui/material";
+import React, { Fragment, useEffect, useState, useRef } from "react";
+import styles from "./Scheduler.module.scss";
+import { message, Select } from "antd";
+import { Spin } from "antd";
+import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import { Scheduler } from "@aldabil/react-scheduler";
-
-const CLASSES = [
-  {
-    class_id: "SE1401",
-    events: [
-      {
-        event_id: 1,
-        title: "Event 1",
-        start: new Date("2022 3 22 09:30"),
-        end: new Date("2022 3 22 10:30"),
-        teacher_id: 2,
-        course_id: 2,
-        room: "201",
-      },
-      {
-        event_id: 2,
-        title: "Event 2",
-        start: new Date("2022 3 22 10:00"),
-        end: new Date("2022 3 22 11:00"),
-        teacher_id: 1,
-        course_id: 2,
-        room: "201",
-      },
-      {
-        event_id: 3,
-        title: "Event 3",
-        start: new Date("2022 3 22 09:00"),
-        end: new Date("2022 3 22 10:00"),
-        teacher_id: 1,
-        course_id: 1,
-        room: "201",
-      },
-    ],
-  },
-  {
-    class_id: "SE1402",
-    events: [
-      {
-        event_id: 3,
-        title: "Event 3",
-        start: new Date("2022 3 22 09:00"),
-        end: new Date("2022 3 22 10:00"),
-        teacher_id: 1,
-        course_id: 1,
-        room_id: 3,
-      },
-    ],
-  },
-];
-
-const TEACHERS = [
-  {
-    teacher_id: 1,
-    teacher_name: "TranLQ",
-  },
-  {
-    teacher_id: 2,
-    teacher_name: "ThongHH",
-  },
-  {
-    teacher_id: 3,
-    teacher_name: "NguyenNDB",
-  },
-  {
-    teacher_id: 4,
-    teacher_name: "MyNH",
-  },
-];
-const COURSES = [
-  {
-    teacher_id: 1,
-    course_id: 1,
-    course_syntax: "DBW301",
-    course_name: "Data warehouse",
-  },
-  {
-    teacher_id: 1,
-    course_id: 2,
-    course_syntax: "ACC101",
-    course_name: "Account Principles",
-  },
-  {
-    teacher_id: 1,
-    course_id: 3,
-    course_syntax: "SSC102",
-    course_name: "Bussiness Comunnication",
-  },
-];
-// export default function App() {
-//   const { Option } = Select;
-//   const [classId, setClassId] = useState("");
-//   const [data, setData] = useState([]);
-//   const [lsResource,setLsResource] = useState(TEACHERS);
-//   const [lsRoom, setLsRoom] = useState(ROOMS);
-//   const [lsCourse,setLsCourse] = useState(COURSES)
-
-//   useEffect(() => {
-//     const selectedClass = CLASSES.filter((item) => item.class_id === classId);
-//     const fetchData = () =>  {if(selectedClass.length > 0) setData(selectedClass[0].events)}
-//     setTimeout(fetchData ,300);
-//   }, [classId]);
-
-//   const handleConfirm = (event, action) => {
-//     console.log(event, action,111111);
-//     if (action === "edit")
-//     {      const array = [...data]
-//       console.log(array,data,"11111111")
-//       const selectedArray = array.filter(item => item.class_id === classId)
-//       const selectedEventArray = selectedArray[0].events.filter(item => item.event_id === event.event_id)
-//       console.log(selectedEventArray)
-//     } else if (action === "create") {
-
-//     }
-//   };
-
-//   const handleDelete = async (deletedId) => {
-//     // Simulate http request: return the deleted id
-//     return new Promise((res, rej) => {
-//       setTimeout(() => {
-//         res(deletedId);
-//       }, 300);
-//     });
-//   };
-
-//   function onChange(value) {
-//     setClassId(value);
-//   }
-
-//   function onSearch(val) {
-//     // console.log("search:", val);
-//   }
-
-//   return (
-//     <Fragment>
-//       <Select
-//         showSearch
-//         placeholder="Select Class"
-//         optionFilterProp="children"
-//         onChange={onChange}
-//         onSearch={onSearch}
-//         filterOption={(input, option) =>
-//           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-//         }
-//       >
-//         {CLASSES.map((item) => (
-//           <Option value={item.class_id}>{item.class_id}</Option>
-//         ))}
-//       </Select>
-//       <Scheduler
-//         events={data}
-//         view="week"
-//         day={null}
-//         month={null}
-//         fields={[
-//           {
-//             name: "teacher_id",
-//             type: "select",
-//             options: TEACHERS.map((res) => {
-//               return {
-//                 id: res.teacher_id,
-//                 text: `${res.title}`,
-//                 value: res.teacher_id, //Should match "name" property
-//               };
-//             }),
-//             config: { label: "Teacher", required: true },
-//           },
-//           {
-//             name: "course_id",
-//             type: "select",
-//             options: COURSES.map((res) => {
-//               return {
-//                 id: res.course_id,
-//                 text: `${res.course_syntax}`,
-//                 value: res.course_id, //Should match "name" property
-//               };
-//             }),
-//             config: { label: "Course", required: true },
-//           },
-//           {
-//             name: "room_id",
-//             type: "select",
-//             options: ROOMS.map((res) => {
-//               return {
-//                 id: res.room_id,
-//                 text: `${res.room_name}`,
-//                 value: res.room_id, //Should match "name" property
-//               };
-//             }),
-//             config: { label: "Room", required: true },
-//           },
-//         ]}
-//         viewerExtraComponent={(fields, event) => {
-//           return (
-//             <div>
-//               {fields.map((field, i) => {
-//                 if (field.name === "teacher_id") {
-//                   const admin = field.options.find(
-//                     (fe) => fe.id === event.teacher_id
-//                   );
-//                   return (
-//                     <Typography
-//                       key={i}
-//                       style={{ display: "flex", alignItems: "center" }}
-//                       variant="caption"
-//                       noWrap
-//                     >
-//                       <PersonRoundedIcon /> {admin.text}
-//                     </Typography>
-//                   );
-//                 } else {
-//                   return "";
-//                 }
-//               })}
-//             </div>
-//           );
-//         }}
-//         onConfirm={handleConfirm}
-//         onDelete={handleDelete}
-//       />
-//     </Fragment>
-//   );
-// }
-const data = [
-  {
-    event_id: 1,
-    title: "Event 1",
-    start: new Date("2022 3 22 09:30"),
-    end: new Date("2022 3 22 10:30"),
-    room: "201",
-  },
-  {
-    event_id: 2,
-    title: "Event 2",
-    start: new Date("2022 3 20 10:00"),
-    end: new Date("2022 3 20 11:00"),
-    room: "202",
-  },
-  {
-    event_id: 3,
-    title: "Event 3",
-    start: new Date("2022 3 24 09:00"),
-    end: new Date("2022 3 24 10:00"),
-    room: "203",
-  },
-];
-
+import { apiStore } from "../../constant/apiStore";
+import { Typography } from "@mui/material";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import moment from "moment";
+import axios from "axios";
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const { Option } = Select;
   const [events, setEvents] = useState([]);
   const [test, setTest] = useState(1);
+  const [lsClass, setLsClass] = useState([]);
+  const [newEvent, setNewEvent] = useState();
+  const [lsTeacher, setLsTeacher] = useState([]);
+  const [lsSubject, setLsSubject] = useState([]);
   const [classId, setClassId] = useState("");
+  const prevSubject = useRef(lsSubject);
+  const prevTeacher = useRef(lsTeacher);
+  const prevClassId = useRef(classId);
+  const prevlsNewImport = useRef([]);
 
-    function onChange(value) {
+  function onChange(value) {
     setClassId(value);
   }
 
   function onSearch(val) {
-    console.log("search:", val);
+    // console.log(val);
   }
-
+  //Fetch Events from DB
   useEffect(() => {
-    const selectedClass = CLASSES.filter((item) => item.class_id === classId);
-    const fetchData = () => {
-      if (selectedClass.length > 0) setEvents(selectedClass[0].events);
-    };
-    setTimeout(fetchData, 300);
-  }, [classId]);
+    function fetchData(setlsClass, setLoading) {
+      setLoading(true);
+      axios({
+        method: "GET",
+        url: apiStore.getAllClass,
+      }).then((res) => {
+        const newData = res.data.map((item) => item.classId);
+        setlsClass(newData);
+        setLoading(false);
+      });
+    }
 
-  const handleConfirm = (e, action) => {
+    function fetchTeacherData(setLsTeacher) {
+      // console.log(fetchListTeacher,"List Teacher")
+      setLoading(true);
+      axios({
+        method: "GET",
+        url: apiStore.getAllTeachers,
+      }).then((res) => {
+        const newData = res.data.map((item) => {
+          return {
+            teacher_id: item.accountId,
+            teacher_name: item.name,
+          };
+        });
+        setLsTeacher(newData);
+        setLoading(false);
+      });
+    }
+    fetchData(setLsClass, setLoading);
+    fetchTeacherData(setLsTeacher);
+  }, []);
+  // Get Previou state of list subjects
+  useEffect(() => {
+    prevSubject.current = lsSubject;
+    prevTeacher.current = lsTeacher;
+    console.log(prevSubject, "prev Subject");
+    console.log(prevTeacher, "prev Teacher");
+  }, [lsSubject, lsTeacher]);
+  useEffect(() => {
+    function fetchData(setEvents) {
+      setLoading(true);
+      axios({
+        method: "GET",
+        url: apiStore.getScheduleByClassId + classId,
+      }).then((res) => {
+        console.log(res.data, "list Event");
+        const newData = res.data.map((item) => {
+          return {
+            event_id: item.id,
+            title: item.subject.code,
+            start: new Date(item.timeStart),
+            end: new Date(item.timeEnd),
+            teacher_name: item.teacherName,
+            room: `${item.room}`,
+            subject_code: item.subject.code,
+          };
+        });
+        console.log(newData, "new fetch Events");
+        setEvents(newData);
+        setLoading(false);
+      });
+    }
+
+    function fetchDataSubject(setLsSubject) {
+      setLoading(true);
+      axios({
+        method: "GET",
+        url: apiStore.getClassById + classId,
+      }).then((res) => {
+        console.log(res.data.subjects, "class subjects");
+        const newData = res.data.subjects.map((item) => {
+          return {
+            subject_id: item.subjectId,
+            subject_code: item.subjectCode,
+            teacher_name: item.teacherName,
+          };
+        });
+        console.log(newData, "newData");
+        setLsSubject(newData);
+        setLoading(false);
+      });
+    }
+    fetchDataSubject(setLsSubject);
+    fetchData(setEvents);
+    prevClassId.current = classId;
+  }, [classId]);
+  // Set List New Events to Import Recurring
+  useEffect(() => {
+    prevlsNewImport.current.push(newEvent);
+    console.log(prevlsNewImport, "New List Event To Import");
+  }, [newEvent]);
+
+  const handleConfirm = async (e, action) => {
     if (action === "edit") {
       let arr = [];
-      const editItemIndex = events.findIndex(
-        (item) => item.event_id === e.event_id
-      );
+      let slotId = e.event_id;
+      const editItemIndex = events.findIndex((item) => item.event_id === e.event_id);
       setEvents((prev) => {
         prev.splice(editItemIndex, 1, e);
         arr = [...prev];
+        console.log(e, "Edit Events");
         return prev;
       });
+
       setTest(Math.random());
+      let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
+      let subject = prevSubject.current.find((item) => item.subject_code === e.subject_code);
+      const putEvent = {
+        room: parseInt(e.room),
+        timeStart: moment(e.start).toISOString(),
+        timeEnd: moment(e.end).toISOString(),
+        classId: prevClassId.current,
+        subjectId: subject.subject_id,
+        teacherId: teacher.teacher_id,
+        description: "Not yet",
+      };
+      setLoading(true);
+      axios.put(apiStore.updateSchedule + slotId, putEvent).then((res) => {
+        setLoading(false);
+        console.log(res);
+        console.log(res.data);
+      });
+
+      console.log(putEvent, "PutEvent");
       return arr;
     } else if (action === "create") {
       setEvents((prev) => [...prev, e]);
+      let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
+      let subject = prevSubject.current.find((item) => item.subject_code === e.subject_code);
+      const PostEvent = {
+        room: parseInt(e.room),
+        timeStart: moment(e.start).toISOString(),
+        timeEnd: moment(e.end).toISOString(),
+        classId: prevClassId.current,
+        subjectId: subject.subject_id,
+        teacherId: teacher.teacher_id,
+      };
+      setNewEvent(PostEvent);
+      // async function CreatePost() {
+      //   console.log(apiStore.postSchedule);
+      //   const requestOptions = {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify(PostEvent),
+      //   };
+
+      //   const response = await fetch(
+      //     `${apiStore.postSchedule}`,
+      //     requestOptions
+      //   );
+      //   const data = await response.json();
+      //   console.log(data, "Post Event");
+      // }
+      // CreatePost();
       return events;
     }
   };
 
   const handleDelete = (deletedId) => {
-    console.log("DELETE:", deletedId);
     setEvents((prev) => prev.filter((event) => event.event_id !== deletedId));
+    function deleteSchedule(setLoading) {
+      setLoading(true);
+      axios
+        .delete(apiStore.deleteSchedule + deletedId)
+        .then((res) => {
+          setLoading(false);
+          res.text();
+        })
+        .then((res) => console.log(res));
+    }
+    deleteSchedule(setLoading);
     return events;
   };
-
+  const handleImport = async () => {
+    const recurringEvents = { slots: [] };
+    for (let i = 1; i < prevlsNewImport.current.length; i++) {
+      recurringEvents.slots.push(prevlsNewImport.current[i]);
+    }
+    const finalRecurring = { ...recurringEvents };
+    console.log("recurring Events Final: ", finalRecurring);
+    function importSchedule(setLoading) {
+      setLoading(true);
+      axios
+        .post(apiStore.importSchedule, finalRecurring)
+        .then((res) => {
+          message.success("Import successfully!");
+          setLoading(false);
+          console.log(res.data, "import data");
+        })
+        .catch((err) => {
+          console.log(err);
+          setTimeout(setLoading(false), 10000);
+          message.success("Import successfully!");
+        });
+    }
+    importSchedule(setLoading);
+  };
   return (
     <Fragment>
-      <Select
-        showSearch
-        placeholder="Select Class"
-        optionFilterProp="children"
-        onChange={onChange}
-        onSearch={onSearch}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-      >
-        {CLASSES.map((item) => (
-          <Option value={item.class_id}>{item.class_id}</Option>
-        ))}
-      </Select>
+      <div className={styles.navbar}>
+        <Select size="large" showSearch placeholder="Select Class" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+          {lsClass.map((item) => (
+            <Option value={item} key={item}>
+              {item}
+            </Option>
+          ))}
+        </Select>
+        <Button type="primary" icon={<DownloadOutlined />} size="large" onClick={handleImport}>
+          Recurring
+        </Button>
+        {loading && (
+          <div className={styles.navbar__item}>
+            <Spin tip="Loading..." />
+          </div>
+        )}
+      </div>
+
       <Scheduler
         view="week"
         events={events}
+        week={{
+          weekDays: [0, 1, 2, 3, 4, 5, 6],
+          weekStartOn: 6,
+          startHour: 6,
+          endHour: 21,
+          step: 60,
+        }}
         day={null}
         month={null}
         fields={[
@@ -325,47 +272,40 @@ export default function App() {
             config: { label: "Room", multiline: true, rows: 1 },
           },
           {
-            name: "teacher_id",
+            name: "subject_code",
             type: "select",
-            options: TEACHERS.map((res) => {
+            options: lsSubject.map((res) => {
               return {
-                id: res.teacher_id,
+                id: res.subject_code,
+                text: `${res.subject_code}`,
+                value: res.subject_code, //Should match "name" property
+              };
+            }),
+            config: { label: "Subject", required: true },
+          },
+          {
+            name: "teacher_name",
+            type: "select",
+            default: "teacher_name",
+            options: lsTeacher.map((res) => {
+              return {
+                id: res.teacher_name,
                 text: `${res.teacher_name}`,
-                value: res.teacher_id, //Should match "name" property
+                value: res.teacher_name, //Should match "name" property
               };
             }),
             config: { label: "Teacher", required: true },
-          },
-          {
-            name: "course_id",
-            type: "select",
-            options: COURSES.map((res) => {
-              return {
-                id: res.course_id,
-                text: `${res.course_syntax}`,
-                value: res.course_id, //Should match "name" property
-              };
-            }),
-            config: { label: "Course", required: true },
           },
         ]}
         viewerExtraComponent={(fields, event) => {
           return (
             <div>
               {fields.map((field, i) => {
-                if (field.name === "teacher_id") {
-                  const teacher = field.options.find(
-                    (fe) => fe.id === event.teacher_id
-                  );
+                if (field.name === "teacher_name") {
+                  const admin = field.options.find((fe) => fe.id === event.teacher_name);
                   return (
-                    <Typography
-                      key={i}
-                      style={{ display: "flex", alignItems: "center" }}
-                      variant="caption"
-                      noWrap
-                      color="textSecondary"
-                    >
-                      <PersonRoundedIcon /> {teacher.text}
+                    <Typography key={i} style={{ display: "flex", alignItems: "center" }} color="textSecondary" variant="caption" noWrap>
+                      <PersonRoundedIcon /> {admin.text}
                     </Typography>
                   );
                 } else {

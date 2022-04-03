@@ -4,7 +4,8 @@
   font-family: $fontFamily;
   h3 {
     font-weight: bold;
-    margin-bottom: 4%;
+    margin-top: 1%;
+    margin-bottom: 0;
   }
   .year_course {
     margin-bottom: 5%;
@@ -19,7 +20,7 @@
       }
       .center_divider {
         @include divider;
-        margin: 0 2%;
+        margin-right: 2%;
       }
       .add_button {
         @include add_button;

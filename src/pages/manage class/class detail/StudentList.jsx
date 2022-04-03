@@ -1,54 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./StudentList.module.scss";
-import { Avatar, Button, Form, Input, Table, Typography, Modal } from "antd";
-import PersonDetail from "../../../components/TeacherDetails";
-export const StudentList = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: (
-        <>
-          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
-        </>
-      ),
-      id: "ST0001",
-      phone: "0904003849",
-      email: "nguyenndbst140258@capstone.com",
-    },
-    {
-      key: "2",
-      name: (
-        <>
-          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
-        </>
-      ),
-      id: "ST0001",
-      phone: "0904003849",
-      email: "nguyenndbst140258@capstone.com",
-    },
-    {
-      key: "3",
-      name: (
-        <>
-          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
-        </>
-      ),
-      id: "ST0001",
-      phone: "0904003849",
-      email: "nguyenndbst140258@capstone.com",
-    },
-    {
-      key: "4",
-      name: (
-        <>
-          <Avatar src="https://joeschmoe.io/api/v1/random" style={{ marginRight: "10px" }}></Avatar>Nguyen Duy Bao Nguyen
-        </>
-      ),
-      id: "ST0001",
-      phone: "0904003849",
-      email: "nguyenndbst140258@capstone.com",
-    },
-  ];
+import { Avatar, Button, Form, Input, Table, Typography, Modal, message } from "antd";
+import StudentDetail from "./StudentDetail";
+import axios from "axios";
+import { apiStore } from "../../../constant/apiStore";
+export const StudentList = ({ item }) => {
+  const [outsideStudent, setOutsideStudent] = useState([]);
+  const [studentTableLoading, setStudentTableLoading] = useState(true);
+  const [outsideStudentDataSource, setOutsideStudentDataSource] = useState([]);
+  const dataSource = item.students.map((student, index) => ({
+    key: index,
+    name: (
+      <>
+        <Avatar src={"https://drive.google.com/uc?export=view&id=" + student.avatar} style={{ marginRight: "10px" }}></Avatar>
+        {student.name}
+      </>
+    ),
+    id: student.accountId,
+    phone: student.phone,
+    email: student.email,
+  }));
+
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      const res = await axios.get(apiStore.getStudents);
+      const data = res.data;
+      console.log(data);
+      const sameSpecStudents = data.filter((student) => student.specialization === item.specialization);
+      let outsideStudentData = [];
+      sameSpecStudents.forEach((student) => {
+        if (item.students.findIndex((s) => s.accountId === student.accountId) === -1) {
+          outsideStudentData.push(student);
+        }
+      });
+      setOutsideStudentDataSource(
+        outsideStudentData.map((student, index) => ({
+          key: index,
+          name: (
+            <>
+              <Avatar src={"https://drive.google.com/uc?export=view&id=" + student.avatar} style={{ marginRight: "10px" }}></Avatar>
+              {student.name}
+            </>
+          ),
+          id: student.accountId,
+          phone: student.phone,
+          email: student.email,
+        }))
+      );
+      setOutsideStudent(outsideStudentData);
+      setStudentTableLoading(false);
+    };
+    fetchStudentData();
+  }, []);
 
   const columns = [
     {
@@ -74,24 +77,42 @@ export const StudentList = () => {
     },
   ];
   const [activeRow, setActiveRow] = useState(0);
+  const [studentInfo, setStudentInfo] = useState({});
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
   const handleCancel = () => {
+    setSelectedRowKeys([]);
     setIsModalVisible(false);
   };
   const handleSave = () => {
-    setSelectedRowKeys([]);
-    setSelectedStudents([]);
-    setIsModalVisible(false);
+    const addStudentToClass = async () => {
+      let data = {
+        studentIds: [...selectedStudents],
+        classId: item.classId,
+      };
+      console.log(data);
+      console.log(apiStore.addStudentsToClass);
+      const res = await axios.post(apiStore.addStudentsToClass, data);
+      if (res.status === 200) {
+        message.success("Add successfully!");
+        setSelectedRowKeys([]);
+        setIsModalVisible(false);
+      } else {
+        console.log(res);
+        message.error("Add failed!");
+      }
+    };
+    addStudentToClass();
   };
   const showModal = () => {
     setIsModalVisible(true);
   };
+
   const onSelectChange = (selectedRowKeys, selectedRows) => {
     let selectedStudentsID = selectedRows.map((student) => student.id);
-    console.log("selectedRow changed: ", selectedStudentsID);
     setSelectedStudents(selectedStudentsID);
     setSelectedRowKeys(selectedRowKeys);
   };
@@ -119,16 +140,19 @@ export const StudentList = () => {
                   return rowIndex;
                 });
                 setLoading(true);
+                let selectedStudent = item.students.find((e) => e.accountId === record.id);
+                setStudentInfo({ ...selectedStudent });
               },
             };
           }}
         />
       </div>
-      <PersonDetail loading={loading} />
+      <StudentDetail loading={loading} studentInfo={studentInfo} classId={item.classId} />
+
       <Modal title="" maskClosable={false} visible={isModalVisible} width="60%" className="studentList_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <h2>Add new students</h2>
         <div className="divider" />
-        <Table dataSource={dataSource} columns={columns} rowSelection={rowSelection} />
+        <Table dataSource={outsideStudentDataSource} columns={columns} rowSelection={rowSelection} loading={studentTableLoading} />
         <div className="button_wrapper">
           <Button onClick={handleSave} className="save_button">
             Save

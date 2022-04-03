@@ -5,7 +5,7 @@ import { BlankPage } from "../pages/BlankPage";
 import { MainLayout } from "../layout/MainLayout";
 import { ManageSubject } from "../pages/Manage Subject/ManageSubject";
 import { ManageClass } from "../pages/manage class/ManageClass";
-import ManageTeacher from "../pages/manage teacher/ManageTeacher";
+import { ManageTeacher } from "../pages/manage teacher/ManageTeacher";
 import { ClassDetail } from "../pages/manage class/ClassDetail";
 import { SchedulerManagement } from "../pages/manageScheduler";
 import { Profile } from "../pages/Manage Info/Profile";

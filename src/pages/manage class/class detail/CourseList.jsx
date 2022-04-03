@@ -1,25 +1,22 @@
-import { Button, Form, Input, Modal, Table, Select } from "antd";
-import React, { useState } from "react";
+import { Button, Form, Input, Modal, Table, Select, message } from "antd";
+import React, { useEffect, useState } from "react";
 import { faBook, faBookBible } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CourseListDetail } from "../../../components/class course detail/CourseListDetail";
 import styles from "./CourseList.module.scss";
+import axios from "axios";
+import { apiStore } from "../../../constant/apiStore";
 
-export const CourseList = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Object-Oriented Programming",
-      id: "PRO192",
-      teacher: "TranLQ",
-    },
-    {
-      key: "2",
-      name: "Object-Oriented Programming",
-      id: "PRO192",
-      teacher: "TranLQ",
-    },
-  ];
+export const CourseList = ({ item }) => {
+  console.log(item);
+  const [allChosenSubjectData, setAllChosenSubjectData] = useState([]);
+  const [lsTeacherOfSubject, setLsTeacherOfSubject] = useState([]);
+  const dataSource = item.subjects.map((subject, index) => ({
+    key: index,
+    name: subject.subjectName,
+    subjectCode: subject.subjectCode,
+    teacher: subject.teacherName,
+  }));
 
   const columns = [
     {
@@ -30,8 +27,8 @@ export const CourseList = () => {
     },
     {
       title: <b>ID</b>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "subjectCode",
+      key: "subjectCode",
     },
     {
       title: <b>Teacher</b>,
@@ -39,16 +36,28 @@ export const CourseList = () => {
       key: "teacher",
     },
   ];
+  const [courseInfo, setCourseInfo] = useState([]);
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const onAddNewFinish = (fieldsValue) => {
-    const values = {
-      ...fieldsValue,
-      birthdate: fieldsValue["birthdate"].format("YYYY-MM-DD"),
+    const addCourse = async () => {
+      const data = {
+        subjectId: fieldsValue.courseId,
+        classId: item.classId,
+        teacherId: fieldsValue.lecture,
+      };
+      const res = await axios.post(apiStore.addCourseToClass, data);
+      if (res.status === 200) {
+        message.success("Add successfully!");
+        setIsModalVisible(false);
+      } else {
+        message.success("Add failed!");
+        console.log(res);
+      }
     };
-    console.log(values);
-    setIsModalVisible(false);
+    addCourse();
   };
   const onAddNewFinishFailed = (err) => {
     console.log(err);
@@ -62,7 +71,33 @@ export const CourseList = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  function handleChange(value) {
+    const chosenSubject = allChosenSubjectData.find((i) => i.id === value);
+    setLsTeacherOfSubject(chosenSubject.teachers);
+  }
   const { Option } = Select;
+
+  useEffect(() => {
+    const getSubjectsData = async () => {
+      const res = await axios.get(apiStore.getAllSubjects);
+      const data = res.data;
+      console.log(data);
+      let str = item.specialization;
+      let matches = str.match(/\b(\w)/g);
+      let acronym = matches.join("");
+      const allSameSpecSubjects = data.filter((subject) => subject.specializations.includes(acronym));
+      let renderredSubject = [];
+      allSameSpecSubjects.forEach((subject) => {
+        if (item.subjects.findIndex((s) => s.subjectId === subject.id) === -1) {
+          renderredSubject.push(subject);
+        }
+      });
+      console.log(renderredSubject);
+      setAllChosenSubjectData(renderredSubject);
+    };
+    getSubjectsData();
+  }, []);
+
   return (
     <div className={styles.class_course_list}>
       <div className={styles.class_course_list__table}>
@@ -80,15 +115,17 @@ export const CourseList = () => {
                 setActiveRow((prev) => {
                   rows[[prev]].classList.remove("active");
                   event.target.parentElement.classList.add("active");
-                  setLoading(true);
                   return rowIndex;
                 });
+                let selectedCourse = item.subjects.find((item) => item.subjectCode === record.subjectCode);
+                setCourseInfo(selectedCourse);
+                setLoading(true);
               },
             };
           }}
         />
       </div>
-      <CourseListDetail loading={loading} />
+      <CourseListDetail loading={loading} courseInfo={courseInfo} />
       <Modal title="" maskClosable={false} visible={isModalVisible} width="30%" className="course_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <h2>
           <FontAwesomeIcon icon={faBookBible} size="lg" color="#21bf73" style={{ marginRight: "10px" }} />
@@ -98,38 +135,21 @@ export const CourseList = () => {
         <div className="modal_addnew_form">
           <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onAddNewFinish} onFinishFailed={onAddNewFinishFailed} autoComplete="off" layout="vertical">
             <Form.Item label="Course Id" name="courseId">
-              <Select
-                showSearch
-                bordered={false}
-                placeholder="Select Course"
-                optionFilterProp="children"
-                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                filterSort={(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}>
-                <Option value="1">DBW201</Option>
-                <Option value="2">PRX301</Option>
-                <Option value="3">PRM302</Option>
-                <Option value="4">SWP401</Option>
-                <Option value="5">PRO103</Option>
-                <Option value="6">PMG201</Option>
+              <Select showSearch bordered={false} placeholder="Select Course" optionFilterProp="children" onChange={handleChange}>
+                {allChosenSubjectData.map((subject) => (
+                  <Option key={subject.id} value={subject.id}>
+                    {subject.subjectCode}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
-            <Form.Item label="Course name" name="courseName">
-              <Input disabled bordered={false} />
-            </Form.Item>
             <Form.Item label="Lecturer" name="lecture">
-              <Select
-                showSearch
-                bordered={false}
-                placeholder="Select Lecturer"
-                optionFilterProp="children"
-                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                filterSort={(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}>
-                <Option value="1">TranLQ</Option>
-                <Option value="2">HoangVD</Option>
-                <Option value="3">PRM302</Option>
-                <Option value="4">ThanhDVB</Option>
-                <Option value="5">NguyenNBD</Option>
-                <Option value="6">MyNH</Option>
+              <Select showSearch bordered={false} placeholder="Select Lecturer" optionFilterProp="children">
+                {lsTeacherOfSubject.map((teacher) => (
+                  <Option key={teacher.accountId} value={teacher.accountId}>
+                    {teacher.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
             <Form.Item style={{ float: "right", margin: "0" }}>

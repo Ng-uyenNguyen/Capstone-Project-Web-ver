@@ -108,20 +108,7 @@ export const ClassTimeTable = () => {
             <Title level={3}>ITE302c (Ethics in IT)</Title>
             <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
           </div>
-          <div className={styles.class_timetable__course}>
-            <Title level={3}>ITE302c (Ethics in IT)</Title>
-            <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
-          </div>
-          <div className={styles.class_timetable__course}>
-            <Title level={3}>ITE302c (Ethics in IT)</Title>
-            <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
-          </div>
-          <div className={styles.class_timetable__course}>
-            <Title level={3}>ITE302c (Ethics in IT)</Title>
-            <Table className="custom_table_1" dataSource={dataSource} columns={columns} />
-          </div>
         </TabPane>
-        <TabPane tab={<Link to="/management/schedules">Timetable by weeks</Link>} key="2"></TabPane>
       </Tabs>
     </div>
   );

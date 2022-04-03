@@ -1,4 +1,4 @@
-@use "../../scss/abstracts" as *;
+@use "../../../scss/abstracts/" as *;
 
 .teacher {
   @include flex(strech, flex-start);
@@ -71,7 +71,7 @@
         column-gap: 1em;
         &__content {
           margin-top: 2%;
-          color: #404d61;          
+          color: #404d61;
         }
       }
       &__phone {
@@ -110,10 +110,9 @@
       align-items: center;
       flex-direction: row;
       flex-wrap: wrap;
-      
       row-gap: 1rem;
       &__item {
-        width: 50%;        
+        width: 50%;
         &__content {
           font-size: 0.9rem;
           font-weight: 450;
@@ -121,10 +120,6 @@
         &__value {
           font-size: 0.8rem;
           color: #404d61;
-          width: 130px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
         }
       }
     }
