@@ -12,7 +12,7 @@ export const MainLayout = () => {
       <div className={styles.main}>
         <div className={styles.admin_dropdown_wrapper}>
           <div className={styles.admin_dropdown}>
-            <Avatar src={<Image src="https://joeschmoe.io/api/v1/random" />} size="large" />
+            <Avatar src={require("../assets/images/profileImg.png")} size="large" />
             <Dropdown overlay={menu} trigger={["click"]}>
               <p className={styles.admin_name}>
                 Hello, My Nguyen <DownOutlined style={{ marginLeft: "25px" }} />

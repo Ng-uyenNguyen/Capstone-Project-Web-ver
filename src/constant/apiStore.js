@@ -1,5 +1,5 @@
-// const baseUrl = "https://capstone-web-server-nabati.herokuapp.com/";
-const baseUrl = "https://localhost/";
+const baseUrl = "https://capstone-web-server-nabati.herokuapp.com/";
+// const baseUrl = "https://localhost/";
 export const apiStore = {
   login: baseUrl + "login",
   getAllSpecializations: baseUrl + "specialization",
@@ -23,4 +23,6 @@ export const apiStore = {
   importSchedule: baseUrl + "schedule/import",
   deleteSchedule: baseUrl + "schedule?id=",
   updateAttendanceLog: baseUrl + "attendance/update",
+  getTotalInfo: baseUrl + "total",
+  getOngoingClass: baseUrl + "class/ongoing",
 };

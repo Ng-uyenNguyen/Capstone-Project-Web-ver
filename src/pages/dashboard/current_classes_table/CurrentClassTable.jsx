@@ -1,45 +1,25 @@
 import { Button, Table, Typography } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CurrentClassTable.module.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { apiStore } from "../../../constant/apiStore";
 export const CurrentClassTable = () => {
-  const dataSource = [
-    {
-      key: "1",
-      Room: "201",
-      Class: "SE002",
-      Lecture: "Cody Fisher",
-      Subject: "ABC123",
-    },
-    {
-      key: "1",
-      Room: "201",
-      Class: "SE002",
-      Lecture: "Cody Fisher",
-      Subject: "ABC123",
-    },
-    {
-      key: "1",
-      Room: "201",
-      Class: "SE002",
-      Lecture: "Cody Fisher",
-      Subject: "ABC123",
-    },
-    {
-      key: "1",
-      Room: "201",
-      Class: "SE002",
-      Lecture: "Cody Fisher",
-      Subject: "ABC123",
-    },
-    {
-      key: "1",
-      Room: "201",
-      Class: "SE002",
-      Lecture: "Cody Fisher",
-      Subject: "ABC123",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState([]);
+  useEffect(async () => {
+    const res = await axios.get(apiStore.getOngoingClass);
+    const data = res.data;
+    const mappedData = data.map((item, index) => ({
+      key: index,
+      Room: item.classId,
+      Class: item.room,
+      Lecture: item.teacherName,
+      Subject: item.subjectName,
+    }));
+    setDataSource(mappedData);
+    setLoading(false);
+  }, []);
 
   const columns = [
     {
@@ -69,16 +49,12 @@ export const CurrentClassTable = () => {
 
   return (
     <div className={styles.class_management}>
-      <YearCourse
-        title="On-Going Classes"
-        dataSource={dataSource}
-        columns={columns}
-      />
+      <YearCourse title="On-Going Classes" dataSource={dataSource} loading={loading} columns={columns} />
     </div>
   );
 };
 
-const YearCourse = ({ title, dataSource, columns }) => {
+const YearCourse = ({ title, dataSource, columns, loading }) => {
   const { Title } = Typography;
   return (
     <div className={styles.year_course}>
@@ -86,11 +62,7 @@ const YearCourse = ({ title, dataSource, columns }) => {
         <Title level={4}>{title}</Title>
         <div className={styles.center_divider} />
       </div>
-      <Table
-        className="custom_table_1"
-        dataSource={dataSource}
-        columns={columns}
-      />
+      <Table className="custom_table_1" loading={loading} dataSource={dataSource} columns={columns} />
     </div>
   );
 };

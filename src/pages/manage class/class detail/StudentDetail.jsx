@@ -88,9 +88,9 @@ function StudentDetail({ loading, deleteStudent, studentInfo, classId }) {
       <div className={styles.teacher__teaching__subject__form}>
         <div className={styles.teacher__teaching__subject__form__item}>{classId}</div>
       </div>
-      <div className={styles.button_wrapper}>
+      {/* <div className={styles.button_wrapper}>
         <button className={styles.remove_button}>Remove</button>
-      </div>
+      </div> */}
     </div>
   );
 }

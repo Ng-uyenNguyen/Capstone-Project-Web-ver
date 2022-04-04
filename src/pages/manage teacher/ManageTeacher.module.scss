@@ -13,5 +13,12 @@
       right: 0;
       @include add_button;
     }
+    .import_new_teacher_btn {
+      position: absolute;
+      top: -45px;
+      right: 170px;
+      @include add_button;
+      background: $blue;
+    }
   }
 }

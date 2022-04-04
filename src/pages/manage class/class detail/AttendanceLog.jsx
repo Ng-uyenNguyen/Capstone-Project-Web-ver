@@ -50,7 +50,7 @@ export const AttendanceLog = ({ item }) => {
   const [selectedDate, setSelectedDate] = useState("");
   function onChange(value) {
     let selectedScheduleCourse = scheduleData.filter((item) => item.subject.id === value);
-
+    console.log(selectedSchedule);
     let mappedData = selectedScheduleCourse.map((item, index) => ({
       key: index,
       day: moment(item.timeStart).format("YYYY/MM/DD"),
@@ -58,7 +58,7 @@ export const AttendanceLog = ({ item }) => {
       endTime: moment(item.timeEnd).format("HH:mm"),
       room: item.room,
       lecturer: item.teacherName,
-      attendance: item.status,
+      attendance: item.status === "ATTENDED" ? "ATTENDED" : "NOT YET",
       view: (
         <Button
           type="link"
@@ -66,12 +66,13 @@ export const AttendanceLog = ({ item }) => {
             setSelectedSchedule(item.id);
             setSelectedDate(moment(item.timeStart).format("YYYY/MM/DD"));
           }}
-          disabled={item.status === "NOT YET"}>
+          disabled={item.status !== "ATTENDED"}>
           View
         </Button>
       ),
     }));
     setScheduleDataSource(mappedData);
+    setSelectedSchedule(-1);
   }
 
   function onSearch(val) {
@@ -99,7 +100,7 @@ export const AttendanceLog = ({ item }) => {
       </Select>
       <Table className="custom_table_1" dataSource={scheduleDataSource} columns={columns} loading={loading} />
       <div className={styles.divider} />
-      {selectedSchedule > -1 ? <AttendanceLogBlock slotId={selectedSchedule} date={selectedDate} /> : ""}
+      {selectedSchedule != -1 ? <AttendanceLogBlock slotId={selectedSchedule} date={selectedDate} /> : ""}
     </div>
   );
 };
@@ -108,7 +109,9 @@ const AttendanceLogBlock = ({ slotId, date }) => {
   const [changeData, setChangeData] = useState([]);
   const [attendanceLogDataSource, setAttendanceLogDataSource] = useState([]);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [active, setActive] = useState(true);
   const handleChange = (e, item, index) => {
+    setActive(false);
     setChangeData((prev) => {
       prev[index] = { ...item, status: e.target.value };
       return prev;
@@ -136,6 +139,7 @@ const AttendanceLogBlock = ({ slotId, date }) => {
     const fetchAttendanceLog = async () => {
       let response = await axios.get(apiStore.getAttendanceLogBySlotId + slotId);
       let data = response.data;
+      console.log(data);
       let mappedData = data.map((item, index) => ({
         key: index,
         no: index + 1,
@@ -207,7 +211,7 @@ const AttendanceLogBlock = ({ slotId, date }) => {
       </h2>
       <Table dataSource={attendanceLogDataSource} columns={attendanceLogColumns} pagination={false} loading={loading} />
 
-      <Button type="primary" style={{ borderRadius: "6px", marginTop: "2%" }} onClick={handleSave} loading={saveLoading}>
+      <Button type="primary" style={{ borderRadius: "6px", marginTop: "2%" }} onClick={handleSave} loading={saveLoading} disabled={active}>
         Save
       </Button>
     </div>

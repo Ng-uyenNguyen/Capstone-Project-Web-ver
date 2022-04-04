@@ -1,6 +1,7 @@
+import { SearchOutlined, UploadOutlined } from "@ant-design/icons";
 import { faCalendar, faEnvelope, faLocationDot, faMobileScreenButton, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography, message } from "antd";
+import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography, message, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useDrivePicker from "react-google-drive-picker";
@@ -16,6 +17,13 @@ export const ManageTeacher = () => {
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reRender, setReRender] = useState("");
+  const [fileList, setFileList] = useState([]);
+  const [upLoading, setUpLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState({
+    addNew: false,
+    update: false,
+    import: false,
+  });
   const { Title } = Typography;
   const [updateForm] = Form.useForm();
   const [addNewForm] = Form.useForm();
@@ -32,7 +40,21 @@ export const ManageTeacher = () => {
       title: <b>ID</b>,
       dataIndex: "id",
       key: "id",
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+        <Input
+          autoFocus
+          placeholder="Search here..."
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
+        />
+      ),
+      filterIcon: () => <SearchOutlined size="large" />,
+      onFilter: (value, record) => record.id.toLowerCase().includes(value.toLowerCase()),
     },
+
     {
       title: <b>Phone</b>,
       dataIndex: "phone",
@@ -77,7 +99,26 @@ export const ManageTeacher = () => {
     };
     updateTeacher();
   };
-
+  const props = {
+    onRemove: (file) => {
+      setFileList((prev) => {
+        const index = prev.indexOf(file);
+        const newFileList = prev.slice();
+        newFileList.splice(index, 1);
+        return newFileList;
+      });
+    },
+    beforeUpload: (file) => {
+      setFileList((prev) => ({
+        fileList: [...prev, file],
+      }));
+      return false;
+    },
+    fileList,
+  };
+  const handleUpload = () => {
+    console.log(fileList);
+  };
   const onAddNewFinish = (fieldsValue) => {
     const teacherData = {
       khoa: 1,
@@ -139,10 +180,6 @@ export const ManageTeacher = () => {
       // customViews: customViewsArray, // custom view
     });
   };
-  const [isModalVisible, setIsModalVisible] = useState({
-    addNew: false,
-    update: false,
-  });
   // ------ Fetch teacher data -----------
   useEffect(() => {
     setTableLoading(true);
@@ -172,6 +209,15 @@ export const ManageTeacher = () => {
       <Title level={3}>Manage Teacher</Title>
       <div className={styles.divider} />
       <div className={styles.teacher_list}>
+        <Button
+          type="primary"
+          className={styles.import_new_teacher_btn}
+          onClick={() => {
+            showModal("import");
+          }}>
+          <UploadOutlined />
+          Import
+        </Button>
         <Button
           type="primary"
           className={styles.add_new_teacher_btn}
@@ -264,7 +310,7 @@ export const ManageTeacher = () => {
                   </Select>
                 </Form.Item>
               </div>
-              <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+              <Form.Item label="Email" name="email" rules={[{ required: true }, { pattern: /^[^s@]+@[^s@]+.[^s@]+$/, message: "Invalid email address" }]}>
                 <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
               </Form.Item>
               <Form.Item style={{ float: "right", marginTop: "7%", marginBottom: "0" }}>
@@ -309,7 +355,7 @@ export const ManageTeacher = () => {
                 </Select>
               </Form.Item>
             </div>
-            <Form.Item label="Email" name="email">
+            <Form.Item label="Email" name="email" rules={[{ required: true }, { pattern: /^[^s@]+@[^s@]+.[^s@]+$/, message: "Invalid email address" }]}>
               <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
             </Form.Item>
             <Form.Item label="Avatar" name="avatar">
@@ -332,6 +378,14 @@ export const ManageTeacher = () => {
             </Form.Item>
           </Form>
         </div>
+      </Modal>
+      <Modal title="Import new teachers" maskClosable={true} visible={isModalVisible.import} width="30%" footer={null} style={{ padding: 0 }} getContainer={false}>
+        <Upload {...props}>
+          <Button icon={<UploadOutlined />}>Select File</Button>
+        </Upload>
+        <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0} loading={upLoading} style={{ marginTop: 16 }}>
+          {upLoading ? "Uploading" : "Start Upload"}
+        </Button>
       </Modal>
     </div>
   );

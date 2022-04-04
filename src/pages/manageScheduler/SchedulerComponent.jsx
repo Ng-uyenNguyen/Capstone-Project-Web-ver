@@ -243,7 +243,7 @@ export default function App() {
           ))}
         </Select>
         <Button type="primary" icon={<DownloadOutlined />} size="large" onClick={handleImport}>
-          Recurring
+          Generate for next 9 weeks
         </Button>
         {loading && (
           <div className={styles.navbar__item}>

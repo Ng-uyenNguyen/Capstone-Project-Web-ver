@@ -1,3 +1,4 @@
+import { SearchOutlined } from "@ant-design/icons";
 import { faCalendar, faEnvelope, faLocationDot, faMobileScreenButton, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography, message } from "antd";
@@ -37,6 +38,19 @@ export const ManageStudent = () => {
       title: <b>ID</b>,
       dataIndex: "id",
       key: "id",
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+        <Input
+          autoFocus
+          placeholder="Search here..."
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
+        />
+      ),
+      filterIcon: () => <SearchOutlined size="large" />,
+      onFilter: (value, record) => record.id.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: <b>Phone</b>,
@@ -251,18 +265,18 @@ export const ManageStudent = () => {
             </h1>
             <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onUpdateFinish} onFinishFailed={onUpdateFinishFailed} autoComplete="off" layout="vertical" form={updateForm}>
               <div className="form_row">
-                <Form.Item label="Name" name="name" className="item1">
+                <Form.Item label="Name" name="name" className="item1" rules={[{ required: true }, { pattern: "^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$", message: "Invalid phone number" }]}>
                   <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faUser} size="xl" color="#21bf73" />} />
                 </Form.Item>
-                <Form.Item label="Age" name="age" className="item2">
+                <Form.Item label="Age" name="age" className="item2" rules={[{ required: true }]}>
                   <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faCalendar} size="xl" color="#21bf73" />} />
                 </Form.Item>
               </div>
-              <Form.Item label="Address" name="address">
+              <Form.Item label="Address" name="address" rules={[{ required: true }]}>
                 <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faLocationDot} size="xl" color="#21bf73" />} />
               </Form.Item>
               <div className="form_row">
-                <Form.Item label="Contact" name="contact" className="item1">
+                <Form.Item label="Contact" name="contact" className="item1" rules={[{ required: true }]}>
                   <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faMobileScreenButton} size="xl" color="#21bf73" />} />
                 </Form.Item>
                 <Form.Item label="Gender" name="gender" className="item2">
@@ -272,7 +286,7 @@ export const ManageStudent = () => {
                   </Select>
                 </Form.Item>
               </div>
-              <Form.Item label="Email" name="email">
+              <Form.Item label="Email" name="email" rules={[{ required: true }, { pattern: /^[^s@]+@[^s@]+.[^s@]+$/, message: "Invalid email address" }]}>
                 <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
               </Form.Item>
               <Form.Item style={{ float: "right", marginTop: "7%", marginBottom: "0" }}>
@@ -332,7 +346,7 @@ export const ManageStudent = () => {
               <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faLocationDot} size="xl" color="#21bf73" />} />
             </Form.Item>
             <div className="form_row">
-              <Form.Item label="Contact" name="contact" className="item1" rules={[{ required: true }]}>
+              <Form.Item label="Contact" name="contact" className="item1" rules={[{ required: true }, { pattern: "^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$", message: "Invalid phone number" }]}>
                 <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faMobileScreenButton} size="xl" color="#21bf73" />} />
               </Form.Item>
               <Form.Item label="Gender" name="gender" className="item2" initialValue={0}>
@@ -342,7 +356,7 @@ export const ManageStudent = () => {
                 </Select>
               </Form.Item>
             </div>
-            <Form.Item label="Email" name="email" rules={[{ required: true }]}>
+            <Form.Item label="Email" name="email" rules={[{ required: true }, { pattern: /^[^s@]+@[^s@]+.[^s@]+$/, message: "Invalid email address" }]}>
               <Input bordered={false} addonBefore={<FontAwesomeIcon icon={faEnvelope} size="xl" color="#21bf73" />} />
             </Form.Item>
             <Form.Item label="Avatar" name="avatar">

@@ -42,13 +42,13 @@ export const CourseListDetail = ({ loading, courseInfo }) => {
               <td>
                 <b>End date: </b>
               </td>
-              <td>{moment(courseInfo.startDate).format("DD/MM/YYYY") == "Invalid date" ? "-" : moment(courseInfo.startDate).format("DD/MM/YYYY")}</td>
+              <td>{moment(courseInfo.endDate).format("DD/MM/YYYY") == "Invalid date" ? "-" : moment(courseInfo.endDate).format("DD/MM/YYYY")}</td>
             </tr>
             <tr>
               <td>
                 <b>Duration: </b>
               </td>
-              <td>10 weeks</td>
+              <td>{moment(courseInfo.startDate).format("DD/MM/YYYY") == "Invalid date" ? "-" : "10 weeks"}</td>
             </tr>
           </table>
           <Button className={styles.remove_button}>

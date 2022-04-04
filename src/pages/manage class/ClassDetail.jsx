@@ -12,7 +12,7 @@ export const ClassDetail = () => {
   const { item } = location.state.classInfo;
   return (
     <div className={styles.class_detail}>
-      <Title level={3}>Class Detail</Title>
+      <Title level={3}>{item.classId} Class Detail</Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Students" key="1">
           <StudentList item={item} />
