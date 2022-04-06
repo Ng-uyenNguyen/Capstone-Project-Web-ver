@@ -2,32 +2,18 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
 import { apiStore } from "../../constant/apiStore";
+import { accountStore } from "../../constant/accountStore";
 import axios from "axios";
 
 export const Login = () => {
   let navigate = useNavigate();
   const onFinish = async (values) => {
     console.log(values);
-    const form = new FormData();
-    form.append("email", "TranLQ@capstone.com");
-    form.append("password", "FpXxmBwXMv");
-    fetch(apiStore.login, {
-      body: form,
-      method: "post",
-      headers: {
-        Cache: "no-cache",
-      },
-      credentials: "include",
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    const res = await axios.post(apiStore.login, form, { withCredentials: true });
-    console.log(res);
+    accountStore.forEach((item) => {
+      if (item.username === values.username && item.password === values.password) {
+        navigate("management", { replace: true });
+      }
+    });
     // const profileRes = await axios.get(apiStore.getProfile, { withCredentials: true });
     // console.log(profileRes);
     // if (res.status === 200) {

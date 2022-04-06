@@ -90,7 +90,7 @@ function PersonDetail({ loading, showModal, selectedPerson, role }) {
         {role === "Student" ? <div className={styles.teacher__teaching__subject__form__item}>{selectedPerson.classs[0]}</div> : selectedPerson.subjects.map((sub) => <div className={styles.teacher__teaching__subject__form__item}>{sub}</div>)}
       </div>
       <div className={styles.button_wrapper}>
-        <button className={styles.remove_button}>Dis Active</button>
+        <button className={styles.remove_button}>De Active</button>
         {showModal ? (
           <button className={styles.update_button} onClick={showModal}>
             Update

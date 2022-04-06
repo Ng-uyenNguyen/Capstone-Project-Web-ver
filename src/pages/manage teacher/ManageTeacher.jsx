@@ -99,25 +99,17 @@ export const ManageTeacher = () => {
     };
     updateTeacher();
   };
-  const props = {
-    onRemove: (file) => {
-      setFileList((prev) => {
-        const index = prev.indexOf(file);
-        const newFileList = prev.slice();
-        newFileList.splice(index, 1);
-        return newFileList;
-      });
-    },
-    beforeUpload: (file) => {
-      setFileList((prev) => ({
-        fileList: [...prev, file],
-      }));
-      return false;
-    },
-    fileList,
-  };
-  const handleUpload = () => {
+  const handleUpload = async () => {
+    const fileUpload = new FormData();
     console.log(fileList);
+    fileUpload.append("file", fileList);
+    const res = await axios.post(apiStore.registerImports, fileUpload);
+    if (res.status === 200) {
+      message.success("Upload successfully!");
+    } else {
+      console.log(res);
+      message.error("Upload failed!");
+    }
   };
   const onAddNewFinish = (fieldsValue) => {
     const teacherData = {
@@ -379,8 +371,29 @@ export const ManageTeacher = () => {
           </Form>
         </div>
       </Modal>
-      <Modal title="Import new teachers" maskClosable={true} visible={isModalVisible.import} width="30%" footer={null} style={{ padding: 0 }} getContainer={false}>
-        <Upload {...props}>
+
+      <Modal
+        title="Import new teachers"
+        maskClosable={true}
+        visible={isModalVisible.import}
+        width="30%"
+        footer={null}
+        style={{ padding: 0 }}
+        getContainer={false}
+        closable={true}
+        onCancel={() =>
+          setIsModalVisible((prev) => {
+            return { ...prev, import: false };
+          })
+        }>
+        <Upload
+          maxCount={1}
+          beforeUpload={(file) => {
+            setFileList(file);
+            return false;
+          }}
+          onRemove={() => setFileList([])}
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
           <Button icon={<UploadOutlined />}>Select File</Button>
         </Upload>
         <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0} loading={upLoading} style={{ marginTop: 16 }}>

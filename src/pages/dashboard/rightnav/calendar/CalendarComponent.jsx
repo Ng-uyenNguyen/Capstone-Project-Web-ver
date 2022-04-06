@@ -8,6 +8,7 @@ export const CalendarComponent = () => {
   return (
     <div className="site-calendar-customize-header-wrapper">
       <Calendar
+        style={{ border: "none" }}
         fullscreen={false}
         headerRender={({ value, type, onChange, onTypeChange }) => {
           const start = 0;
@@ -45,11 +46,7 @@ export const CalendarComponent = () => {
               <Typography.Title level={4}>Calendar</Typography.Title>
               <Row gutter={8}>
                 <Col>
-                  <Radio.Group
-                    size="small"
-                    onChange={(e) => onTypeChange(e.target.value)}
-                    value={type}
-                  >
+                  <Radio.Group size="small" onChange={(e) => onTypeChange(e.target.value)} value={type}>
                     <Radio.Button value="month">Month</Radio.Button>
                     <Radio.Button value="year">Year</Radio.Button>
                   </Radio.Group>
@@ -63,8 +60,7 @@ export const CalendarComponent = () => {
                       const now = value.clone().year(newYear);
                       onChange(now);
                     }}
-                    value={String(year)}
-                  >
+                    value={String(year)}>
                     {options}
                   </Select>
                 </Col>
@@ -77,8 +73,7 @@ export const CalendarComponent = () => {
                       const newValue = value.clone();
                       newValue.month(parseInt(selectedMonth, 10));
                       onChange(newValue);
-                    }}
-                  >
+                    }}>
                     {monthOptions}
                   </Select>
                 </Col>

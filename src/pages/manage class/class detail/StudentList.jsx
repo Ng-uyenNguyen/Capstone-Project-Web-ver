@@ -22,8 +22,9 @@ export const StudentList = ({ item }) => {
   }));
 
   useEffect(() => {
+    const myAbortController = new AbortController();
     const fetchStudentData = async () => {
-      const res = await axios.get(apiStore.getStudents);
+      const res = await axios.get(apiStore.getStudents, { signal: myAbortController.signal });
       const data = res.data;
       console.log(data);
       const sameSpecStudents = data.filter((student) => student.specialization === item.specialization);
@@ -51,6 +52,9 @@ export const StudentList = ({ item }) => {
       setStudentTableLoading(false);
     };
     fetchStudentData();
+    return () => {
+      myAbortController.abort();
+    };
   }, []);
 
   const columns = [

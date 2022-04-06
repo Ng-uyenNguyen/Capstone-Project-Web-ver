@@ -19,6 +19,7 @@ export default function App() {
   const [newEvent, setNewEvent] = useState();
   const [lsTeacher, setLsTeacher] = useState([]);
   const [lsSubject, setLsSubject] = useState([]);
+  const [lsClassId, setLsClassId] = useState([]);
   const [classId, setClassId] = useState("");
   const prevSubject = useRef(lsSubject);
   const prevTeacher = useRef(lsTeacher);
@@ -27,6 +28,33 @@ export default function App() {
 
   function onChange(value) {
     setClassId(value);
+    function fetchData(setEvents) {
+      setLoading(true);
+      axios({
+        method: "GET",
+        url: apiStore.getScheduleByClassId + value,
+      }).then((res) => {
+        console.log(res.data, "list Event");
+        const newData = res.data.map((item) => {
+          return {
+            event_id: item.id,
+            title: item.subject.code,
+            start: new Date(item.timeStart),
+            end: new Date(item.timeEnd),
+            teacher_name: item.teacherName,
+            room: `${item.room}`,
+            subject_code: item.subject.code,
+          };
+        });
+        console.log(newData, "new fetch Events");
+        setEvents(newData);
+        setLoading(false);
+      });
+    }
+    const currentSubject = lsClass.find((item) => item.classId === value);
+    console.log(currentSubject.subjects, "jnsakndkjsn");
+    setLsSubject([...currentSubject.subjects]);
+    fetchData(setEvents);
   }
 
   function onSearch(val) {
@@ -38,10 +66,11 @@ export default function App() {
       setLoading(true);
       axios({
         method: "GET",
-        url: apiStore.getAllClass,
+        url: apiStore.getClassSimple,
       }).then((res) => {
         const newData = res.data.map((item) => item.classId);
-        setlsClass(newData);
+        setLsClassId(newData);
+        setLsClass(res.data);
         setLoading(false);
       });
     }
@@ -66,7 +95,6 @@ export default function App() {
     fetchData(setLsClass, setLoading);
     fetchTeacherData(setLsTeacher);
   }, []);
-  // Get Previou state of list subjects
   useEffect(() => {
     prevSubject.current = lsSubject;
     prevTeacher.current = lsTeacher;
@@ -74,58 +102,12 @@ export default function App() {
     console.log(prevTeacher, "prev Teacher");
   }, [lsSubject, lsTeacher]);
   useEffect(() => {
-    function fetchData(setEvents) {
-      setLoading(true);
-      axios({
-        method: "GET",
-        url: apiStore.getScheduleByClassId + classId,
-      }).then((res) => {
-        console.log(res.data, "list Event");
-        const newData = res.data.map((item) => {
-          return {
-            event_id: item.id,
-            title: item.subject.code,
-            start: new Date(item.timeStart),
-            end: new Date(item.timeEnd),
-            teacher_name: item.teacherName,
-            room: `${item.room}`,
-            subject_code: item.subject.code,
-          };
-        });
-        console.log(newData, "new fetch Events");
-        setEvents(newData);
-        setLoading(false);
-      });
-    }
-
-    function fetchDataSubject(setLsSubject) {
-      setLoading(true);
-      axios({
-        method: "GET",
-        url: apiStore.getClassById + classId,
-      }).then((res) => {
-        console.log(res.data.subjects, "class subjects");
-        const newData = res.data.subjects.map((item) => {
-          return {
-            subject_id: item.subjectId,
-            subject_code: item.subjectCode,
-            teacher_name: item.teacherName,
-          };
-        });
-        console.log(newData, "newData");
-        setLsSubject(newData);
-        setLoading(false);
-      });
-    }
-    fetchDataSubject(setLsSubject);
-    fetchData(setEvents);
-    prevClassId.current = classId;
-  }, [classId]);
-  // Set List New Events to Import Recurring
-  useEffect(() => {
     prevlsNewImport.current.push(newEvent);
     console.log(prevlsNewImport, "New List Event To Import");
   }, [newEvent]);
+  useEffect(() => {
+    prevClassId.current = classId;
+  }, [classId]);
 
   const handleConfirm = async (e, action) => {
     if (action === "edit") {
@@ -140,16 +122,17 @@ export default function App() {
       });
 
       setTest(Math.random());
+      console.log(prevClassId, "Prev Class Id");
       let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
-      let subject = prevSubject.current.find((item) => item.subject_code === e.subject_code);
+      let subject = prevSubject.current.find((item) => item.subjectId === e.subject_code);
       const putEvent = {
         room: parseInt(e.room),
         timeStart: moment(e.start).toISOString(),
         timeEnd: moment(e.end).toISOString(),
         classId: prevClassId.current,
-        subjectId: subject.subject_id,
+        subjectId: subject.subjectId,
         teacherId: teacher.teacher_id,
-        description: "Not yet",
+        status: "NOT YET",
       };
       setLoading(true);
       axios.put(apiStore.updateSchedule + slotId, putEvent).then((res) => {
@@ -163,32 +146,21 @@ export default function App() {
     } else if (action === "create") {
       setEvents((prev) => [...prev, e]);
       let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
-      let subject = prevSubject.current.find((item) => item.subject_code === e.subject_code);
+      let subject = prevSubject.current.find((item) => item.subjectId === e.subject_code);
+      console.log(e, "evennnnnn");
+      console.log(teacher, "teacher Post");
+      console.log(subject, "subject Post");
+      console.log(prevClassId, "Prev Class Id");
       const PostEvent = {
         room: parseInt(e.room),
         timeStart: moment(e.start).toISOString(),
         timeEnd: moment(e.end).toISOString(),
         classId: prevClassId.current,
-        subjectId: subject.subject_id,
+        subjectId: subject.subjectId,
         teacherId: teacher.teacher_id,
       };
+      console.log(PostEvent, "Post Event");
       setNewEvent(PostEvent);
-      // async function CreatePost() {
-      //   console.log(apiStore.postSchedule);
-      //   const requestOptions = {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify(PostEvent),
-      //   };
-
-      //   const response = await fetch(
-      //     `${apiStore.postSchedule}`,
-      //     requestOptions
-      //   );
-      //   const data = await response.json();
-      //   console.log(data, "Post Event");
-      // }
-      // CreatePost();
       return events;
     }
   };
@@ -236,14 +208,14 @@ export default function App() {
     <Fragment>
       <div className={styles.navbar}>
         <Select size="large" showSearch placeholder="Select Class" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-          {lsClass.map((item) => (
+          {lsClassId.map((item) => (
             <Option value={item} key={item}>
               {item}
             </Option>
           ))}
         </Select>
         <Button type="primary" icon={<DownloadOutlined />} size="large" onClick={handleImport}>
-          Generate for next 9 weeks
+          Recurring
         </Button>
         {loading && (
           <div className={styles.navbar__item}>
@@ -276,9 +248,9 @@ export default function App() {
             type: "select",
             options: lsSubject.map((res) => {
               return {
-                id: res.subject_code,
-                text: `${res.subject_code}`,
-                value: res.subject_code, //Should match "name" property
+                id: res.subjectCode,
+                text: `${res.subjectCode}`,
+                value: res.subjectId, //Should match "name" property
               };
             }),
             config: { label: "Subject", required: true },

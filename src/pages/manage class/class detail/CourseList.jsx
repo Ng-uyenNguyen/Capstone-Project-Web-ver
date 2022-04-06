@@ -78,8 +78,9 @@ export const CourseList = ({ item }) => {
   const { Option } = Select;
 
   useEffect(() => {
+    const myAbortController = new AbortController();
     const getSubjectsData = async () => {
-      const res = await axios.get(apiStore.getAllSubjects);
+      const res = await axios.get(apiStore.getAllSubjects, { signal: myAbortController.signal });
       const data = res.data;
       console.log(data);
       let str = item.specialization;
@@ -96,6 +97,9 @@ export const CourseList = ({ item }) => {
       setAllChosenSubjectData(renderredSubject);
     };
     getSubjectsData();
+    return () => {
+      myAbortController.abort();
+    };
   }, []);
 
   return (

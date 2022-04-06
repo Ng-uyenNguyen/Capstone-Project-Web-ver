@@ -80,6 +80,7 @@ export const AttendanceLog = ({ item }) => {
   }
   useEffect(() => {
     const fetchScheduleData = async () => {
+      console.log(apiStore.getScheduleByClassId + item.classId);
       let res = await axios.get(apiStore.getScheduleByClassId + item.classId);
       let data = await res.data;
       console.log(data);
@@ -123,7 +124,7 @@ const AttendanceLogBlock = ({ slotId, date }) => {
       studentId: item.accountId,
       slotId: slotId,
       status: item.status,
-      description: "",
+      description: item.description,
     }));
     const res = await axios.put(apiStore.updateAttendanceLog, data);
     if (res.status === 200) {

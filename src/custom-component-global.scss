@@ -523,6 +523,10 @@
   .modal_content {
     font-family: $fontFamily;
     padding-left: 0;
+    .ant-input-group-addon {
+      background-color: $white;
+      border: none;
+    }
     .ant-form-item-label > label {
       font-weight: bold;
       font-size: 16px;
@@ -538,21 +542,21 @@
     }
     .input_field {
       display: flex;
-      width: 95%;
-      .ant-select-selection-search-input {
-        border-bottom: 1px solid $primary-color-1;
-      }
+
       .ant-select-selector {
         border: none;
         border-bottom: 1px solid $primary-color-1;
+        width: 94%;
       }
       img {
         width: 30px;
         height: 30px;
       }
+
       input {
         border-radius: 0;
         border-bottom: 1px solid $primary-color-1;
+        width: 420px;
       }
     }
   }

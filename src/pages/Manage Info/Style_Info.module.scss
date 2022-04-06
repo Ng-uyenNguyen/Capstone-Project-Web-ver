@@ -1,5 +1,5 @@
 @use "../../scss/abstracts/" as *;
-.divider{
+.divider {
   @include divider(20%);
   width: 97%;
 }
@@ -13,7 +13,7 @@
   align-items: center;
   padding-left: 2%;
 }
-.profile_field{
+.profile_field {
   display: flex;
   flex-direction: row;
   font-family: $fontFamily;
@@ -34,35 +34,26 @@
   font-size: large;
 }
 .profile_title {
-  width: 20%;
-  display: flex;
-  flex-direction: column;
+  width: 250px;
   font-family: $fontFamily;
   font-size: $fontSizeMedium;
   font-weight: bold;
   color: $txtColor;
-  p {
-    margin-bottom: 11%;
-  }
-  
+  height: 60px;
 }
-.profile_data{
-  p {
-    margin-bottom: 11%;
-  }
-}
+
 //====================== Change Password
-.changePass{
+.changePass {
   display: flex;
   flex-direction: column;
 }
-.info{
+.info {
   display: flex;
   align-items: center;
   margin: 3% 3% 0 0;
   padding-left: 2%;
 }
-.contain{
+.contain {
   background-color: $primary-color-4;
   width: 95%;
   height: 600px;
@@ -73,26 +64,25 @@
   padding-top: 20px;
 }
 
-.custom_form{
+.custom_form {
   font-family: $fontFamily;
   display: flex;
   flex-direction: column;
   margin-left: 15%;
   margin-top: 5%;
-  .input_item{
+  .input_item {
     display: flex;
     flex-direction: row;
   }
-  input{
+  input {
     width: 425px;
     height: 51px;
     border-radius: 10px;
     border-color: $primary-color-1;
     margin-left: 70px;
     margin-bottom: 5%;
-   
   }
-  p{
+  p {
     width: 35%;
     display: flex;
     flex-direction: column;
@@ -100,39 +90,38 @@
     font-size: $fontSizeMedium;
     font-weight: bold;
     color: $txtColor;
-}
-.custom_btn{
-  font-family: $fontFamily;
-  align-self: flex-end;
-  &__btn_cancel{
-    font-size: large;
-    width: 110px;
-    height: 44px;
-    border-radius: 25px;
-    border-color: $red;
-    background-color: $white;
-    color: $red;
-    font-weight: bold;
-    margin-right: 20px;
-    &:hover {
-      background-color: $red;
-      color: $white;
-    }
-
   }
-  &__btn_done{
-    font-size: large;
-    width: 110px;
-    height: 44px;
-    border-radius: 25px;
-    border-color: $primary-color-1;
-    background-color: $white;
-    color: $primary-color-1;
-    font-weight: bold;
-    &:hover {
-      background-color:$primary-color-1;
-      color: $white;
+  .custom_btn {
+    font-family: $fontFamily;
+    align-self: flex-end;
+    &__btn_cancel {
+      font-size: large;
+      width: 110px;
+      height: 44px;
+      border-radius: 25px;
+      border-color: $red;
+      background-color: $white;
+      color: $red;
+      font-weight: bold;
+      margin-right: 20px;
+      &:hover {
+        background-color: $red;
+        color: $white;
+      }
+    }
+    &__btn_done {
+      font-size: large;
+      width: 110px;
+      height: 44px;
+      border-radius: 25px;
+      border-color: $primary-color-1;
+      background-color: $white;
+      color: $primary-color-1;
+      font-weight: bold;
+      &:hover {
+        background-color: $primary-color-1;
+        color: $white;
+      }
     }
   }
-}
 }

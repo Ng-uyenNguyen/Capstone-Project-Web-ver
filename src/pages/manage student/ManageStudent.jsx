@@ -1,7 +1,7 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined, UploadOutlined } from "@ant-design/icons";
 import { faCalendar, faEnvelope, faLocationDot, faMobileScreenButton, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography, message } from "antd";
+import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography, message, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useDrivePicker from "react-google-drive-picker";
@@ -18,9 +18,12 @@ export const ManageStudent = () => {
   const [loading, setLoading] = useState(false);
   const [specializations, setSpecializations] = useState([]);
   const [reRender, setReRender] = useState("");
+  const [fileList, setFileList] = useState([]);
+  const [upLoading, setUpLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState({
     addNew: false,
     update: false,
+    import: false,
   });
   const { Title } = Typography;
   const [updateForm] = Form.useForm();
@@ -97,6 +100,18 @@ export const ManageStudent = () => {
     setIsModalVisible((prev) => {
       return { ...prev, update: false };
     });
+  };
+  const handleUpload = async () => {
+    const fileUpload = new FormData();
+    console.log(fileList);
+    fileUpload.append("file", fileList);
+    const res = await axios.post(apiStore.registerImports, fileUpload);
+    if (res.status === 200) {
+      message.success("Upload successfully!");
+    } else {
+      console.log(res);
+      message.error("Upload failed!");
+    }
   };
   const onAddNewFinish = (fieldsValue) => {
     const studentData = {
@@ -195,6 +210,15 @@ export const ManageStudent = () => {
       <Title level={3}>Manage Student</Title>
       <div className={styles.divider} />
       <div className={styles.student_list}>
+        <Button
+          type="primary"
+          className={styles.import_new_teacher_btn}
+          onClick={() => {
+            showModal("import");
+          }}>
+          <UploadOutlined />
+          Import
+        </Button>
         <Button
           type="primary"
           className={styles.add_new_student_btn}
@@ -372,6 +396,34 @@ export const ManageStudent = () => {
             </Form.Item>
           </Form>
         </div>
+      </Modal>
+      <Modal
+        title="Import new students"
+        maskClosable={true}
+        visible={isModalVisible.import}
+        width="30%"
+        footer={null}
+        style={{ padding: 0 }}
+        getContainer={false}
+        closable={true}
+        onCancel={() =>
+          setIsModalVisible((prev) => {
+            return { ...prev, import: false };
+          })
+        }>
+        <Upload
+          maxCount={1}
+          beforeUpload={(file) => {
+            setFileList(file);
+            return false;
+          }}
+          onRemove={() => setFileList([])}
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+          <Button icon={<UploadOutlined />}>Select File</Button>
+        </Upload>
+        <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0} loading={upLoading} style={{ marginTop: 16 }}>
+          {upLoading ? "Uploading" : "Start Upload"}
+        </Button>
       </Modal>
     </div>
   );

@@ -58,6 +58,44 @@
 .spec_detail {
   @include right_side_bar;
   overflow: scroll;
+  .custom_box {
+    @include flex(baseline, flex-start);
+    margin-bottom: 5px;
+
+    &__divider {
+      min-width: 20px;
+      width: 10%;
+      height: 2px;
+      background-color: $primary-color-1;
+    }
+    .box {
+      border: 1px solid $primary-color-1;
+      width: 280px;
+      height: 80px;
+      border-radius: 10px;
+      position: relative;
+      @include flex(center, center);
+      box-sizing: border-box;
+      margin-bottom: 10px;
+
+      h3 {
+        margin-top: 20px;
+        // color: $primary-color-1;
+        // font-weight: 400;
+      }
+      &::before {
+        content: "";
+        background-color: $primary-color-1;
+        position: absolute;
+        left: -1px;
+        top: 0px;
+        width: 10%;
+        height: 101%;
+        border-radius: 10px 0px 0px 10px;
+        border: 1px solid $primary-color-1;
+      }
+    }
+  }
   h5 {
     font-weight: bold;
     margin-bottom: 2%;
@@ -67,7 +105,7 @@
   &__spec {
     color: $primary-color-1;
     font-weight: bold;
-    font-size: medium;
+    font-size: large;
   }
   &__divider {
     @include divider(0);
@@ -90,16 +128,16 @@
     }
   }
   .btn_update {
-    width: 110px;
+    width: 280px;
     height: 34px;
-    border-color: $yellow;
-    color: $yellow;
+    border-color: $primary-color-1;
+    color: $primary-color-1;
     background-color: $white;
-    border-radius: 40px;
+    border-radius: 10px;
     font-size: medium;
     font-weight: bold;
     &:hover {
-      background-color: $yellow;
+      background-color: $primary-color-1;
       color: $white;
     }
   }
@@ -109,10 +147,11 @@
     @include flex(center, center);
   }
   .info {
+    margin-top: 20px;
+    width: 90%;
     &__item {
-      @include flex(center, flex-start);
+      @include flex(baseline, flex-start);
       flex-direction: row;
-      padding-left: 20px;
       &__title {
         font-weight: bold;
         margin-right: 10px;
@@ -121,72 +160,32 @@
   }
 }
 
-.sem_detail {
-  margin-top: 10px;
-  .custom_box {
-    @include flex(baseline, flex-start);
-    margin-bottom: 5px;
-
-    &__divider {
-      min-width: 20px;
-      width: 10%;
-      height: 2px;
-      background-color: $primary-color-1;
-    }
-    .box {
-      border: 1px solid $primary-color-1;
-      width: 240px;
-      height: 56px;
-      border-radius: 10px;
-      position: relative;
-      @include flex(center, center);
-      box-sizing: border-box;
-      margin-bottom: 10px;
-
-      h2 {
-        margin: 0;
-        color: $primary-color-1;
-        font-weight: 400;
-      }
-      &::before {
-        content: "";
-        background-color: $primary-color-1;
-        position: absolute;
-        left: -1px;
-        top: 0px;
-        width: 10%;
-        height: 101%;
-        border-radius: 10px 0px 0px 10px;
-        border: 1px solid $primary-color-1;
-      }
-    }
-  }
-  .subject_list {
-    font-family: $fontFamily;
-    @include flex(baseline, flex-start);
-    margin-left: 30px;
-    flex-direction: column;
-    &__subject_items {
-      @include flex(baseline, flex-start);
-      flex-direction: row;
-    }
-  }
+.heading_title {
+  width: 93%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: large;
+}
+.subject_list {
+  width: 95%;
+  @include flex(flex-start, baseline);
+  flex-flow: row wrap;
+  margin-left: 18px;
+  gap: 15px 25px;
   .subject_tag {
     background-color: $primary-color-1;
-    width: 61px;
-    height: 20px;
+    width: 70px;
+    height: 25px;
     border-radius: 5px;
     color: $white;
     text-align: center;
-    &__divider {
-      min-width: 10px;
-      height: 2px;
-      width: 5%;
-      background-color: $primary-color-1;
-      margin: 5px 10px 5px 0;
-    }
   }
 }
+
+// .sem_detail {
+//   margin-top: 10px;
+
+// }
 .ant-modal-content {
   border-radius: 20px;
 }
@@ -201,6 +200,21 @@
   font-weight: bold;
   &:hover {
     background-color: $primary-color-1;
+    color: $white;
+  }
+}
+.btn_cancel {
+  width: 100px;
+  height: 40px;
+  margin-right: 5px;
+  border-color: $red;
+  color: $red;
+  background-color: $white;
+  border-radius: 40px;
+  font-size: medium;
+  font-weight: bold;
+  &:hover {
+    background-color: $red;
     color: $white;
   }
 }
