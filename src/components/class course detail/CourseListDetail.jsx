@@ -5,9 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./CourseListDetail.module.scss";
 import moment from "moment";
-export const CourseListDetail = ({ loading, courseInfo }) => {
-  const { Option } = Select;
-  const [isDisable, setIsDisable] = useState(true);
+export const CourseListDetail = ({ loading, courseInfo, handleDeleteCourse }) => {
   return !loading ? (
     <div className={styles.class_course_detail_loading}>
       <Image src={require("../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
@@ -51,7 +49,7 @@ export const CourseListDetail = ({ loading, courseInfo }) => {
               <td>{moment(courseInfo.startDate).format("DD/MM/YYYY") == "Invalid date" ? "-" : "10 weeks"}</td>
             </tr>
           </table>
-          <Button className={styles.remove_button}>
+          <Button className={styles.remove_button} onClick={handleDeleteCourse}>
             <FontAwesomeIcon icon={faTrash} />
           </Button>
         </Space>

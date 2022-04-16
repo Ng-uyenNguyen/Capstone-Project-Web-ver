@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, Button } from "antd";
 import styles from "./Style_Specs.module.scss";
-
 export const SpecDetail = ({ loading, info, showModal, getCode }) => {
   return !loading ? (
     <div className={styles.spec_detail_loading}>
@@ -34,12 +33,28 @@ export const SpecDetail = ({ loading, info, showModal, getCode }) => {
       <div className={styles.info}>
         <div className={styles.info__item}>
           <p className={styles.info__item__title}>No.Classes</p>
-          <p>10</p>
+          <p>{info.classes.length}</p>
         </div>
         <div className={styles.info__item}>
-          <p className={styles.info__item__title}>No.Students</p>
-          <p>50</p>
+          <p className={styles.info__item__title}>No.Subjects</p>
+          <p>{info.subjects.length}</p>
         </div>
+      </div>
+      <div className={styles.heading_title}>
+        <h4>
+          <b>List of Classes</b>
+        </h4>
+        <div className={styles.divider}></div>
+      </div>
+      <div className={styles.subject_list}>
+        {info.classes &&
+          info.classes.map((info, i) => {
+            return (
+              <div className={styles.subject_tag} key={i}>
+                {info}
+              </div>
+            );
+          })}
       </div>
       <div className={styles.heading_title}>
         <h4>

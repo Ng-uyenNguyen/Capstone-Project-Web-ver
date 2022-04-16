@@ -1,4 +1,4 @@
-import { SearchOutlined, UploadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, SearchOutlined, UploadOutlined } from "@ant-design/icons";
 import { faCalendar, faEnvelope, faLocationDot, faMobileScreenButton, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, DatePicker, Form, Image, Input, Modal, Select, Table, Typography, message, Upload } from "antd";
@@ -103,12 +103,14 @@ export const ManageTeacher = () => {
     const fileUpload = new FormData();
     console.log(fileList);
     fileUpload.append("file", fileList);
-    const res = await axios.post(apiStore.registerImports, fileUpload);
-    if (res.status === 200) {
-      message.success("Upload successfully!");
-    } else {
-      console.log(res);
+    try {
+      const res = await axios.post(apiStore.registerImports, fileUpload);
+      if (res.status === 200) {
+        message.success("Upload successfully!");
+      }
+    } catch (error) {
       message.error("Upload failed!");
+      console.error(error);
     }
   };
   const onAddNewFinish = (fieldsValue) => {
@@ -164,13 +166,27 @@ export const ManageTeacher = () => {
       clientId: "783817650711-i61ag5smqtp7r7idjfdr689vo3jabh9p.apps.googleusercontent.com",
       developerKey: "AIzaSyDmk-kVoNPTD8_jjT58mClo8SRtJfF-fVo",
       viewId: "DOCS",
-      token: "ya29.A0ARrdaM9op1qMcbeHj4vr430uw9NPE724vRKgsbEadi3LKY-0eQexHWD5tXjtc_A6Gz2jILA0yYC-YZ2TogNc3jrGfZKvmqGcGMc8bdbUXMVXT8lXEdhv-h32A84N4Hi8fZjKfKfQLEMnLpxM22h0Nf82fM6a", // pass oauth token in case you already have one
+      token: "ya29.A0ARrdaM9_QJtdjAE3fz8ZM2iD2ObMaeh-Vj_i0JX9gLOOJ6D2N8wC-aOPkvKABkWbziQunqgdYnh3G3QKBs2JtVAcf9GiweARHtbJd1I9ZBDp-H_CmygN54yPk09fejYqCLtuHZnd5SxqLlfjXLjmUayeid1K", // pass oauth token in case you already have one
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
       multiselect: true,
       // customViews: customViewsArray, // custom view
     });
+  };
+
+  const handleDeActive = async () => {
+    const deActiveAccounts = [selectedTeacher.accountId];
+    try {
+      const res = await axios.put(apiStore.deAtiveAccount, deActiveAccounts);
+      if (res.status === 200) {
+        message.success("Account was de-activated!");
+        setReRender("De-active");
+      }
+    } catch (error) {
+      message.error("Cannot de-active account!");
+      console.error(error);
+    }
   };
   // ------ Fetch teacher data -----------
   useEffect(() => {
@@ -247,6 +263,7 @@ export const ManageTeacher = () => {
         }}
         role="Lecturer"
         selectedPerson={selectedTeacher}
+        handleDeActive={handleDeActive}
       />
       {/* Modal update teacher */}
 
@@ -398,6 +415,9 @@ export const ManageTeacher = () => {
         </Upload>
         <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0} loading={upLoading} style={{ marginTop: 16 }}>
           {upLoading ? "Uploading" : "Start Upload"}
+        </Button>
+        <Button type="primary" href={apiStore.downloadSampleFile} style={{ marginTop: 16, marginLeft: 10 }} icon={<DownloadOutlined />}>
+          Download sample file
         </Button>
       </Modal>
     </div>

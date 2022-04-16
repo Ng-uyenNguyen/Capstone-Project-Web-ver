@@ -178,8 +178,8 @@ export const ManageClass = () => {
               </Form.Item>
               <Form.Item label="Specialization" name="specialization">
                 <Select>
-                  {specializations.map((item) => (
-                    <Option key={item.id} value={item.id}>
+                  {specializations.map((item, index) => (
+                    <Option key={index} value={item.id}>
                       {item.name}
                     </Option>
                   ))}

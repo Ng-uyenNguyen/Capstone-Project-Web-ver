@@ -3,7 +3,6 @@ import { CurrentClassTable } from "./current_classes_table/CurrentClassTable";
 import "./dashboard_styles.scss";
 import { PillButton } from "./PillButton";
 import { RightNav } from "./rightnav/RightNav";
-import { Chart } from "./chart/Chart";
 import axios from "axios";
 import { apiStore } from "../../constant/apiStore";
 export const Dashboard = () => {

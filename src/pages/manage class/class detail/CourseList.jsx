@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Table, Select, message } from "antd";
+import { Button, Form, Input, Modal, Table, Select, message, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { faBook, faBookBible } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,17 +7,22 @@ import styles from "./CourseList.module.scss";
 import axios from "axios";
 import { apiStore } from "../../../constant/apiStore";
 
-export const CourseList = ({ item }) => {
+export const CourseList = ({ item, setReRender }) => {
   console.log(item);
   const [allChosenSubjectData, setAllChosenSubjectData] = useState([]);
   const [lsTeacherOfSubject, setLsTeacherOfSubject] = useState([]);
+  const [loadTeachers, setLoadTeachers] = useState(false);
+  const [courseInfo, setCourseInfo] = useState({});
+  const [activeRow, setActiveRow] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const dataSource = item.subjects.map((subject, index) => ({
     key: index,
     name: subject.subjectName,
     subjectCode: subject.subjectCode,
     teacher: subject.teacherName,
   }));
-
+  const { Option } = Select;
   const columns = [
     {
       title: <b>Name</b>,
@@ -36,10 +41,6 @@ export const CourseList = ({ item }) => {
       key: "teacher",
     },
   ];
-  const [courseInfo, setCourseInfo] = useState([]);
-  const [activeRow, setActiveRow] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onAddNewFinish = (fieldsValue) => {
     const addCourse = async () => {
@@ -48,13 +49,16 @@ export const CourseList = ({ item }) => {
         classId: item.classId,
         teacherId: fieldsValue.lecture,
       };
-      const res = await axios.post(apiStore.addCourseToClass, data);
-      if (res.status === 200) {
-        message.success("Add successfully!");
-        setIsModalVisible(false);
-      } else {
+      try {
+        const res = await axios.post(apiStore.addCourseToClass, data);
+        if (res.status === 200) {
+          message.success("Add successfully!");
+          setReRender("Add course");
+          setIsModalVisible(false);
+        }
+      } catch (err) {
         message.success("Add failed!");
-        console.log(res);
+        console.log(err);
       }
     };
     addCourse();
@@ -71,11 +75,24 @@ export const CourseList = ({ item }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  function handleChange(value) {
+  async function handleChange(value) {
     const chosenSubject = allChosenSubjectData.find((i) => i.id === value);
-    setLsTeacherOfSubject(chosenSubject.teachers);
+    setLoadTeachers(true);
+    const res = await axios.get(apiStore.getSubjectByID + chosenSubject.id);
+    setLsTeacherOfSubject(res.data.teachers);
+    setLoadTeachers(false);
   }
-  const { Option } = Select;
+  const handleDeleteCourse = async () => {
+    console.log("deletinggg");
+    console.log(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId);
+    try {
+      const res = axios.delete(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId);
+      if (res.status === 200) message.success("Delete successfully!");
+    } catch (error) {
+      console.error(error);
+      message.error("Delete failed!");
+    }
+  };
 
   useEffect(() => {
     const myAbortController = new AbortController();
@@ -129,7 +146,9 @@ export const CourseList = ({ item }) => {
           }}
         />
       </div>
-      <CourseListDetail loading={loading} courseInfo={courseInfo} />
+      <CourseListDetail loading={loading} courseInfo={courseInfo} handleDeleteCourse={handleDeleteCourse} />
+
+      {/* Add new course to class modal */}
       <Modal title="" maskClosable={false} visible={isModalVisible} width="30%" className="course_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <h2>
           <FontAwesomeIcon icon={faBookBible} size="lg" color="#21bf73" style={{ marginRight: "10px" }} />
@@ -156,6 +175,7 @@ export const CourseList = ({ item }) => {
                 ))}
               </Select>
             </Form.Item>
+            <Spin size="small" spinning={loadTeachers} />
             <Form.Item style={{ float: "right", margin: "0" }}>
               <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel}>
                 Done

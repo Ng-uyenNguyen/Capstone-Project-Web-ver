@@ -180,6 +180,7 @@ export default function App() {
     deleteSchedule(setLoading);
     return events;
   };
+
   const handleImport = async () => {
     const recurringEvents = { slots: [] };
     for (let i = 1; i < prevlsNewImport.current.length; i++) {
@@ -194,9 +195,11 @@ export default function App() {
         .then((res) => {
           message.success("Import successfully!");
           setLoading(false);
+          prevlsNewImport.current = [];
           console.log(res.data, "import data");
         })
         .catch((err) => {
+          prevlsNewImport.current = [];
           console.log(err);
           setTimeout(setLoading(false), 10000);
           message.success("Import successfully!");

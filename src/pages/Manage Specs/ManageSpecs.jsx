@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Table, Modal, Form, Input, Select, Tag, message } from "antd";
+import { Typography, Button, Table, Modal, Form, Input, Select, message } from "antd";
 import { SpecDetail } from "./SpecDetail.jsx";
 import styles from "./Style_Specs.module.scss";
 import { apiStore } from "../../constant/apiStore";
@@ -18,6 +18,7 @@ export const ManageSpecs = () => {
   const [formUpdate] = Form.useForm();
   const [formAdd] = Form.useForm();
   const [loadTable, setLoadTable] = useState(true);
+
   // modal
   const [isModalVisible, setIsModalVisible] = useState({
     addNew: false,
@@ -40,6 +41,7 @@ export const ManageSpecs = () => {
       const res = await fetch(apiStore.getSpecs);
       const data = await res.json();
       setListSpecs(data);
+
       setLoadTable(false);
     }
     setTimeout(getSpecs, 1000);
@@ -149,7 +151,7 @@ export const ManageSpecs = () => {
       key: "name",
       render: (name) => (
         <>
-          <p key={getCode(name)}>{getCode(name)}</p>
+          <label key={getCode(name)}>{getCode(name)}</label>
         </>
       ),
     },
@@ -173,13 +175,13 @@ export const ManageSpecs = () => {
     },
     {
       title: "No.Classes",
-      dataIndex: "numClass",
-      key: "numClass",
-    },
-    {
-      title: "No.Students",
-      dataIndex: "numStudent",
-      key: "numStudent",
+      dataIndex: "classes",
+      key: "classes",
+      render: (classes, i) => (
+        <>
+          <label key={i}>{classes.length}</label>
+        </>
+      ),
     },
   ];
 

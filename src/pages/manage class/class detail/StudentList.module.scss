@@ -10,4 +10,11 @@
     right: 0;
     @include add_button;
   }
+  .import_new_student_btn {
+    position: absolute;
+    top: -57px;
+    right: 170px;
+    @include add_button;
+    background: $blue;
+  }
 }

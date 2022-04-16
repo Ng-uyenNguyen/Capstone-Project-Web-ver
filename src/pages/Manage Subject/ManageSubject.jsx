@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Tag, Typography, Button, Table, Modal, Input, Select, Form, message } from "antd";
 import { SubjectDetail } from "./SubjectDetail";
 import styles from "./StyleSubject.module.scss";
@@ -9,15 +9,17 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 export const ManageSubject = () => {
   const { Title } = Typography;
   const [listSubjects, setListSub] = useState([]);
+  const [lsTeacher, setlsTeachers] = useState([]);
+  const [lsSubDetail, setSubDetai] = useState([]);
   const [info, setInfo] = useState({});
   const [reRender, setReRender] = useState("");
 
-  const [lsTeacher, setlsTeachers] = useState([]);
   const [formUpdate] = Form.useForm();
   const [formAdd] = Form.useForm();
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadTable, setLoadTable] = useState(true);
+  const [loadDetail, setLoadDetail] = useState(false);
 
   // modal
   const [isModalVisible, setIsModalVisible] = useState({
@@ -66,6 +68,30 @@ export const ManageSubject = () => {
     }
     setTimeout(getLsTeacher, 1000);
   }, []);
+  // Get Subject Detail
+
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  };
+  let prevID = usePrevious(info.id);
+  useEffect(() => {
+    if (typeof info.id != undefined) {
+      async function getSubjectDetail() {
+        const res = await fetch(apiStore.getSubjectByID + info.id);
+        const data = await res.json();
+        setSubDetai(data);
+        setLoadDetail(false);
+      }
+      setTimeout(getSubjectDetail, 1000);
+    }
+    if (prevID !== info.id) {
+      setLoadDetail(true);
+    }
+  }, [info.id]);
 
   const columns = [
     {
@@ -196,6 +222,7 @@ export const ManageSubject = () => {
       .then((response) => {
         if (response.status === 200) {
           message.success("Update Subject successfully");
+          setLoading(false);
           setReRender("update");
         } else {
           message.error("Update Subject failed");
@@ -365,7 +392,7 @@ export const ManageSubject = () => {
           }}
         />
       </div>
-      <SubjectDetail loading={loading} info={info} showModal={showModal} />
+      <SubjectDetail loading={loading} info={info} showModal={showModal} lsSubDetail={lsSubDetail} loadDetail={loadDetail} />
     </div>
   );
 };

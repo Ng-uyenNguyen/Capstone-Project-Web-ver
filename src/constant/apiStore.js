@@ -32,4 +32,9 @@ export const apiStore = {
   getTeachers: baseUrl + "account/teachers",
   getClassSimple: baseUrl + "class/simple",
   registerImports: baseUrl + "register/import",
+  deAtiveAccount: baseUrl + "account",
+  deleteCourseInClass: baseUrl + "class/deletecourse?classId=",
+  downloadSampleFile: baseUrl + "download/samplefile",
+  importStudentToClass: baseUrl + "class/import/student",
+  downloadAddStudentToClassSample: baseUrl + "class/download/samplefile",
 };

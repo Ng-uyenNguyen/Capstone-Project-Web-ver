@@ -3,7 +3,7 @@ import { Image, Space } from "antd";
 import React from "react";
 import styles from "./TeacherDetail.module.scss";
 
-function PersonDetail({ loading, showModal, selectedPerson, role }) {
+function PersonDetail({ loading, showModal, selectedPerson, role, handleDeActive }) {
   return !loading ? (
     <div className={styles.loading}>
       <Image src={require("../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
@@ -13,7 +13,7 @@ function PersonDetail({ loading, showModal, selectedPerson, role }) {
       <div className={styles.teacher__avatar__form}>
         <img src={"https://drive.google.com/uc?export=view&id=" + selectedPerson.avatar} alt="" className={styles.teacher__avatar__form__image} />
         <div className={styles.teacher__avatar__form__name}>{selectedPerson.name}</div>
-        <div className={styles.teacher__avatar__form__class}>{selectedPerson.classs}</div>
+        <div className={styles.teacher__avatar__form__class}>{selectedPerson.accountId}</div>
         <div className={styles.teacher__avatar__form__role}>{role}</div>
       </div>
       <div className={styles.teacher__form__title}>
@@ -87,10 +87,15 @@ function PersonDetail({ loading, showModal, selectedPerson, role }) {
       </div>
 
       <div className={styles.teacher__teaching__subject__form}>
-        {role === "Student" ? <div className={styles.teacher__teaching__subject__form__item}>{selectedPerson.classs[0]}</div> : selectedPerson.subjects.map((sub) => <div className={styles.teacher__teaching__subject__form__item}>{sub}</div>)}
+        {role === "Student"
+          ? selectedPerson.classs.map((classs) => <div className={styles.teacher__teaching__subject__form__item}>{classs}</div>)
+          : //================
+            selectedPerson.subjects.map((sub) => <div className={styles.teacher__teaching__subject__form__item}>{sub}</div>)}
       </div>
       <div className={styles.button_wrapper}>
-        <button className={styles.remove_button}>De Active</button>
+        <button className={styles.remove_button} onClick={handleDeActive}>
+          De - Active
+        </button>
         {showModal ? (
           <button className={styles.update_button} onClick={showModal}>
             Update
