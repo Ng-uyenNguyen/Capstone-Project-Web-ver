@@ -109,6 +109,7 @@ export const ManageStudent = () => {
       const res = await axios.post(apiStore.registerImports, fileUpload);
       if (res.status === 200) {
         message.success("Upload successfully!");
+        setReRender("import");
       }
     } catch (error) {
       message.error("Upload failed!");
@@ -297,7 +298,7 @@ export const ManageStudent = () => {
           </div>
           <div className="modal_update_info">
             <h1>
-              Update Information <Image src={require("../../assets/images/update_icon.png")} />
+              Update Information <Image src={require("../../assets/images/update_icon.png")} preview={false} />
             </h1>
             <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onUpdateFinish} onFinishFailed={onUpdateFinishFailed} autoComplete="off" layout="vertical" form={updateForm}>
               <div className="form_row">

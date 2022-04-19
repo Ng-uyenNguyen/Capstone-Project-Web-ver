@@ -251,9 +251,9 @@ export default function App() {
             type: "select",
             options: lsSubject.map((res) => {
               return {
-                id: res.subjectCode,
+                id: res.subjectId,
                 text: `${res.subjectCode}`,
-                value: res.subjectId, //Should match "name" property
+                value: res.subjectCode, //Should match "name" property
               };
             }),
             config: { label: "Subject", required: true },

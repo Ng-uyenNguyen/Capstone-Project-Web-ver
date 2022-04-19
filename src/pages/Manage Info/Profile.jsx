@@ -7,11 +7,11 @@ export const Profile = () => {
     age: "30",
     gender: "Female",
     name: "My Nguyen",
-    personal_email: "nguyenndbde140258@fpt.edu.vn",
+    personal_email: "mynh3000@gmail.com",
     phone: "0123456789",
     account_id: "LE00001",
     // Not available
-    email: "nguyenndbde@attendance.com",
+    email: "MyNH3@capstone.com",
     address: " 123 Chau Thi Vinh Te",
     birthday: "01/01/2000",
   };
@@ -20,7 +20,7 @@ export const Profile = () => {
       <h1>Profile</h1>
       <div className={styles.divider} />
       <div className={styles.info_banner}>
-        <Avatar size={160} icon={<img src={require("../../assets/images/profileImg.png")}></img>} />
+        <Avatar size={160} icon={<img src={"https://drive.google.com/uc?export=view&id=1Ym8PMuDF4g_v2THXCyhWQYp_InPLjKQ8"}></img>} />
         <div className={styles.name_field}>
           <Title>{user_data.name}</Title>
           <p className={styles.role}>Administration</p>

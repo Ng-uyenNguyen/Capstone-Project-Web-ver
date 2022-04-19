@@ -8,25 +8,31 @@ import axios from "axios";
 export const Login = () => {
   let navigate = useNavigate();
   const onFinish = async (values) => {
-    console.log(values);
-    accountStore.forEach((item) => {
-      if (item.username === values.username && item.password === values.password) {
-        navigate("management", { replace: true });
-      }
+    const form = new FormData();
+    form.append("email", values.username);
+    form.append("password", values.password);
+    // accountStore.forEach((item) => {
+    //   if (item.username === values.username && item.password === values.password) {
+    //     navigate("management", { replace: true });
+    //   }
+    // });
+    const res = await axios.post(apiStore.login, form, {
+      auth: {
+        email: values.email,
+        password: values.password,
+      },
     });
-    // const profileRes = await axios.get(apiStore.getProfile, { withCredentials: true });
-    // console.log(profileRes);
-    // if (res.status === 200) {
-    //   const accountId = res.data;
-    //   console.log(accountId);
-    // const profileRes = await axios.get(apiStore.getProfile);
-    // const profile = await profileRes.json();
-    // console.log(profile);
-    // if (profile.roles[0] === "ROLE_MANAGER");
-    // navigate("management", { replace: true });
-    // console.log("Login successfully");
-    // }
-    // console.log(res);
+    console.log(res);
+    if (res.status === 200) {
+      const accountId = res.data;
+      console.log(accountId);
+      const profileRes = await axios.get(apiStore.getProfile);
+      const profile = await profileRes.json();
+      console.log(profile);
+      // if (profile.roles[0] === "ROLE_MANAGER");
+      // navigate("management", { replace: true });
+      // console.log("Login successfully");
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);

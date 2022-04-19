@@ -3,7 +3,7 @@ import { Image, Space } from "antd";
 import React from "react";
 import styles from "./StudentDetail.module.scss";
 
-function StudentDetail({ loading, deleteStudent, studentInfo, classId }) {
+function StudentDetail({ loading, handleDeleteStudent, studentInfo, classId }) {
   return !loading ? (
     <div className={styles.loading}>
       <Image src={require("../../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
@@ -88,9 +88,11 @@ function StudentDetail({ loading, deleteStudent, studentInfo, classId }) {
       <div className={styles.teacher__teaching__subject__form}>
         <div className={styles.teacher__teaching__subject__form__item}>{classId}</div>
       </div>
-      {/* <div className={styles.button_wrapper}>
-        <button className={styles.remove_button}>Remove</button>
-      </div> */}
+      <div className={styles.button_wrapper}>
+        <button className={styles.remove_button} onClick={handleDeleteStudent}>
+          Remove
+        </button>
+      </div>
     </div>
   );
 }

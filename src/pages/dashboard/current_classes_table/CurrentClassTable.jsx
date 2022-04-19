@@ -54,13 +54,12 @@ export const CurrentClassTable = () => {
     const fetchData = async () => {
       const res = await axios.get(apiStore.getOngoingClass);
       const data = res.data;
-      console.log(data);
       const mappedData = data.map((item, index) => ({
         key: index,
         Class: item.classId,
         Room: item.room,
-        timeStart: moment(item.timeStart).format("HH:MM"),
-        timeEnd: moment(item.timeEnd).format("HH:MM"),
+        timeStart: moment(item.timeStart).format("HH:mm"),
+        timeEnd: moment(item.timeEnd).format("HH:mm"),
         Lecture: item.teacherName,
         Subject: item.subject.code,
         detail: (

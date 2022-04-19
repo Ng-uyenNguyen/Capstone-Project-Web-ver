@@ -12,7 +12,7 @@ export const MainLayout = () => {
       <div className={styles.main}>
         <div className={styles.admin_dropdown_wrapper}>
           <div className={styles.admin_dropdown}>
-            <Avatar src={require("../assets/images/profileImg.png")} size="large" />
+            <Avatar src={"https://drive.google.com/uc?export=view&id=1Ym8PMuDF4g_v2THXCyhWQYp_InPLjKQ8"} size="large" />
             <Dropdown overlay={menu} trigger={["click"]}>
               <p className={styles.admin_name}>
                 Hello, My Nguyen <DownOutlined style={{ marginLeft: "25px" }} />

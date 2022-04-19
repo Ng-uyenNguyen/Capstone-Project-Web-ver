@@ -15,6 +15,7 @@ export const CourseList = ({ item, setReRender }) => {
   const [courseInfo, setCourseInfo] = useState({});
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [courseForm] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dataSource = item.subjects.map((subject, index) => ({
     key: index,
@@ -74,6 +75,9 @@ export const CourseList = ({ item, setReRender }) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    courseForm.resetFields();
+    setLoadTeachers(false);
+    setLsTeacherOfSubject([]);
   };
   async function handleChange(value) {
     const chosenSubject = allChosenSubjectData.find((i) => i.id === value);
@@ -83,12 +87,12 @@ export const CourseList = ({ item, setReRender }) => {
     setLoadTeachers(false);
   }
   const handleDeleteCourse = async () => {
-    console.log("deletinggg");
-    console.log(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId);
     try {
       const res = axios.delete(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId);
       if (res.status === 200) message.success("Delete successfully!");
+      else message.error("Delete failed!");
     } catch (error) {
+      console.log("dddddddddd");
       console.error(error);
       message.error("Delete failed!");
     }
@@ -156,7 +160,7 @@ export const CourseList = ({ item, setReRender }) => {
         </h2>
 
         <div className="modal_addnew_form">
-          <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onAddNewFinish} onFinishFailed={onAddNewFinishFailed} autoComplete="off" layout="vertical">
+          <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onAddNewFinish} onFinishFailed={onAddNewFinishFailed} autoComplete="off" layout="vertical" form={courseForm}>
             <Form.Item label="Course Id" name="courseId">
               <Select showSearch bordered={false} placeholder="Select Course" optionFilterProp="children" onChange={handleChange}>
                 {allChosenSubjectData.map((subject) => (

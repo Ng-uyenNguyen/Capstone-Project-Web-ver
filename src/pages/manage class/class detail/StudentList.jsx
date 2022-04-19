@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import styles from "./StudentList.module.scss";
-import { Avatar, Button, Form, Input, Table, Typography, Modal, message, Upload } from "antd";
-import StudentDetail from "./StudentDetail";
-import axios from "axios";
-import { apiStore } from "../../../constant/apiStore";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
+import { Avatar, Button, message, Modal, Table, Upload } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { apiStore } from "../../../constant/apiStore";
+import StudentDetail from "./StudentDetail";
+import styles from "./StudentList.module.scss";
 export const StudentList = ({ item, setReRender }) => {
   const [outsideStudent, setOutsideStudent] = useState([]);
   console.log(item);
@@ -124,12 +124,24 @@ export const StudentList = ({ item, setReRender }) => {
     };
     addStudentToClass();
   };
+
+  const handleDeleteStudent = async () => {
+    try {
+      const res = await axios.delete(apiStore.deleteStudent(item.classId, studentInfo.accountId));
+      if (res.status === 200) {
+        message.success("Delete successfully!");
+        setReRender("Delete student");
+      }
+    } catch (error) {
+      message.error("Delete failed!");
+      console.error(error);
+    }
+  };
   const showModal = (method) => {
     setIsModalVisible((prev) => {
       return { ...prev, [method]: true };
     });
   };
-
   const onSelectChange = (selectedRowKeys, selectedRows) => {
     let selectedStudentsID = selectedRows.map((student) => student.id);
     setSelectedStudents(selectedStudentsID);
@@ -195,7 +207,7 @@ export const StudentList = ({ item, setReRender }) => {
           }}
         />
       </div>
-      <StudentDetail loading={loading} studentInfo={studentInfo} classId={item.classId} />
+      <StudentDetail loading={loading} studentInfo={studentInfo} classId={item.classId} handleDeleteStudent={handleDeleteStudent} />
 
       <Modal title="" maskClosable={false} visible={isModalVisible.addNew} width="60%" className="studentList_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <h2>Add new students</h2>

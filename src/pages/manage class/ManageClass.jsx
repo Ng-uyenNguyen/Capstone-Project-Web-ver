@@ -20,6 +20,7 @@ export const ManageClass = () => {
       size: values.quantity,
       semester: 1,
     };
+    console.log(data);
     const addNewClasses = async () => {
       const res = await axios.post(apiStore.addNewClass, data);
       if (res.status === 200) {
@@ -59,7 +60,7 @@ export const ManageClass = () => {
         khoa: "K" + item.classId.slice(2, 4),
         classID: item.classId,
         specilization: item.specialization,
-        totalStudent: item.students.length,
+        totalStudent: item.studentCount,
         detail: (
           <Button type="link" onClick={() => handleNavigate({ item })}>
             Detail
@@ -76,7 +77,8 @@ export const ManageClass = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       const res = await axios.get(apiStore.getAllSpecializations);
-      const data = res.data;
+      const data = await res.data;
+      console.log(data, "specccc");
       setSpecializations(data);
     };
     fetchStudentData();
@@ -176,10 +178,10 @@ export const ManageClass = () => {
                   <Option value={16}>K16</Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Specialization" name="specialization">
+              <Form.Item label="Specialization" name="specialization" initialValue={specializations[0]?.specId}>
                 <Select>
                   {specializations.map((item, index) => (
-                    <Option key={index} value={item.id}>
+                    <Option key={index} value={item.specId}>
                       {item.name}
                     </Option>
                   ))}

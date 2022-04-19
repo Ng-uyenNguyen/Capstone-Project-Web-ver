@@ -1,4 +1,4 @@
-// const baseUrl = "https://capstone-web-server-nabati.herokuapp.com/";
+// const baseUrl = "https://ai-attendance-server.herokuapp.com/";
 const baseUrl = "https://localhost/";
 export const apiStore = {
   login: baseUrl + "login",
@@ -37,4 +37,6 @@ export const apiStore = {
   downloadSampleFile: baseUrl + "download/samplefile",
   importStudentToClass: baseUrl + "class/import/student",
   downloadAddStudentToClassSample: baseUrl + "class/download/samplefile",
+  getCurrentlyOnline: baseUrl + "account/recently",
+  deleteStudent: (classId, studentId) => baseUrl + `class/deletestudent?classId=${classId}&studentId=${studentId}`,
 };
