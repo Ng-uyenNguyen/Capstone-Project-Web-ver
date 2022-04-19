@@ -21,6 +21,7 @@ export default function App() {
   const [lsSubject, setLsSubject] = useState([]);
   const [lsClassId, setLsClassId] = useState([]);
   const [classId, setClassId] = useState("");
+  const [currentSubject, setCurrentSubject] = useState();
   const prevSubject = useRef(lsSubject);
   const prevTeacher = useRef(lsTeacher);
   const prevClassId = useRef(classId);
@@ -120,11 +121,10 @@ export default function App() {
         console.log(e, "Edit Events");
         return prev;
       });
-
       setTest(Math.random());
       console.log(prevClassId, "Prev Class Id");
       let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
-      let subject = prevSubject.current.find((item) => item.subjectId === e.subject_code);
+      let subject = prevSubject.current.find((item) => item.subjectCode === e.subject_code);
       const putEvent = {
         room: parseInt(e.room),
         timeStart: moment(e.start).toISOString(),
@@ -146,7 +146,7 @@ export default function App() {
     } else if (action === "create") {
       setEvents((prev) => [...prev, e]);
       let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
-      let subject = prevSubject.current.find((item) => item.subjectId === e.subject_code);
+      let subject = prevSubject.current.find((item) => item.subjectCode === e.subject_code);
       console.log(e, "evennnnnn");
       console.log(teacher, "teacher Post");
       console.log(subject, "subject Post");
@@ -251,7 +251,7 @@ export default function App() {
             type: "select",
             options: lsSubject.map((res) => {
               return {
-                id: res.subjectId,
+                id: res.subjectCode,
                 text: `${res.subjectCode}`,
                 value: res.subjectCode, //Should match "name" property
               };
