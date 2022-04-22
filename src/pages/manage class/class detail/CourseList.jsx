@@ -17,12 +17,14 @@ export const CourseList = ({ item, setReRender }) => {
   const [loading, setLoading] = useState(false);
   const [courseForm] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentCourseData, setCurrentCourseData] = useState({ courseId: 0, teacherId: "" });
   const dataSource = item.subjects.map((subject, index) => ({
     key: index,
     name: subject.subjectName,
     subjectCode: subject.subjectCode,
     teacher: subject.teacherName,
   }));
+
   const { Option } = Select;
   const columns = [
     {
@@ -46,19 +48,20 @@ export const CourseList = ({ item, setReRender }) => {
   const onAddNewFinish = (fieldsValue) => {
     const addCourse = async () => {
       const data = {
-        subjectId: fieldsValue.courseId,
+        subjectId: currentCourseData.courseId,
         classId: item.classId,
-        teacherId: fieldsValue.lecture,
+        teacherId: currentCourseData.teacherId,
       };
+      console.log(data, "dataaaaaaaaaaaasas");
       try {
         const res = await axios.post(apiStore.addCourseToClass, data);
         if (res.status === 200) {
           message.success("Add successfully!");
-          setReRender("Add course");
+          setReRender("Add course" + currentCourseData.courseId);
           setIsModalVisible(false);
         }
       } catch (err) {
-        message.success("Add failed!");
+        message.error("Add failed!");
         console.log(err);
       }
     };
@@ -80,12 +83,20 @@ export const CourseList = ({ item, setReRender }) => {
     setLsTeacherOfSubject([]);
   };
   async function handleChange(value) {
+    setCurrentCourseData((prev) => {
+      return { ...prev, courseId: value };
+    });
     const chosenSubject = allChosenSubjectData.find((i) => i.id === value);
     setLoadTeachers(true);
     const res = await axios.get(apiStore.getSubjectByID + chosenSubject.id);
     setLsTeacherOfSubject(res.data.teachers);
     setLoadTeachers(false);
   }
+  const handleLecturerChange = (value) => {
+    setCurrentCourseData((prev) => {
+      return { ...prev, teacherId: value };
+    });
+  };
   const handleDeleteCourse = async () => {
     try {
       const res = axios.delete(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId);
@@ -158,11 +169,10 @@ export const CourseList = ({ item, setReRender }) => {
           <FontAwesomeIcon icon={faBookBible} size="lg" color="#21bf73" style={{ marginRight: "10px" }} />
           Add new course
         </h2>
-
         <div className="modal_addnew_form">
           <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onAddNewFinish} onFinishFailed={onAddNewFinishFailed} autoComplete="off" layout="vertical" form={courseForm}>
             <Form.Item label="Course Id" name="courseId">
-              <Select showSearch bordered={false} placeholder="Select Course" optionFilterProp="children" onChange={handleChange}>
+              <Select showSearch bordered={false} placeholder="Select Course" onChange={handleChange}>
                 {allChosenSubjectData.map((subject) => (
                   <Option key={subject.id} value={subject.id}>
                     {subject.subjectCode}
@@ -171,7 +181,7 @@ export const CourseList = ({ item, setReRender }) => {
               </Select>
             </Form.Item>
             <Form.Item label="Lecturer" name="lecture">
-              <Select showSearch bordered={false} placeholder="Select Lecturer" optionFilterProp="children">
+              <Select showSearch bordered={false} placeholder="Select Lecturer" optionFilterProp="children" onChange={handleLecturerChange}>
                 {lsTeacherOfSubject.map((teacher) => (
                   <Option key={teacher.accountId} value={teacher.accountId}>
                     {teacher.name}

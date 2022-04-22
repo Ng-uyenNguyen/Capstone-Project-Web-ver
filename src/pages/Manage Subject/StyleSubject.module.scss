@@ -111,8 +111,11 @@
     }
   }
   .btn_field {
-    width: 92%;
-    padding-top: 40px;
+    width: 100%;
+    padding: 40px 15px 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
   .subject_banner {
     display: flex;

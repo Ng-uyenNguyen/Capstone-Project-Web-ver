@@ -6,14 +6,14 @@ export const Profile = () => {
   const user_data = {
     age: "30",
     gender: "Female",
-    name: "My Nguyen",
-    personal_email: "mynh3000@gmail.com",
+    name: "Xuan Nguyen",
+    personal_email: "xuannt3000@gmail.com",
     phone: "0123456789",
     account_id: "LE00001",
     // Not available
-    email: "MyNH3@capstone.com",
+    email: "XuanNT@capstone.com",
     address: " 123 Chau Thi Vinh Te",
-    birthday: "01/01/2000",
+    birthday: "01/01/1995",
   };
   return (
     <div className={styles.manage_profile}>

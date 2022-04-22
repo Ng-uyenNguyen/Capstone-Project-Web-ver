@@ -1,11 +1,42 @@
-import { Avatar, Image, Menu, Dropdown } from "antd";
+import { DownOutlined, HolderOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Dropdown, Menu } from "antd";
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import styles from "./MainLayout.module.scss";
-import { DownOutlined, UserOutlined, HolderOutlined, LogoutOutlined } from "@ant-design/icons";
 
 export const MainLayout = () => {
+  let navigate = useNavigate();
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <Link to="/management/profile">
+          <UserOutlined style={{ marginRight: "5px" }} />
+          Profile
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <Link to="/management/changePassword">
+          <HolderOutlined style={{ marginRight: "5px" }} />
+          Change Password
+        </Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3">
+        <Button
+          type="text"
+          onClick={() => {
+            localStorage.setItem("userAuth", "false");
+            console.log(localStorage.getItem("userAuth"));
+            navigate("/", { replace: true });
+          }}>
+          <LogoutOutlined style={{ marginRight: "5px" }} />
+          Log Out
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div>
       <Sidebar />
@@ -15,7 +46,7 @@ export const MainLayout = () => {
             <Avatar src={"https://drive.google.com/uc?export=view&id=1Ym8PMuDF4g_v2THXCyhWQYp_InPLjKQ8"} size="large" />
             <Dropdown overlay={menu} trigger={["click"]}>
               <p className={styles.admin_name}>
-                Hello, My Nguyen <DownOutlined style={{ marginLeft: "25px" }} />
+                Hello, XuanNT <DownOutlined style={{ marginLeft: "25px" }} />
               </p>
             </Dropdown>
           </div>
@@ -25,26 +56,3 @@ export const MainLayout = () => {
     </div>
   );
 };
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <Link to="/management/profile">
-        <UserOutlined style={{ marginRight: "5px" }} />
-        Profile
-      </Link>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <Link to="/management/changePassword">
-        <HolderOutlined style={{ marginRight: "5px" }} />
-        Change Password
-      </Link>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="3">
-      <Link to="/">
-        <LogoutOutlined style={{ marginRight: "5px" }} />
-        Log Out
-      </Link>
-    </Menu.Item>
-  </Menu>
-);

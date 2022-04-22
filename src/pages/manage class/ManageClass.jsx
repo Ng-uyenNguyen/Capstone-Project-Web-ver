@@ -1,10 +1,10 @@
 import { Button, Image, Modal, Table, Typography, Form, Input, InputNumber, Select, message } from "antd";
 import React, { useEffect, useState } from "react";
 import styles from "./ManageClass.module.scss";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiStore } from "../../constant/apiStore";
 import { SearchOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 export const ManageClass = () => {
   const { Option } = Select;
   const { Title } = Typography;
@@ -12,6 +12,7 @@ export const ManageClass = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [specializations, setSpecializations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [addLoading, setAddLoading] = useState(false);
 
   const onFinish = (values) => {
     const data = {
@@ -21,14 +22,23 @@ export const ManageClass = () => {
       semester: 1,
     };
     console.log(data);
+    setAddLoading(true);
     const addNewClasses = async () => {
-      const res = await axios.post(apiStore.addNewClass, data);
-      if (res.status === 200) {
-        message.success("Add successfully!");
-        form.resetFields();
-        setIsModalVisible(false);
-      } else {
-        console.log(res);
+      try {
+        const res = await axios.post(apiStore.addNewClass, data);
+        if (res.status === 200) {
+          message.success("Add successfully!");
+          form.resetFields(false);
+          setAddLoading(true);
+          setIsModalVisible(false);
+        } else {
+          console.log(res);
+          setAddLoading(false);
+          message.success("Add failed!");
+        }
+      } catch (error) {
+        console.log(error);
+        setAddLoading(false);
         message.success("Add failed!");
       }
     };
@@ -75,13 +85,12 @@ export const ManageClass = () => {
 
   // ---------- Fetch specialization data --------------
   useEffect(() => {
-    const fetchStudentData = async () => {
+    const fetchSpecializationData = async () => {
       const res = await axios.get(apiStore.getAllSpecializations);
       const data = await res.data;
-      console.log(data, "specccc");
       setSpecializations(data);
     };
-    fetchStudentData();
+    fetchSpecializationData();
   }, []);
 
   const columns = [
@@ -176,6 +185,7 @@ export const ManageClass = () => {
                   <Option value={14}>K14</Option>
                   <Option value={15}>K15</Option>
                   <Option value={16}>K16</Option>
+                  <Option value={16}>K17</Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Specialization" name="specialization" initialValue={specializations[0]?.specId}>
@@ -196,7 +206,7 @@ export const ManageClass = () => {
               <Button type="primary" onClick={handleCancel} className="cancel_btn">
                 Cancel
               </Button>
-              <Button type="primary" htmlType="submit" className="submit_btn">
+              <Button type="primary" htmlType="submit" className="submit_btn" loading={addLoading}>
                 Create
               </Button>
             </Form.Item>

@@ -218,7 +218,7 @@ export default function App() {
           ))}
         </Select>
         <Button type="primary" icon={<DownloadOutlined />} size="large" onClick={handleImport}>
-          Recurring
+          Generate Schedule
         </Button>
         {loading && (
           <div className={styles.navbar__item}>

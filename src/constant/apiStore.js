@@ -1,5 +1,5 @@
-// const baseUrl = "https://ai-attendance-server.herokuapp.com/";
-const baseUrl = "https://localhost/";
+const baseUrl = "https://ai-attendance-server.herokuapp.com/";
+// const baseUrl = "https://localhost/";
 export const apiStore = {
   login: baseUrl + "login",
   getAllSpecializations: baseUrl + "specialization",
@@ -39,4 +39,5 @@ export const apiStore = {
   downloadAddStudentToClassSample: baseUrl + "class/download/samplefile",
   getCurrentlyOnline: baseUrl + "account/recently",
   deleteStudent: (classId, studentId) => baseUrl + `class/deletestudent?classId=${classId}&studentId=${studentId}`,
+  getTeacherOfSubjects: baseUrl + "subject/getTeachers/{id}?id=",
 };

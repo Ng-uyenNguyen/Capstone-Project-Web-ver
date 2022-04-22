@@ -1,38 +1,42 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./login_styles.scss";
-import { apiStore } from "../../constant/apiStore";
+// import { apiStore } from "../../constant/apiStore";
 import { accountStore } from "../../constant/accountStore";
-import axios from "axios";
-
+// import axios from "axios";
 export const Login = () => {
   let navigate = useNavigate();
-  const onFinish = async (values) => {
+  const onFinish = (values) => {
     const form = new FormData();
     form.append("email", values.username);
     form.append("password", values.password);
-    // accountStore.forEach((item) => {
-    //   if (item.username === values.username && item.password === values.password) {
-    //     navigate("management", { replace: true });
-    //   }
-    // });
-    const res = await axios.post(apiStore.login, form, {
-      auth: {
-        email: values.email,
-        password: values.password,
-      },
+    let correctAccount = false;
+    accountStore.forEach((item) => {
+      if (item.username === values.username && item.password === values.password) {
+        localStorage.setItem("userAuth", "true");
+        navigate("management", { replace: true });
+        console.log(localStorage.getItem("userAuth"));
+        correctAccount = true;
+      }
     });
-    console.log(res);
-    if (res.status === 200) {
-      const accountId = res.data;
-      console.log(accountId);
-      const profileRes = await axios.get(apiStore.getProfile);
-      const profile = await profileRes.json();
-      console.log(profile);
-      // if (profile.roles[0] === "ROLE_MANAGER");
-      // navigate("management", { replace: true });
-      // console.log("Login successfully");
-    }
+    correctAccount === false && alert("Username or password is incorrect!");
+    // const res = await axios.post(apiStore.login, form, {
+    //   auth: {
+    //     email: values.email,
+    //     password: values.password,
+    //   },
+    // });
+    // console.log(res);
+    // if (res.status === 200) {
+    //   const accountId = res.data;
+    //   console.log(accountId);
+    //   const profileRes = await axios.get(apiStore.getProfile);
+    //   const profile = await profileRes.json();
+    //   console.log(profile);
+    // if (profile.roles[0] === "ROLE_MANAGER");
+    // navigate("management", { replace: true });
+    // console.log("Login successfully");
+    // }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);

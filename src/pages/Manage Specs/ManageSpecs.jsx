@@ -4,11 +4,14 @@ import { SpecDetail } from "./SpecDetail.jsx";
 import styles from "./Style_Specs.module.scss";
 import { apiStore } from "../../constant/apiStore";
 import { SearchOutlined } from "@mui/icons-material";
+import { CompassOutlined } from "@ant-design/icons";
 export const ManageSpecs = () => {
   const { Title } = Typography;
   const [listSpecs, setListSpecs] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   // List subjects of system
   const [listSubjects, setListSub] = useState([]);
+  const [updateLoading, setUpdateLoading] = useState(false);
   // Subjects of Specs
 
   const [info, setInfo] = useState({});
@@ -40,11 +43,18 @@ export const ManageSpecs = () => {
     async function getSpecs() {
       const res = await fetch(apiStore.getSpecs);
       const data = await res.json();
+      const mappedData = data.map((item, index) => ({
+        key: index + 1,
+        code: getCode(item.name),
+        name: item.name,
+        noClass: item.classes.length,
+        id: item.specId,
+      }));
+      setDataSource([...mappedData]);
       setListSpecs(data);
-
       setLoadTable(false);
     }
-    setTimeout(getSpecs, 1000);
+    getSpecs();
   }, [reRender]);
 
   useEffect(() => {
@@ -53,7 +63,7 @@ export const ManageSpecs = () => {
       const data = await res.json();
       setListSub(data);
     }
-    setTimeout(getSubjects, 1000);
+    getSubjects();
   }, []);
   // API GET LIST SUBJECTS OF SPECS
   // useEffect(() => {
@@ -66,9 +76,13 @@ export const ManageSpecs = () => {
   // }, [specID]);
   // Select Input
   const [selectedItems, setSelectedItems] = useState([]);
+  const [updateSelected, setUpdateSelected] = useState([]);
   const filteredOptions = listSubjects.filter((o) => !selectedItems.includes(o));
   const handleSelectChange = (selectedItems) => {
     setSelectedItems(selectedItems);
+  };
+  const handleUpdateSelected = (selectedItems) => {
+    setUpdateSelected(selectedItems);
   };
 
   function getCode(str) {
@@ -110,10 +124,11 @@ export const ManageSpecs = () => {
   };
   //====================== UPDATE SPECS ========================
   const updateSpecs = () => {
+    setUpdateLoading(true);
     const values = {
       specId: info.specId,
       name: info.name,
-      subjectId: selectedItems,
+      subjectId: updateSelected,
     };
     fetch(apiStore.getSpecs, {
       method: "PUT",
@@ -125,8 +140,12 @@ export const ManageSpecs = () => {
       .then((response) => {
         if (response.status === 200) {
           message.success("Update specialization successfully");
+          setIsModalVisible((prev) => {
+            return { ...prev, update: false };
+          });
           setLoading(false);
-          setReRender("update");
+          setUpdateLoading(false);
+          setReRender("update" + updateSelected);
         } else {
           message.error("Update specialization Failed!");
         }
@@ -134,26 +153,23 @@ export const ManageSpecs = () => {
       .catch((err) => {
         console.error(err);
       });
-    setIsModalVisible((prev) => {
-      return { ...prev, update: false };
-    });
+
     formUpdate.resetFields();
   };
   const columns = [
     {
-      title: "ID",
-      dataIndex: "specId",
-      key: "specId",
+      title: "No",
+      dataIndex: "key",
+      key: "key",
+    },
+    {
+      title: "",
+      key: "id",
     },
     {
       title: "Name  Code",
-      dataIndex: "name",
-      key: "name",
-      render: (name) => (
-        <>
-          <label key={getCode(name)}>{getCode(name)}</label>
-        </>
-      ),
+      dataIndex: "code",
+      key: "code",
     },
     {
       title: "Name",
@@ -175,13 +191,8 @@ export const ManageSpecs = () => {
     },
     {
       title: "No.Classes",
-      dataIndex: "classes",
-      key: "classes",
-      render: (classes, i) => (
-        <>
-          <label key={i}>{classes.length}</label>
-        </>
-      ),
+      dataIndex: "noClass",
+      key: "noClass",
     },
   ];
 
@@ -215,7 +226,7 @@ export const ManageSpecs = () => {
                 <Form.Item label="Subject Code" name="subjectId">
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_subjectCode.png")} alt="icon_subject" />
-                    <Select mode="multiple" placeholder="Select Subjects" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }}>
+                    <Select mode="multiple" placeholder="Select Subjects" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                       {filteredOptions.map((item, i) => (
                         <Select.Option key={i} value={item.id}>
                           {item.subjectCode}
@@ -236,8 +247,9 @@ export const ManageSpecs = () => {
             </div>
           </Modal>
         </div>
+
         {/* ================== Update Specs Modal  ======================*/}
-        <div className={styles.modalStyle}>
+        <div>
           <Modal getContainer={false} forceRender className="addNew_subject_modal" visible={isModalVisible.update} onCancel={handleCancel} footer={null} closable={false} maskClosable={false}>
             <div className="modal_content">
               <div className={styles.modalTitle}>
@@ -250,7 +262,7 @@ export const ManageSpecs = () => {
                 <Form.Item label="Subject Code" name="subjectId">
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_subjectCode.png")} alt="icon_subject" />
-                    <Select mode="multiple" placeholder="Select Subjects" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }}>
+                    <Select mode="multiple" placeholder="Select Subjects" value={updateSelected} onChange={handleUpdateSelected} style={{ width: "100%" }} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                       {filteredOptions.map((item, i) => (
                         <Select.Option key={i} value={item.id}>
                           {item.subjectCode}
@@ -263,7 +275,7 @@ export const ManageSpecs = () => {
                   <Button className={styles.btn_cancel} onClick={handleCancel}>
                     Cancel
                   </Button>
-                  <Button htmlType="submit" className={styles.btn_done}>
+                  <Button htmlType="submit" className={styles.btn_done} loading={updateLoading}>
                     Save
                   </Button>
                 </Form.Item>
@@ -274,7 +286,7 @@ export const ManageSpecs = () => {
         <Table
           loading={loadTable}
           className="custom_table_1"
-          dataSource={listSpecs}
+          dataSource={dataSource}
           columns={columns}
           onRow={(record, rowIndex) => {
             return {
@@ -285,9 +297,11 @@ export const ManageSpecs = () => {
                   event.target.parentElement.classList.add("active");
                   return rowIndex;
                 });
-                const data = listSpecs.find((item) => item.specId === record.specId);
+                const data = listSpecs.find((item) => item.specId === record.id);
                 setInfo(data);
                 setLoading(true);
+                let selectedSubjects = listSubjects.filter((item) => data.subjects.includes(item.subjectCode));
+                setUpdateSelected(selectedSubjects.map((i) => i.id));
               },
             };
           }}

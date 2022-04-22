@@ -11,6 +11,7 @@ export const CurrentClassTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedClass, setSelectedClass] = useState({});
+  const [absentStudent, setAbsentStudent] = useState([]);
   const [attendanceLogDataSource, setAttendanceLogDataSource] = useState([]);
   const showModal = () => {
     setIsModalVisible(true);
@@ -25,6 +26,7 @@ export const CurrentClassTable = () => {
     let response = await axios.get(apiStore.getAttendanceLogBySlotId + item.id);
     let data = response.data;
     console.log(data);
+    setAbsentStudent(data.filter((student) => student.status === "ABSENT"));
     let mappedData = data.map((item, index) => ({
       key: index,
       no: index + 1,
@@ -192,6 +194,26 @@ export const CurrentClassTable = () => {
               <td>
                 <Typography.Text>{selectedClass.totalStudents}</Typography.Text>
               </td>
+              {selectedClass.status === "ATTENDED" && (
+                <>
+                  <td>
+                    <Typography.Text strong type="success">
+                      Present :{" "}
+                    </Typography.Text>
+                  </td>
+                  <td>
+                    <Typography.Text>{selectedClass.totalStudents - absentStudent.length}</Typography.Text>
+                  </td>
+                  <td>
+                    <Typography.Text strong type="danger">
+                      Absent :{" "}
+                    </Typography.Text>
+                  </td>
+                  <td>
+                    <Typography.Text>{absentStudent.length}</Typography.Text>
+                  </td>
+                </>
+              )}
             </tr>
           </tbody>
         </table>

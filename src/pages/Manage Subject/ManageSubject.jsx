@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Tag, Typography, Button, Table, Modal, Input, Select, Form, message } from "antd";
-import { SubjectDetail } from "./SubjectDetail";
-import styles from "./StyleSubject.module.scss";
 import { SearchOutlined } from "@mui/icons-material";
+import { Button, Form, Input, message, Modal, Select, Table, Tag, Typography } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import { apiStore } from "../../constant/apiStore";
-import { display, flexbox } from "@mui/system";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import styles from "./StyleSubject.module.scss";
+import { SubjectDetail } from "./SubjectDetail";
 export const ManageSubject = () => {
   const { Title } = Typography;
   const [listSubjects, setListSub] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const [lsTeacher, setlsTeachers] = useState([]);
   const [lsSubDetail, setSubDetai] = useState([]);
   const [info, setInfo] = useState({});
   const [reRender, setReRender] = useState("");
-
+  const [updateSelected, setUpdateSelected] = useState([]);
   const [formUpdate] = Form.useForm();
   const [formAdd] = Form.useForm();
   const [activeRow, setActiveRow] = useState(0);
@@ -33,7 +32,6 @@ export const ManageSubject = () => {
     setIsModalVisible(false);
   };
   const showModal = (method) => {
-    console.log(info);
     formUpdate.setFieldsValue({ name: info.name, subjectCode: info.subjectCode });
 
     setIsModalVisible((prev) => {
@@ -49,12 +47,23 @@ export const ManageSubject = () => {
   const handleSelectChange = (selectedItems) => {
     setSelectedItems(selectedItems);
   };
+  const handleUpdateSelected = (selectedItems) => {
+    setUpdateSelected(selectedItems);
+  };
   //========== GET LIST SUBJECTS AND STUDENTS
   useEffect(() => {
     setLoadTable(true);
     async function getSubjects() {
       const res = await fetch(apiStore.getSubjects);
       const data = await res.json();
+      const mappedData = data.map((item, index) => ({
+        key: index + 1,
+        name: item.name,
+        code: item.subjectCode,
+        lsSpec: item.specializations,
+        id: item.id,
+      }));
+      setDataSource([...mappedData]);
       setListSub(data);
       setLoadTable(false);
     }
@@ -78,12 +87,15 @@ export const ManageSubject = () => {
     return ref.current;
   };
   let prevID = usePrevious(info.id);
+
+  //=========== Get Subject Detail
   useEffect(() => {
     if (typeof info.id != undefined) {
       async function getSubjectDetail() {
         const res = await fetch(apiStore.getSubjectByID + info.id);
         const data = await res.json();
         setSubDetai(data);
+        setUpdateSelected(data.teachers.map((teacher) => teacher.accountId));
         setLoadDetail(false);
       }
       setTimeout(getSubjectDetail, 1000);
@@ -95,14 +107,19 @@ export const ManageSubject = () => {
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
+      title: "No",
+      dataIndex: "key",
+      key: "key",
+    },
+    {
+      title: "",
+
       key: "id",
     },
     {
       title: "Name  Code",
-      dataIndex: "subjectCode",
-      key: "subjectCode",
+      dataIndex: "code",
+      key: "code",
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
         <Input
           autoFocus
@@ -115,7 +132,7 @@ export const ManageSubject = () => {
         />
       ),
       filterIcon: () => <SearchOutlined size="large" />,
-      onFilter: (value, record) => record.subjectCode.toLowerCase().includes(value.toLowerCase()),
+      onFilter: (value, record) => record.code.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Name",
@@ -137,14 +154,14 @@ export const ManageSubject = () => {
     },
     {
       title: "Specialization",
-      dataIndex: "specializations",
-      key: "specializations",
-      render: (specializations) => (
+      dataIndex: "lsSpec",
+      key: "lsSpec",
+      render: (lsSpec) => (
         <>
-          {specializations.map((specialization, i) => {
+          {lsSpec?.map((item, i) => {
             return (
               <Tag key={i} className={styles.subject_tag}>
-                {specialization.toUpperCase()}
+                {item.toUpperCase()}
               </Tag>
             );
           })}
@@ -210,7 +227,7 @@ export const ManageSubject = () => {
   const updateSubject = (fieldsValue) => {
     const values = {
       ...fieldsValue,
-      teacherIds: selectedItems,
+      teacherIds: updateSelected,
     };
     fetch(apiStore.subject + info.id, {
       method: "PUT",
@@ -223,7 +240,7 @@ export const ManageSubject = () => {
         if (response.status === 200) {
           message.success("Update Subject successfully");
           setLoading(false);
-          setReRender("update");
+          setReRender("update" + updateSelected);
         } else {
           message.error("Update Subject failed");
         }
@@ -279,7 +296,7 @@ export const ManageSubject = () => {
                 <Form.Item label="Lecturer Name" name="teacherIds">
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_teacher02.png")} alt="icon_teacher" />
-                    <Select mode="multiple" placeholder="Select lectures" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }}>
+                    <Select mode="multiple" placeholder="Select lectures" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                       {filteredOptions.map((item, i) => (
                         <Select.Option key={i} value={item.accountId}>
                           {item.name}
@@ -324,7 +341,7 @@ export const ManageSubject = () => {
                 <Form.Item label="Lecturer Name" name="teacherIds">
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_teacher02.png")} alt="icon_teacher" />
-                    <Select mode="multiple" placeholder="Select lectures" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }}>
+                    <Select mode="multiple" placeholder="Select lectures" value={updateSelected} onChange={handleUpdateSelected} style={{ width: "100%" }} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                       {filteredOptions.map((item, i) => (
                         <Select.Option key={i} value={item.accountId}>
                           {item.name}
@@ -374,7 +391,7 @@ export const ManageSubject = () => {
         <Table
           loading={loadTable}
           className="custom_table_1"
-          dataSource={listSubjects}
+          dataSource={dataSource}
           columns={columns}
           onRow={(record, rowIndex) => {
             return {
@@ -387,6 +404,8 @@ export const ManageSubject = () => {
                 });
                 setInfo({ ...record });
                 setLoading(true);
+                let selected = listSubjects.find((item) => item.id === record.id);
+                setInfo({ ...selected });
               },
             };
           }}
