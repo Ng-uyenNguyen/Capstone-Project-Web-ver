@@ -27,35 +27,33 @@ export default function App() {
   const prevClassId = useRef(classId);
   const prevlsNewImport = useRef([]);
 
+  function fetchData(setEvents, iden) {
+    setLoading(true);
+    axios({
+      method: "GET",
+      url: apiStore.getScheduleByClassId + iden,
+    }).then((res) => {
+      const newData = res.data.map((item) => {
+        return {
+          event_id: item.id,
+          title: item.subject.code,
+          start: new Date(item.timeStart),
+          end: new Date(item.timeEnd),
+          teacher_name: item.teacherName,
+          room: `${item.room}`,
+          subject_code: item.subject.code,
+        };
+      });
+      console.log(newData, "new fetch Events for" + iden);
+      setEvents(newData);
+      setLoading(false);
+    });
+  }
   function onChange(value) {
     setClassId(value);
-    function fetchData(setEvents) {
-      setLoading(true);
-      axios({
-        method: "GET",
-        url: apiStore.getScheduleByClassId + value,
-      }).then((res) => {
-        console.log(res.data, "list Event");
-        const newData = res.data.map((item) => {
-          return {
-            event_id: item.id,
-            title: item.subject.code,
-            start: new Date(item.timeStart),
-            end: new Date(item.timeEnd),
-            teacher_name: item.teacherName,
-            room: `${item.room}`,
-            subject_code: item.subject.code,
-          };
-        });
-        console.log(newData, "new fetch Events");
-        setEvents(newData);
-        setLoading(false);
-      });
-    }
     const currentSubject = lsClass.find((item) => item.classId === value);
-    console.log(currentSubject.subjects, "jnsakndkjsn");
     setLsSubject([...currentSubject.subjects]);
-    fetchData(setEvents);
+    fetchData(setEvents, value);
   }
 
   function onSearch(val) {
@@ -99,8 +97,6 @@ export default function App() {
   useEffect(() => {
     prevSubject.current = lsSubject;
     prevTeacher.current = lsTeacher;
-    console.log(prevSubject, "prev Subject");
-    console.log(prevTeacher, "prev Teacher");
   }, [lsSubject, lsTeacher]);
   useEffect(() => {
     prevlsNewImport.current.push(newEvent);
@@ -110,7 +106,7 @@ export default function App() {
     prevClassId.current = classId;
   }, [classId]);
 
-  const handleConfirm = async (e, action) => {
+  const handleConfirm = (e, action) => {
     if (action === "edit") {
       let arr = [];
       let slotId = e.event_id;
@@ -136,13 +132,14 @@ export default function App() {
       };
       setLoading(true);
       axios.put(apiStore.updateSchedule + slotId, putEvent).then((res) => {
+        fetchData(setEvents, prevClassId.current);
         setLoading(false);
         console.log(res);
         console.log(res.data);
       });
-
       console.log(putEvent, "PutEvent");
-      return arr;
+      console.log(prevClassId.current, "Class IDDDDDDDDDDDDDDDDDD");
+      return events;
     } else if (action === "create") {
       setEvents((prev) => [...prev, e]);
       let teacher = prevTeacher.current.find((item) => item.teacher_name === e.teacher_name);
@@ -193,6 +190,7 @@ export default function App() {
       axios
         .post(apiStore.importSchedule, finalRecurring)
         .then((res) => {
+          fetchData(setEvents, classId);
           message.success("Import successfully!");
           setLoading(false);
           prevlsNewImport.current = [];
@@ -218,7 +216,7 @@ export default function App() {
           ))}
         </Select>
         <Button type="primary" icon={<DownloadOutlined />} size="large" onClick={handleImport}>
-          Generate Schedule
+          Generate
         </Button>
         {loading && (
           <div className={styles.navbar__item}>
