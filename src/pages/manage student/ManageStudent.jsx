@@ -106,7 +106,7 @@ export const ManageStudent = () => {
     console.log(fileList);
     fileUpload.append("file", fileList);
     try {
-      const res = await axios.post(apiStore.registerImports, fileUpload);
+      const res = await axios.post(apiStore.registerImports, fileUpload, { headers: { "Access-Control-Allow-Origin": "*" } });
       if (res.status === 200) {
         message.success("Upload successfully!");
         setReRender("import");

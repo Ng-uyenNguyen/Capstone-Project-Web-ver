@@ -29,7 +29,7 @@ export const ManageClass = () => {
         if (res.status === 200) {
           message.success("Add successfully!");
           form.resetFields(false);
-          setAddLoading(true);
+          setAddLoading(false);
           setIsModalVisible(false);
         } else {
           console.log(res);

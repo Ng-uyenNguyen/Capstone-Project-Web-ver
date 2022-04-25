@@ -167,7 +167,7 @@ export const ManageTeacher = () => {
       clientId: "783817650711-i61ag5smqtp7r7idjfdr689vo3jabh9p.apps.googleusercontent.com",
       developerKey: "AIzaSyDmk-kVoNPTD8_jjT58mClo8SRtJfF-fVo",
       viewId: "DOCS",
-      token: "ya29.A0ARrdaM9_QJtdjAE3fz8ZM2iD2ObMaeh-Vj_i0JX9gLOOJ6D2N8wC-aOPkvKABkWbziQunqgdYnh3G3QKBs2JtVAcf9GiweARHtbJd1I9ZBDp-H_CmygN54yPk09fejYqCLtuHZnd5SxqLlfjXLjmUayeid1K", // pass oauth token in case you already have one
+      token: "ya29.A0ARrdaM-SktaQpqDVk-KrTlaQ4tRC7x1AI0OJYI1DULpERX86-2-BkRgzqz5ntXsUZ8K-6OyGobajhZ_M0xYLuJaLc9BEQ1uEwEwiEYOa-zfFjHGYTQuop8Co6-CS4zLbBluM4-sWWpA9iAKWSg4VQkjkg4ts",
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,

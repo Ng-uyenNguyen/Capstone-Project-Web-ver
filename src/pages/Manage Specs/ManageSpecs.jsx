@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Table, Modal, Form, Input, Select, message } from "antd";
+import {
+  Typography,
+  Button,
+  Table,
+  Modal,
+  Form,
+  Input,
+  Select,
+  message,
+} from "antd";
 import { SpecDetail } from "./SpecDetail.jsx";
 import styles from "./Style_Specs.module.scss";
 import { apiStore } from "../../constant/apiStore";
@@ -77,7 +86,9 @@ export const ManageSpecs = () => {
   // Select Input
   const [selectedItems, setSelectedItems] = useState([]);
   const [updateSelected, setUpdateSelected] = useState([]);
-  const filteredOptions = listSubjects.filter((o) => !selectedItems.includes(o));
+  const filteredOptions = listSubjects.filter(
+    (o) => !selectedItems.includes(o)
+  );
   const handleSelectChange = (selectedItems) => {
     setSelectedItems(selectedItems);
   };
@@ -187,7 +198,8 @@ export const ManageSpecs = () => {
         />
       ),
       filterIcon: () => <SearchOutlined size="large" />,
-      onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
+      onFilter: (value, record) =>
+        record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "No.Classes",
@@ -205,28 +217,67 @@ export const ManageSpecs = () => {
           className={styles.add_new_spec_btn}
           onClick={() => {
             showModal("addNew");
-          }}>
+          }}
+        >
           + Specialization
         </Button>
         <div>
-          <Modal className="addNew_subject_modal" visible={isModalVisible.addNew} onCancel={handleCancel} footer={null} closable={false} maskClosable={false}>
+          <Modal
+            className="addNew_subject_modal"
+            visible={isModalVisible.addNew}
+            onCancel={handleCancel}
+            footer={null}
+            closable={false}
+            maskClosable={false}
+          >
             <div className="modal_content">
               <div className={styles.modalTitle}>
-                <img src={require("../../assets/images/icon_addSpecs.png")} style={{ width: "30px" }}></img>
+                <img
+                  src={require("../../assets/images/icon_addSpecs.png")}
+                  style={{ width: "30px" }}
+                ></img>
                 <Title level={4}>NEW SPECIALIZATION</Title>
               </div>
               {/* ==== FORM ADD SPECS  ===== */}
-              <Form form={formAdd} layout="vertical" onFinish={addNewSpecs} style={{ height: "280px" }}>
-                <Form.Item label="Specialization Name" name="name" rules={[{ required: true, message: "Please enter subject name!" }]}>
+              <Form
+                form={formAdd}
+                layout="vertical"
+                onFinish={addNewSpecs}
+                style={{ height: "280px" }}
+              >
+                <Form.Item
+                  label="Specialization Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: "Please enter subject name!" },
+                  ]}
+                >
                   <div className="input_field">
-                    <img src={require("../../assets/images/icon_subject02.png")} alt="icon_subject" />
+                    <img
+                      src={require("../../assets/images/icon_subject02.png")}
+                      alt="icon_subject"
+                    />
                     <Input bordered={false} required={true} />
                   </div>
                 </Form.Item>
                 <Form.Item label="Subject Code" name="subjectId">
                   <div className="input_field">
-                    <img src={require("../../assets/images/icon_subjectCode.png")} alt="icon_subject" />
-                    <Select mode="multiple" placeholder="Select Subjects" value={selectedItems} onChange={handleSelectChange} style={{ width: "100%" }} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                    <img
+                      src={require("../../assets/images/icon_subjectCode.png")}
+                      alt="icon_subject"
+                    />
+                    <Select
+                      mode="multiple"
+                      placeholder="Select Subjects"
+                      value={selectedItems}
+                      onChange={handleSelectChange}
+                      style={{ width: "100%" }}
+                      filterOption={(input, option) =>
+                        option.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                    >
                       {filteredOptions.map((item, i) => (
                         <Select.Option key={i} value={item.id}>
                           {item.subjectCode}
@@ -250,19 +301,59 @@ export const ManageSpecs = () => {
 
         {/* ================== Update Specs Modal  ======================*/}
         <div>
-          <Modal getContainer={false} forceRender className="addNew_subject_modal" visible={isModalVisible.update} onCancel={handleCancel} footer={null} closable={false} maskClosable={false}>
+          <Modal
+            getContainer={false}
+            forceRender
+            className="addNew_subject_modal"
+            visible={isModalVisible.update}
+            onCancel={handleCancel}
+            footer={null}
+            closable={false}
+            maskClosable={false}
+          >
             <div className="modal_content">
               <div className={styles.modalTitle}>
-                <img src={require("../../assets/images/icon_addSpecs.png")} style={{ width: "30px" }}></img>
+                <img
+                  src={require("../../assets/images/icon_addSpecs.png")}
+                  style={{ width: "30px" }}
+                ></img>
                 <Title level={4}>UPDATE SPECIALIZATION</Title>
               </div>
               {/* ==== UPDATE SPECS FORM  ===== */}
-              <Form form={formUpdate} layout="vertical" onFinish={updateSpecs} style={{ height: "200px" }}>
-                <p style={{ marginTop: "25px", textAlign: "center", color: "#21BF73", fontSize: "large" }}>{info.name}</p>
+              <Form
+                form={formUpdate}
+                layout="vertical"
+                onFinish={updateSpecs}
+                style={{ height: "200px" }}
+              >
+                <p
+                  style={{
+                    marginTop: "25px",
+                    textAlign: "center",
+                    color: "#21BF73",
+                    fontSize: "large",
+                  }}
+                >
+                  {info.name}
+                </p>
                 <Form.Item label="Subject Code" name="subjectId">
                   <div className="input_field">
-                    <img src={require("../../assets/images/icon_subjectCode.png")} alt="icon_subject" />
-                    <Select mode="multiple" placeholder="Select Subjects" value={updateSelected} onChange={handleUpdateSelected} style={{ width: "100%" }} filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                    <img
+                      src={require("../../assets/images/icon_subjectCode.png")}
+                      alt="icon_subject"
+                    />
+                    <Select
+                      mode="multiple"
+                      placeholder="Select Subjects"
+                      value={updateSelected}
+                      onChange={handleUpdateSelected}
+                      style={{ width: "100%" }}
+                      filterOption={(input, option) =>
+                        option.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                    >
                       {filteredOptions.map((item, i) => (
                         <Select.Option key={i} value={item.id}>
                           {item.subjectCode}
@@ -271,14 +362,23 @@ export const ManageSpecs = () => {
                     </Select>
                   </div>
                 </Form.Item>
-                <Form.Item style={{ float: "right" }}>
-                  <Button className={styles.btn_cancel} onClick={handleCancel}>
-                    Cancel
-                  </Button>
-                  <Button htmlType="submit" className={styles.btn_done} loading={updateLoading}>
-                    Save
-                  </Button>
-                </Form.Item>
+                <div className="btn_wrrapper">
+                  <Form.Item style={{ float: "right" }}>
+                    <Button
+                      className={styles.btn_cancel}
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      htmlType="submit"
+                      className={styles.btn_done}
+                      loading={updateLoading}
+                    >
+                      Save
+                    </Button>
+                  </Form.Item>
+                </div>
               </Form>
             </div>
           </Modal>
@@ -293,21 +393,31 @@ export const ManageSpecs = () => {
               onClick: (event) => {
                 const rows = event.target.parentElement.parentElement.children;
                 setActiveRow((prev) => {
-                  if (rows[[prev]] !== undefined) rows[[prev]].classList.remove("active");
+                  if (rows[[prev]] !== undefined)
+                    rows[[prev]].classList.remove("active");
                   event.target.parentElement.classList.add("active");
                   return rowIndex;
                 });
-                const data = listSpecs.find((item) => item.specId === record.id);
+                const data = listSpecs.find(
+                  (item) => item.specId === record.id
+                );
                 setInfo(data);
                 setLoading(true);
-                let selectedSubjects = listSubjects.filter((item) => data.subjects.includes(item.subjectCode));
+                let selectedSubjects = listSubjects.filter((item) =>
+                  data.subjects.includes(item.subjectCode)
+                );
                 setUpdateSelected(selectedSubjects.map((i) => i.id));
               },
             };
           }}
         />
       </div>
-      <SpecDetail loading={loading} info={info} showModal={showModal} getCode={getCode} />
+      <SpecDetail
+        loading={loading}
+        info={info}
+        showModal={showModal}
+        getCode={getCode}
+      />
     </div>
   );
 };

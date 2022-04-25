@@ -45,7 +45,7 @@ export const CourseList = ({ item, setReRender }) => {
     },
   ];
 
-  const onAddNewFinish = (fieldsValue) => {
+  const onAddNewFinish = () => {
     const addCourse = async () => {
       const data = {
         subjectId: currentCourseData.courseId,
@@ -54,7 +54,7 @@ export const CourseList = ({ item, setReRender }) => {
       };
       console.log(data, "dataaaaaaaaaaaasas");
       try {
-        const res = await axios.post(apiStore.addCourseToClass, data);
+        const res = await axios.post(apiStore.addCourseToClass, data, { headers: { "Access-Control-Allow-Origin": "*" } });
         if (res.status === 200) {
           message.success("Add successfully!");
           setReRender("Add course" + currentCourseData.courseId);
