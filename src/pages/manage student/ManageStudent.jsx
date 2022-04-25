@@ -102,16 +102,19 @@ export const ManageStudent = () => {
     });
   };
   const handleUpload = async () => {
+    setUpLoading(true);
     const fileUpload = new FormData();
     console.log(fileList);
     fileUpload.append("file", fileList);
     try {
-      const res = await axios.post(apiStore.registerImports, fileUpload);
+      const res = await axios.post(apiStore.registerImports, fileUpload, { headers: { "Content-Type": "multipart/form-data" } });
       if (res.status === 200) {
+        setUpLoading(false);
         message.success("Upload successfully!");
         setReRender("import");
       }
     } catch (error) {
+      setUpLoading(false);
       message.error("Upload failed!");
       console.error(error);
     }

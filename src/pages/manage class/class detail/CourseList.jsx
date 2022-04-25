@@ -8,13 +8,13 @@ import axios from "axios";
 import { apiStore } from "../../../constant/apiStore";
 
 export const CourseList = ({ item, setReRender }) => {
-  console.log(item);
   const [allChosenSubjectData, setAllChosenSubjectData] = useState([]);
   const [lsTeacherOfSubject, setLsTeacherOfSubject] = useState([]);
   const [loadTeachers, setLoadTeachers] = useState(false);
   const [courseInfo, setCourseInfo] = useState({});
   const [activeRow, setActiveRow] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
   const [courseForm] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentCourseData, setCurrentCourseData] = useState({ courseId: 0, teacherId: "" });
@@ -45,22 +45,24 @@ export const CourseList = ({ item, setReRender }) => {
     },
   ];
 
-  const onAddNewFinish = (fieldsValue) => {
+  const onAddNewFinish = () => {
+    setAddLoading(true);
     const addCourse = async () => {
       const data = {
         subjectId: currentCourseData.courseId,
         classId: item.classId,
         teacherId: currentCourseData.teacherId,
       };
-      console.log(data, "dataaaaaaaaaaaasas");
       try {
-        const res = await axios.post(apiStore.addCourseToClass, data);
+        const res = await axios.post(apiStore.addCourseToClass, data, { headers: { "Access-Control-Allow-Origin": "*" } });
         if (res.status === 200) {
+          setAddLoading(false);
           message.success("Add successfully!");
           setReRender("Add course" + currentCourseData.courseId);
           setIsModalVisible(false);
         }
       } catch (err) {
+        setAddLoading(false);
         message.error("Add failed!");
         console.log(err);
       }
@@ -99,11 +101,16 @@ export const CourseList = ({ item, setReRender }) => {
   };
   const handleDeleteCourse = async () => {
     try {
-      const res = axios.delete(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId);
-      if (res.status === 200) message.success("Delete successfully!");
-      else message.error("Delete failed!");
+      const res = await axios.delete(apiStore.deleteCourseInClass + item.classId + "&subjectId=" + courseInfo.subjectId, { headers: { "Access-Control-Allow-Origin": "*" } });
+      if (res.status === 200) {
+        message.success("Delete successfully!");
+        setReRender("Delete course" + currentCourseData.courseId);
+      } else {
+        console.log(res);
+        message.success("Delete successfully!");
+        setReRender("Delete course" + currentCourseData.courseId);
+      }
     } catch (error) {
-      console.log("dddddddddd");
       console.error(error);
       message.error("Delete failed!");
     }
@@ -191,7 +198,7 @@ export const CourseList = ({ item, setReRender }) => {
             </Form.Item>
             <Spin size="small" spinning={loadTeachers} />
             <Form.Item style={{ float: "right", margin: "0" }}>
-              <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel}>
+              <Button type="primary" htmlType="submit" className="submit_button" onClick={handleCancel} loading={addLoading}>
                 Done
               </Button>
               <Button type="primary" className="cancel_button" onClick={handleCancel}>

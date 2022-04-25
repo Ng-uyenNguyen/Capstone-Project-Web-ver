@@ -281,13 +281,25 @@ export const ManageSubject = () => {
               </div>
               {/* ==== Form Input ===== */}
               <Form form={formAdd} layout="vertical" onFinish={addNewSubject} style={{ height: "400px" }}>
-                <Form.Item label="Subject Name" name="name" rules={[{ required: true, message: "Please enter subject name!" }]}>
+                <Form.Item
+                  label="Subject Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: "Please enter subject name!" },
+                    { pattern: "^[a-zA-Zd]+(?: [A-Za-zd]{2,})*$", message: "Invalid name" },
+                  ]}>
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_subject02.png")} alt="icon_subject" />
                     <Input placeholder="Data Warehouse" bordered={false} required={true} />
                   </div>
                 </Form.Item>
-                <Form.Item label="Subject Code" name="subjectCode" rules={[{ required: true, message: "Please input subject code!" }]}>
+                <Form.Item
+                  label="Subject Code"
+                  name="subjectCode"
+                  rules={[
+                    { required: true, message: "Please input subject code!" },
+                    { pattern: "^[A-Z]{3}[0-9]{3}$", message: "Invalid name" },
+                  ]}>
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_subjectCode.png")} alt="icon_subjectCode" />
                     <Input placeholder="DBW101" bordered={false} required={true} />

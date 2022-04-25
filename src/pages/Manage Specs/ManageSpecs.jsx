@@ -217,7 +217,13 @@ export const ManageSpecs = () => {
               </div>
               {/* ==== FORM ADD SPECS  ===== */}
               <Form form={formAdd} layout="vertical" onFinish={addNewSpecs} style={{ height: "280px" }}>
-                <Form.Item label="Specialization Name" name="name" rules={[{ required: true, message: "Please enter subject name!" }]}>
+                <Form.Item
+                  label="Specialization Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: "Please enter subject name!" },
+                    { pattern: "^[a-zA-Zd]+(?: [A-Za-zd]{2,})*$", message: "Invalid name" },
+                  ]}>
                   <div className="input_field">
                     <img src={require("../../assets/images/icon_subject02.png")} alt="icon_subject" />
                     <Input bordered={false} required={true} />

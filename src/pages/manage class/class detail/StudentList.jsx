@@ -1,5 +1,5 @@
-import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
-import { Avatar, Button, message, Modal, Table, Upload } from "antd";
+import { DownloadOutlined, SearchOutlined, UploadOutlined } from "@ant-design/icons";
+import { Avatar, Button, Input, message, Modal, Table, Upload } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { apiStore } from "../../../constant/apiStore";
@@ -15,6 +15,8 @@ export const StudentList = ({ item, setReRender }) => {
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [upLoading, setUpLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState({
     addNew: false,
     import: false,
@@ -80,6 +82,19 @@ export const StudentList = ({ item, setReRender }) => {
       title: <b>ID</b>,
       dataIndex: "id",
       key: "id",
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+        <Input
+          autoFocus
+          placeholder="Search here..."
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+            confirm({ closeDropdown: false });
+          }}
+        />
+      ),
+      filterIcon: () => <SearchOutlined size="large" />,
+      onFilter: (value, record) => record.id.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: <b>Phone</b>,
@@ -100,12 +115,13 @@ export const StudentList = ({ item, setReRender }) => {
     });
   };
   const handleSave = () => {
+    setAddLoading(true);
     const addStudentToClass = async () => {
       let data = {
         studentIds: [...selectedStudents],
         classId: item.classId,
       };
-      console.log(data);
+
       console.log(apiStore.addStudentsToClass);
       try {
         const res = await axios.post(apiStore.addStudentsToClass, data);
@@ -113,6 +129,7 @@ export const StudentList = ({ item, setReRender }) => {
           message.success("Add successfully!");
           setReRender("Add student");
           setSelectedRowKeys([]);
+          setAddLoading(false);
           setIsModalVisible((prev) => {
             return { ...prev, addNew: false };
           });
@@ -126,9 +143,11 @@ export const StudentList = ({ item, setReRender }) => {
   };
 
   const handleDeleteStudent = async () => {
+    setDeleteLoading(true);
     try {
       const res = await axios.delete(apiStore.deleteStudent(item.classId, studentInfo.accountId));
       if (res.status === 200) {
+        setDeleteLoading(false);
         message.success("Delete successfully!");
         setReRender("Delete student");
       }
@@ -207,14 +226,14 @@ export const StudentList = ({ item, setReRender }) => {
           }}
         />
       </div>
-      <StudentDetail loading={loading} studentInfo={studentInfo} classId={item.classId} handleDeleteStudent={handleDeleteStudent} />
+      <StudentDetail loading={loading} studentInfo={studentInfo} classId={item.classId} handleDeleteStudent={handleDeleteStudent} deleteLoading={deleteLoading} />
 
       <Modal title="" maskClosable={false} visible={isModalVisible.addNew} width="60%" className="studentList_addnew_modal" footer={null} closable={false} style={{ padding: 0 }}>
         <h2>Add new students</h2>
         <div className="divider" />
         <Table dataSource={outsideStudentDataSource} columns={columns} rowSelection={rowSelection} loading={studentTableLoading} />
         <div className="button_wrapper">
-          <Button onClick={handleSave} className="save_button">
+          <Button onClick={handleSave} className="save_button" loading={addLoading}>
             Save
           </Button>
           <Button onClick={handleCancel} className="cancel_button">

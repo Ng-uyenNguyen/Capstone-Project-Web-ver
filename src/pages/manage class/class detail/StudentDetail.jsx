@@ -1,9 +1,9 @@
 import { EditOutlined, HomeOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Image, Space } from "antd";
+import { Button, Image, Space } from "antd";
 import React from "react";
 import styles from "./StudentDetail.module.scss";
 
-function StudentDetail({ loading, handleDeleteStudent, studentInfo, classId }) {
+function StudentDetail({ loading, handleDeleteStudent, studentInfo, classId, deleteLoading }) {
   return !loading ? (
     <div className={styles.loading}>
       <Image src={require("../../../assets/images/loading_sidebar.png")} alt="logo" preview={false} width={200} height={200} />
@@ -89,9 +89,9 @@ function StudentDetail({ loading, handleDeleteStudent, studentInfo, classId }) {
         <div className={styles.teacher__teaching__subject__form__item}>{classId}</div>
       </div>
       <div className={styles.button_wrapper}>
-        <button className={styles.remove_button} onClick={handleDeleteStudent}>
+        <Button className={styles.remove_button} onClick={handleDeleteStudent} loading={deleteLoading}>
           Remove
-        </button>
+        </Button>
       </div>
     </div>
   );
